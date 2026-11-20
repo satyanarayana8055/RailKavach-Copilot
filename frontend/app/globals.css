@@ -11,29 +11,17 @@
   --brand-amber-rgb: 245 158 11;
   --brand-blue: #127dc2;
   --brand-cyan: #009fce;
-  --ink-page: #03061a;
-  --dark-bg: #03061a;
-  --royal: #021945;
-  --ink-950: #0a0d12;
-  --ink-900: #0f1318;
-  --ink-850: #131820;
-  --ink-800: #181d27;
-  --ink-700: #1f2632;
-  --ink-600: #2a3242;
-  --ink-500: #6b7689;
-  --ink-400: #828ea1;
-  --ink-300: #8995a8;
-  --ink-200: #b6bfcd;
-  --ink-100: #dde2ea;
-  --text-primary: #ffffff;
-  --text-secondary: #b0b0b0;
+  --page-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
   --primary-gradient: linear-gradient(90deg, #f48220 0%, #c2945a 35%, #6c8c87 70%, #127dc2 100%);
-  --brand-gradient: linear-gradient(90deg, #f48220 0%, #009fce 100%);
+  --brand-gradient: linear-gradient(90deg, #f48220 0%, #127dc2 100%);
 }
 
 body {
-  color: var(--text-primary);
-  background: var(--dark-bg);
+  color: #0f172a;
+  background: #f8fafc;
   font-family: "Geist", -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -55,32 +43,32 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-/* Subtle Linear/AiSPRY Background Grid */
+/* Subtle Clean Background Grid for Light Mode */
 .bg-grid {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
 }
 
-/* Glassmorphism Styles */
+/* Crisp Clean Card and Panel Styles for Light Mode */
 .glass-panel {
-  background: rgba(15, 19, 28, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
 }
 
 .glass-card:hover {
-  border-color: rgba(244, 130, 32, 0.4);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 10px 25px -5px rgba(244, 130, 32, 0.15);
+  border-color: rgba(244, 130, 32, 0.45);
+  box-shadow: 0 10px 25px -5px rgba(244, 130, 32, 0.12), 0 8px 10px -6px rgba(244, 130, 32, 0.08);
+  transform: translateY(-1px);
 }
 
 .btn-primary-aispry {
@@ -88,44 +76,45 @@ body {
   color: #ffffff;
   font-weight: 600;
   border-radius: 9999px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 14px rgba(244, 130, 32, 0.35);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(244, 130, 32, 0.28);
 }
 
 .btn-primary-aispry:hover {
   background: #ea580c;
   transform: translateY(-1.5px);
-  box-shadow: 0 8px 20px rgba(244, 130, 32, 0.5);
+  box-shadow: 0 8px 20px rgba(244, 130, 32, 0.4);
 }
 
 .btn-secondary-aispry {
-  background: rgba(255, 255, 255, 0.05);
-  color: #e2e8f0;
+  background: #ffffff;
+  color: #1e293b;
   font-weight: 500;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #cbd5e1;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .btn-secondary-aispry:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(0, 159, 206, 0.5);
-  color: #ffffff;
+  background: #f8fafc;
+  border-color: #127dc2;
+  color: #0f172a;
   transform: translateY(-1.5px);
 }
 
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: #cbd5e1;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(244, 130, 32, 0.4);
+  background: #94a3b8;
 }

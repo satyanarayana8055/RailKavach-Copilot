@@ -468,16 +468,16 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#03061a] text-slate-100 relative overflow-hidden bg-grid selection:bg-[#f48220] selection:text-black">
+    <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 relative overflow-hidden bg-grid selection:bg-[#f48220] selection:text-white">
       
       {/* Top Accent Strip (Exact AiSPRY Gradient) */}
-      <div className="h-[2.5px] bg-gradient-to-r from-[#f48220] via-[#c2945a] to-[#009fce] w-full sticky top-0 z-[60]"></div>
+      <div className="h-[3px] bg-gradient-to-r from-[#f48220] via-[#c2945a] to-[#009fce] w-full sticky top-0 z-[60]"></div>
 
-      {/* Top Ambient Radial Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[350px] bg-aispry-radial pointer-events-none -z-10 blur-3xl"></div>
+      {/* Top Ambient Subtle Radial Tint */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[350px] bg-gradient-to-b from-orange-100/50 via-sky-50/30 to-transparent pointer-events-none -z-10 blur-3xl"></div>
 
-      {/* Modern Navigation Bar (Official AiSPRY Brand Design) */}
-      <header className="sticky top-[2.5px] z-50 px-6 py-3 backdrop-blur-2xl bg-[#03061a]/90 border-b border-white/[0.08] shadow-2xl shadow-black/80">
+      {/* Modern Navigation Bar (Official AiSPRY Brand Design - Clean Light Mode) */}
+      <header className="sticky top-[3px] z-50 px-6 py-3.5 backdrop-blur-xl bg-white/95 border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           {/* AiSPRY Brand Identity with Official Logo */}
@@ -489,19 +489,19 @@ export default function Home() {
                 className="h-8 sm:h-9 w-auto object-contain shrink-0"
               />
             </a>
-            <span className="hidden sm:inline-flex text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-orange-500/10 text-[#f48220] border border-[#f48220]/40">
+            <span className="hidden sm:inline-flex text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-orange-50 text-[#f48220] border border-orange-200">
               RailKavach™ Suite
             </span>
           </div>
 
           {/* Desktop Product Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1 text-xs font-medium text-slate-300">
+          <nav className="hidden lg:flex items-center space-x-1 text-xs font-medium text-slate-600">
             <button
               onClick={() => setActiveTab("copilot")}
               className={`px-3 py-1.5 rounded-lg transition relative ${
                 activeTab === "copilot"
-                  ? "text-[#f48220] font-semibold bg-white/[0.05]"
-                  : "hover:text-white hover:bg-white/[0.03]"
+                  ? "text-[#f48220] font-semibold bg-orange-50"
+                  : "hover:text-slate-950 hover:bg-slate-100"
               }`}
             >
               Voice Studio
@@ -510,8 +510,8 @@ export default function Home() {
               onClick={() => setActiveTab("files")}
               className={`px-3 py-1.5 rounded-lg transition relative ${
                 activeTab === "files"
-                  ? "text-[#f48220] font-semibold bg-white/[0.05]"
-                  : "hover:text-white hover:bg-white/[0.03]"
+                  ? "text-[#f48220] font-semibold bg-orange-50"
+                  : "hover:text-slate-950 hover:bg-slate-100"
               }`}
             >
               Asset Inspector
@@ -520,8 +520,8 @@ export default function Home() {
               onClick={() => setActiveTab("timeline")}
               className={`px-3 py-1.5 rounded-lg transition relative ${
                 activeTab === "timeline"
-                  ? "text-[#f48220] font-semibold bg-white/[0.05]"
-                  : "hover:text-white hover:bg-white/[0.03]"
+                  ? "text-[#f48220] font-semibold bg-orange-50"
+                  : "hover:text-slate-950 hover:bg-slate-100"
               }`}
             >
               Timeline Sync
@@ -530,8 +530,8 @@ export default function Home() {
               onClick={() => setActiveTab("wdd")}
               className={`px-3 py-1.5 rounded-lg transition relative ${
                 activeTab === "wdd"
-                  ? "text-[#f48220] font-semibold bg-white/[0.05]"
-                  : "hover:text-white hover:bg-white/[0.03]"
+                  ? "text-[#f48220] font-semibold bg-orange-50"
+                  : "hover:text-slate-950 hover:bg-slate-100"
               }`}
             >
               WDD Gantry
@@ -540,8 +540,8 @@ export default function Home() {
               onClick={() => setActiveTab("artifacts")}
               className={`px-3 py-1.5 rounded-lg transition relative ${
                 activeTab === "artifacts"
-                  ? "text-[#f48220] font-semibold bg-white/[0.05]"
-                  : "hover:text-white hover:bg-white/[0.03]"
+                  ? "text-[#f48220] font-semibold bg-orange-50"
+                  : "hover:text-slate-950 hover:bg-slate-100"
               }`}
             >
               Statutory DPDP
@@ -555,16 +555,16 @@ export default function Home() {
             <div className="relative">
               <button
                 onClick={() => setShowRoleMenu(!showRoleMenu)}
-                className="px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.12] text-xs font-semibold flex items-center gap-2 text-white shadow-sm transition"
+                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-50 border border-slate-300 text-xs font-semibold flex items-center gap-2 text-slate-800 shadow-sm transition"
               >
                 <currentRole.icon className="w-3.5 h-3.5 text-[#009fce]" />
                 <span>{currentRole.title}</span>
-                <ChevronDown className="w-3 h-3 text-slate-400" />
+                <ChevronDown className="w-3 h-3 text-slate-500" />
               </button>
 
               {showRoleMenu && (
-                <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-[#090e1f] border border-white/[0.12] shadow-2xl p-2 z-50 flex flex-col gap-1 backdrop-blur-2xl">
-                  <div className="px-3 py-2 text-[10px] font-semibold text-slate-400 uppercase tracking-wider border-b border-white/[0.06]">
+                <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white border border-slate-200 shadow-2xl p-2 z-50 flex flex-col gap-1">
+                  <div className="px-3 py-2 text-[10px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-100">
                     Select Indian Railways Role (RBAC)
                   </div>
                   {Object.values(ROLES).map((role) => (
@@ -573,14 +573,14 @@ export default function Home() {
                       onClick={() => switchRole(role.code)}
                       className={`w-full text-left p-2.5 rounded-xl text-xs transition flex items-start gap-2.5 ${
                         activeRole === role.code
-                          ? "bg-orange-500/15 text-[#f48220] border border-[#f48220]/40 font-semibold"
-                          : "hover:bg-white/[0.04] text-slate-300"
+                          ? "bg-orange-50 text-[#f48220] border border-orange-200 font-semibold"
+                          : "hover:bg-slate-50 text-slate-700"
                       }`}
                     >
                       <role.icon className="w-4 h-4 text-[#009fce] shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-semibold text-white">{role.title}</div>
-                        <div className="text-[10px] text-slate-400 leading-tight mt-0.5">{role.division}</div>
+                        <div className="font-semibold text-slate-900">{role.title}</div>
+                        <div className="text-[10px] text-slate-500 leading-tight mt-0.5">{role.division}</div>
                       </div>
                     </button>
                   ))}
@@ -595,19 +595,19 @@ export default function Home() {
               }}
               className={`px-3.5 py-1.5 rounded-full text-xs font-medium border transition flex items-center gap-1.5 ${
                 dpdpMasking || currentRole.forceMasking
-                  ? "bg-purple-600/30 border-purple-400 text-purple-200 shadow-sm shadow-purple-500/30"
-                  : "bg-white/[0.04] hover:bg-white/[0.08] border-white/[0.08] text-slate-300"
+                  ? "bg-purple-50 border-purple-300 text-purple-700 shadow-sm"
+                  : "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700"
               }`}
               title={currentRole.forceMasking ? "Enforced by DPDP Act for this role" : "Toggle DPDP PII Masking"}
             >
-              {dpdpMasking || currentRole.forceMasking ? <Lock className="w-3.5 h-3.5 text-purple-300" /> : <Unlock className="w-3.5 h-3.5 text-slate-400" />}
+              {dpdpMasking || currentRole.forceMasking ? <Lock className="w-3.5 h-3.5 text-purple-600" /> : <Unlock className="w-3.5 h-3.5 text-slate-500" />}
               <span>{dpdpMasking || currentRole.forceMasking ? "DPDP: Masked" : "DPDP Mode"}</span>
             </button>
 
             {/* Language Switcher */}
             <button
               onClick={() => setLang(lang === "en" ? "hi" : "en")}
-              className="px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-xs font-medium border border-white/[0.08] text-slate-200 transition"
+              className="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-xs font-medium border border-slate-200 text-slate-800 transition"
             >
               {lang === "en" ? "🇮🇳 हिन्दी" : "🌐 English"}
             </button>
@@ -618,19 +618,17 @@ export default function Home() {
       {/* Main Workspace */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-6 md:p-8 flex flex-col gap-6">
 
-        {/* AiSPRY Hero Section */}
+        {/* AiSPRY Hero Section (Crisp Light Theme) */}
         <section className="relative pt-6 pb-8 flex flex-col items-center text-center overflow-hidden">
-          {/* Radial Glow Accents */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-aispry-radial rounded-full blur-[140px] pointer-events-none"></div>
-
+          
           {/* Pill Tag Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-950/40 border border-orange-500/40 text-[#f48220] text-xs font-semibold mb-4 shadow-inner">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200 text-[#f48220] text-xs font-semibold mb-4 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-[#f48220] animate-pulse"></span>
             ★ Indian Railways Production AI · Startup Buildathon India 2026
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight max-w-4xl mx-auto leading-[1.18]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-950 tracking-tight max-w-4xl mx-auto leading-[1.18]">
             India&apos;s pioneering AI for{" "}
             <em className="font-display italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#f48220] via-[#c2945a] to-[#009fce]">
               railway safety intelligence
@@ -639,8 +637,8 @@ export default function Home() {
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-4 text-sm sm:text-base text-slate-300 max-w-3xl mx-auto font-normal leading-relaxed">
-            <strong className="text-white">RailKavach</strong> is AiSPRY&apos;s production-grade multimodal AI safety platform for Indian Railways — unifying <strong className="text-white">Loco Cab Audio (Railcomm)</strong>, <strong className="text-white">In-Cab Driver Vision (Locate)</strong>, <strong className="text-white">Wagon Damage Gantries (WDD)</strong>, and <strong className="text-white">Caution Orders</strong> into sub-second voice analytics with zero new hardware.
+          <p className="mt-4 text-sm sm:text-base text-slate-600 max-w-3xl mx-auto font-normal leading-relaxed">
+            <strong className="text-slate-900">RailKavach</strong> is AiSPRY&apos;s production-grade multimodal AI safety platform for Indian Railways — unifying <strong className="text-slate-900">Loco Cab Audio (Railcomm)</strong>, <strong className="text-slate-900">In-Cab Driver Vision (Locate)</strong>, <strong className="text-slate-900">Wagon Damage Gantries (WDD)</strong>, and <strong className="text-slate-900">Caution Orders</strong> into sub-second voice analytics with zero new hardware.
           </p>
 
           {/* Hero Action Buttons */}
@@ -661,50 +659,50 @@ export default function Home() {
           </div>
 
           {/* AiSPRY Trust Metrics Strip */}
-          <div className="mt-8 pt-6 border-t border-gray-800/80 w-full grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="glass-card p-4 rounded-2xl">
-              <p className="text-xl sm:text-3xl font-bold text-white font-mono">11,354</p>
-              <p className="text-[11px] text-slate-400 mt-1">Audio Transcripts (NWR)</p>
+          <div className="mt-8 pt-6 border-t border-slate-200 w-full grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="glass-card p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+              <p className="text-xl sm:text-3xl font-bold text-slate-900 font-mono">11,354</p>
+              <p className="text-[11px] text-slate-500 mt-1">Audio Transcripts (NWR)</p>
             </div>
-            <div className="glass-card p-4 rounded-2xl">
+            <div className="glass-card p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
               <p className="text-xl sm:text-3xl font-bold text-[#f48220] font-mono">3.68M</p>
-              <p className="text-[11px] text-slate-400 mt-1">Lines Processed</p>
+              <p className="text-[11px] text-slate-500 mt-1">Lines Processed</p>
             </div>
-            <div className="glass-card p-4 rounded-2xl">
+            <div className="glass-card p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
               <p className="text-xl sm:text-3xl font-bold text-[#009fce] font-mono">8 mins</p>
-              <p className="text-[11px] text-slate-400 mt-1">WDD Gantry vs 5.5h Manual</p>
+              <p className="text-[11px] text-slate-500 mt-1">WDD Gantry vs 5.5h Manual</p>
             </div>
-            <div className="glass-card p-4 rounded-2xl">
-              <p className="text-xl sm:text-3xl font-bold text-emerald-400 font-mono">&lt; 1,800</p>
-              <p className="text-[11px] text-slate-400 mt-1">Tokens / Query (99.1% Saved)</p>
+            <div className="glass-card p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+              <p className="text-xl sm:text-3xl font-bold text-emerald-600 font-mono">&lt; 1,800</p>
+              <p className="text-[11px] text-slate-500 mt-1">Tokens / Query (99.1% Saved)</p>
             </div>
           </div>
         </section>
 
         {/* Role Scoping Banner */}
-        <div className="glass-card p-4 rounded-2xl flex flex-wrap items-center justify-between text-xs gap-3 border-l-4 border-l-cyan-400">
+        <div className="glass-card bg-white p-4 rounded-2xl flex flex-wrap items-center justify-between text-xs gap-3 border border-slate-200 shadow-sm border-l-4 border-l-[#f48220]">
           <div className="flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400">
+            <span className="p-2 rounded-xl bg-orange-50 text-[#f48220]">
               <currentRole.icon className="w-4 h-4" />
             </span>
             <div>
-              <div className="font-semibold text-white flex items-center gap-2">
+              <div className="font-semibold text-slate-900 flex items-center gap-2">
                 <span>Active Scope: {currentRole.designation}</span>
-                <span className="px-2 py-0.5 rounded-full bg-blue-500/10 text-cyan-400 border border-cyan-500/30 text-[10px]">
+                <span className="px-2 py-0.5 rounded-full bg-orange-50 text-[#f48220] border border-orange-200 text-[10px]">
                   {currentRole.division}
                 </span>
               </div>
-              <div className="text-slate-400 text-[11px] mt-0.5">{currentRole.description}</div>
+              <div className="text-slate-500 text-[11px] mt-0.5">{currentRole.description}</div>
             </div>
           </div>
           <div className="flex items-center gap-2">
             {currentRole.canSignCRS && (
-              <span className="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[11px] font-semibold">
+              <span className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-semibold">
                 ✓ Authorized for Statutory Inquiry Reports
               </span>
             )}
             {currentRole.canIssueWorkOrder && (
-              <span className="px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[11px] font-semibold">
+              <span className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 text-[11px] font-semibold">
                 ✓ Authorized for Sick-Line Repair Orders
               </span>
             )}
@@ -712,14 +710,14 @@ export default function Home() {
         </div>
 
         {/* AiSPRY Core Railway Pillars & Fast Jury Scenarios */}
-        <div className="glass-panel p-6 rounded-3xl relative overflow-hidden">
+        <div className="glass-panel bg-white p-6 rounded-3xl relative overflow-hidden border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#f48220]">
               <Sparkles className="w-3.5 h-3.5" />
               <span>One-Click Jury Scenarios (Instant Zero-Latency Demos)</span>
             </div>
-            <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <div className="flex items-center gap-2 text-[11px] text-slate-500 font-mono">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
               <span>100% Venue Uptime Guaranteed</span>
             </div>
           </div>
@@ -728,23 +726,23 @@ export default function Home() {
             {/* Scenario 1 */}
             <button
               onClick={() => runScenario(1)}
-              className="glass-card group text-left p-4.5 rounded-2xl transition duration-200 hover:-translate-y-0.5 flex flex-col justify-between"
+              className="glass-card bg-slate-50/70 hover:bg-white text-left p-4.5 rounded-2xl transition duration-200 hover:-translate-y-0.5 flex flex-col justify-between border border-slate-200 hover:border-orange-300 shadow-sm hover:shadow-md"
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[11px] font-semibold text-[#f48220] uppercase tracking-wider">Scenario 01</span>
-                  <span className="px-2 py-0.5 rounded-full bg-orange-500/10 text-[#f48220] border border-orange-500/20 text-[10px] font-mono">
+                  <span className="px-2 py-0.5 rounded-full bg-orange-100 text-[#ea580c] border border-orange-200 text-[10px] font-mono font-semibold">
                     Near-SPAD
                   </span>
                 </div>
-                <h3 className="text-sm font-semibold text-white group-hover:text-[#f48220] transition">
+                <h3 className="text-sm font-semibold text-slate-900 group-hover:text-[#f48220] transition">
                   Train 12414 at Suratgarh
                 </h3>
-                <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
                   Correlates VHF caution order with cab driver phone distraction alert at [03:14:15].
                 </p>
               </div>
-              <div className="mt-4 flex items-center text-xs text-[#f48220] font-medium">
+              <div className="mt-4 flex items-center text-xs text-[#f48220] font-semibold">
                 <span>Run Investigation</span>
                 <ChevronRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition" />
               </div>
@@ -753,23 +751,23 @@ export default function Home() {
             {/* Scenario 2 */}
             <button
               onClick={() => runScenario(2)}
-              className="glass-card group text-left p-4.5 rounded-2xl transition duration-200 hover:-translate-y-0.5 flex flex-col justify-between"
+              className="glass-card bg-slate-50/70 hover:bg-white text-left p-4.5 rounded-2xl transition duration-200 hover:-translate-y-0.5 flex flex-col justify-between border border-slate-200 hover:border-amber-300 shadow-sm hover:shadow-md"
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider">Scenario 02</span>
-                  <span className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-mono">
+                  <span className="text-[11px] font-semibold text-amber-600 uppercase tracking-wider">Scenario 02</span>
+                  <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 text-[10px] font-mono font-semibold">
                     Night Fatigue
                   </span>
                 </div>
-                <h3 className="text-sm font-semibold text-white group-hover:text-amber-300 transition">
+                <h3 className="text-sm font-semibold text-slate-900 group-hover:text-amber-600 transition">
                   02:00–05:00 AM Micro-Sleeps
                 </h3>
-                <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
                   Identifies repeat drowsiness clusters across night freight runs on Bikaner Division.
                 </p>
               </div>
-              <div className="mt-4 flex items-center text-xs text-amber-400 font-medium">
+              <div className="mt-4 flex items-center text-xs text-amber-600 font-semibold">
                 <span>View Fatigue Clusters</span>
                 <ChevronRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition" />
               </div>
@@ -778,23 +776,23 @@ export default function Home() {
             {/* Scenario 3 */}
             <button
               onClick={() => runScenario(3)}
-              className="glass-card group text-left p-4.5 rounded-2xl transition duration-200 hover:-translate-y-0.5 flex flex-col justify-between"
+              className="glass-card bg-slate-50/70 hover:bg-white text-left p-4.5 rounded-2xl transition duration-200 hover:-translate-y-0.5 flex flex-col justify-between border border-slate-200 hover:border-cyan-300 shadow-sm hover:shadow-md"
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[11px] font-semibold text-[#009fce] uppercase tracking-wider">Scenario 03</span>
-                  <span className="px-2 py-0.5 rounded-full bg-cyan-500/10 text-[#009fce] border border-cyan-500/20 text-[10px] font-mono">
+                  <span className="px-2 py-0.5 rounded-full bg-cyan-100 text-cyan-800 border border-cyan-200 text-[10px] font-mono font-semibold">
                     WDD Differential
                   </span>
                 </div>
-                <h3 className="text-sm font-semibold text-white group-hover:text-[#009fce] transition">
+                <h3 className="text-sm font-semibold text-slate-900 group-hover:text-[#009fce] transition">
                   Rake BOXN-542 Transit Damage
                 </h3>
-                <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
                   PaddleOCR wagon serials + 8 defect classes separating transit liability from pre-existing dents.
                 </p>
               </div>
-              <div className="mt-4 flex items-center text-xs text-[#009fce] font-medium">
+              <div className="mt-4 flex items-center text-xs text-[#009fce] font-semibold">
                 <span>Audit Rake Differential</span>
                 <ChevronRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition" />
               </div>
@@ -803,14 +801,14 @@ export default function Home() {
         </div>
 
         {/* Tab Navigation (Role-Permission Filtered) */}
-        <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-lg w-fit overflow-x-auto">
+        <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-200/80 border border-slate-300/80 w-fit overflow-x-auto shadow-inner">
           {currentRole.allowedTabs.includes("copilot") && (
             <button
               onClick={() => setActiveTab("copilot")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 shrink-0 ${
                 activeTab === "copilot"
-                  ? "bg-[#f48220] text-black font-bold shadow-lg shadow-orange-500/25"
-                  : "text-slate-300 hover:text-white hover:bg-white/[0.04]"
+                  ? "bg-[#f48220] text-white font-bold shadow-md shadow-orange-500/25"
+                  : "text-slate-700 hover:text-slate-950 hover:bg-white"
               }`}
             >
               <Shield className="w-3.5 h-3.5" />
@@ -823,8 +821,8 @@ export default function Home() {
               onClick={() => setActiveTab("files")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 shrink-0 ${
                 activeTab === "files"
-                  ? "bg-[#f48220] text-black font-bold shadow-lg shadow-orange-500/25"
-                  : "text-slate-300 hover:text-white hover:bg-white/[0.04]"
+                  ? "bg-[#f48220] text-white font-bold shadow-md shadow-orange-500/25"
+                  : "text-slate-700 hover:text-slate-950 hover:bg-white"
               }`}
             >
               <Upload className="w-3.5 h-3.5" />
@@ -837,8 +835,8 @@ export default function Home() {
               onClick={() => setActiveTab("timeline")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 shrink-0 ${
                 activeTab === "timeline"
-                  ? "bg-[#f48220] text-black font-bold shadow-lg shadow-orange-500/25"
-                  : "text-slate-300 hover:text-white hover:bg-white/[0.04]"
+                  ? "bg-[#f48220] text-white font-bold shadow-md shadow-orange-500/25"
+                  : "text-slate-700 hover:text-slate-950 hover:bg-white"
               }`}
             >
               <Clock className="w-3.5 h-3.5" />
@@ -851,8 +849,8 @@ export default function Home() {
               onClick={() => setActiveTab("wdd")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 shrink-0 ${
                 activeTab === "wdd"
-                  ? "bg-[#f48220] text-black font-bold shadow-lg shadow-orange-500/25"
-                  : "text-slate-300 hover:text-white hover:bg-white/[0.04]"
+                  ? "bg-[#f48220] text-white font-bold shadow-md shadow-orange-500/25"
+                  : "text-slate-700 hover:text-slate-950 hover:bg-white"
               }`}
             >
               <Train className="w-3.5 h-3.5" />
@@ -865,8 +863,8 @@ export default function Home() {
               onClick={() => setActiveTab("artifacts")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 shrink-0 ${
                 activeTab === "artifacts"
-                  ? "bg-[#f48220] text-black font-bold shadow-lg shadow-orange-500/25"
-                  : "text-slate-300 hover:text-white hover:bg-white/[0.04]"
+                  ? "bg-[#f48220] text-white font-bold shadow-md shadow-orange-500/25"
+                  : "text-slate-700 hover:text-slate-950 hover:bg-white"
               }`}
             >
               <FileText className="w-3.5 h-3.5" />
@@ -880,10 +878,12 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 flex flex-col gap-4">
               
-              {/* Linear-Style Search & Mic Input */}
+              {/* Clean Light-Mode Search & Mic Input */}
               <form onSubmit={handleCustomSubmit} className="relative">
-                <div className={`glass-panel rounded-2xl p-2 transition flex items-center gap-2 ${
-                  isListening ? "border-red-500/60 ring-2 ring-red-500/20" : "hover:border-white/[0.15]"
+                <div className={`glass-panel bg-white rounded-2xl p-2.5 transition flex items-center gap-2 border shadow-sm ${
+                  isListening
+                    ? "border-red-500 ring-2 ring-red-500/20"
+                    : "border-slate-300 focus-within:border-[#f48220] focus-within:ring-2 focus-within:ring-orange-500/20"
                 }`}>
                   <button
                     type="button"
@@ -891,7 +891,7 @@ export default function Home() {
                     className={`p-2.5 rounded-xl transition ${
                       isListening
                         ? "bg-red-500 text-white animate-pulse"
-                        : "bg-white/[0.04] text-slate-400 hover:text-cyan-400 hover:bg-white/[0.08]"
+                        : "bg-slate-100 text-slate-600 hover:text-[#f48220] hover:bg-slate-200"
                     }`}
                     title="Click to speak (Speech-to-Text)"
                   >
@@ -909,16 +909,16 @@ export default function Home() {
                         ? "Type or speak inquiry (e.g., 'Investigate Train 12414 near Suratgarh')..."
                         : "टाइप करें या बोलें (उदा. 'सूरतगढ़ के पास 12414 की जांच करें')..."
                     }
-                    className="flex-1 bg-transparent border-none text-sm text-white placeholder-slate-400 focus:outline-none px-2"
+                    className="flex-1 bg-transparent border-none text-sm text-slate-900 placeholder-slate-400 focus:outline-none px-2"
                   />
 
                   {/* Equalizer animation */}
                   {(isListening || isSpeaking) && (
                     <div className="flex items-center gap-1 px-3">
-                      <span className="w-1 h-3 bg-cyan-400 rounded-full animate-wave"></span>
-                      <span className="w-1 h-5 bg-indigo-400 rounded-full animate-wave" style={{ animationDelay: "0.2s" }}></span>
-                      <span className="w-1 h-2 bg-blue-400 rounded-full animate-wave" style={{ animationDelay: "0.4s" }}></span>
-                      <span className="w-1 h-4 bg-cyan-300 rounded-full animate-wave" style={{ animationDelay: "0.1s" }}></span>
+                      <span className="w-1 h-3 bg-[#f48220] rounded-full animate-wave"></span>
+                      <span className="w-1 h-5 bg-[#009fce] rounded-full animate-wave" style={{ animationDelay: "0.2s" }}></span>
+                      <span className="w-1 h-2 bg-amber-500 rounded-full animate-wave" style={{ animationDelay: "0.4s" }}></span>
+                      <span className="w-1 h-4 bg-[#f48220] rounded-full animate-wave" style={{ animationDelay: "0.1s" }}></span>
                     </div>
                   )}
 
@@ -935,35 +935,35 @@ export default function Home() {
 
               {/* AiSPRY High-Impact Prompt Suggestion Chips */}
               <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px]">
-                <span className="text-slate-400 flex items-center gap-1 font-medium">
+                <span className="text-slate-500 flex items-center gap-1 font-medium">
                   <Sparkles className="w-3 h-3 text-[#f48220]" />
                   <span>Suggested Prompts:</span>
                 </span>
                 <button
                   type="button"
                   onClick={() => executeSearch("क्या 12403 का सिग्नल लाल था?")}
-                  className="px-3 py-1 rounded-full bg-orange-500/10 hover:bg-orange-500/20 text-[#f48220] border border-[#f48220]/30 transition flex items-center gap-1 font-mono"
+                  className="px-3 py-1 rounded-full bg-orange-50 hover:bg-orange-100 text-[#f48220] border border-orange-200 transition flex items-center gap-1 font-mono font-medium shadow-sm"
                 >
                   🇮🇳 क्या 12403 का सिग्नल लाल था?
                 </button>
                 <button
                   type="button"
                   onClick={() => executeSearch("Investigate Train 12414 near Suratgarh")}
-                  className="px-3 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.08] transition"
+                  className="px-3 py-1 rounded-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 shadow-sm transition"
                 >
                   Investigate Train 12414 Near-SPAD
                 </button>
                 <button
                   type="button"
                   onClick={() => executeSearch("Show driver alertness and fatigue trends between 02:00 and 05:00 AM")}
-                  className="px-3 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.08] transition"
+                  className="px-3 py-1 rounded-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 shadow-sm transition"
                 >
                   Night Fatigue 02:00–05:00 AM
                 </button>
                 <button
                   type="button"
                   onClick={() => executeSearch("Audit entry-versus-exit wagon damage for freight rake BOXN-542")}
-                  className="px-3 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.08] transition"
+                  className="px-3 py-1 rounded-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 shadow-sm transition"
                 >
                   WDD Transit Damage (BOXN-542)
                 </button>
@@ -971,14 +971,14 @@ export default function Home() {
 
               {/* Copilot Response Workspace */}
               {response && (
-                <div className="glass-panel p-6 rounded-3xl flex flex-col gap-5">
+                <div className="glass-panel bg-white p-6 rounded-3xl flex flex-col gap-5 border border-slate-200 shadow-sm">
                   
                   {/* Telemetry Header */}
-                  <div className="flex flex-wrap items-center justify-between pb-4 border-b border-white/[0.08] text-xs gap-3">
-                    <div className="flex items-center gap-2 text-slate-300">
+                  <div className="flex flex-wrap items-center justify-between pb-4 border-b border-slate-100 text-xs gap-3">
+                    <div className="flex items-center gap-2 text-slate-600">
                       <Zap className="w-4 h-4 text-[#f48220]" />
-                      <span className="font-semibold text-white">Reasoning Core:</span>
-                      <span className="text-[#009fce] font-mono">Gemini 1.5 Flash + Agent Skills</span>
+                      <span className="font-semibold text-slate-900">Reasoning Core:</span>
+                      <span className="text-[#009fce] font-mono font-medium">Gemini 1.5 Flash + Agent Skills</span>
                     </div>
 
                     <div className="flex items-center gap-2.5">
@@ -986,8 +986,8 @@ export default function Home() {
                         onClick={() => speakText(response.answer)}
                         className={`px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 border transition ${
                           isSpeaking
-                            ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                            : "bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border-white/[0.08]"
+                            ? "bg-amber-50 text-amber-800 border-amber-300"
+                            : "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
                         }`}
                         title="Listen to response"
                       >
@@ -995,18 +995,18 @@ export default function Home() {
                         <span>{isSpeaking ? "Pause Audio" : "Speak Aloud"}</span>
                       </button>
 
-                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono text-[11px]">
+                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[11px] font-semibold">
                         {response.cached ? "⚡ 0 Tokens (Cache Hit)" : `Tokens: ${response.token_usage.total_tokens}`}
                       </span>
 
-                      <span className="px-2 py-0.5 rounded-md bg-white/[0.04] text-slate-400 font-mono text-[11px] border border-white/[0.06]">
+                      <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-mono text-[11px] border border-slate-200">
                         {response.latency_ms}ms
                       </span>
                     </div>
                   </div>
 
                   {/* Summary Text */}
-                  <div className="text-sm leading-relaxed text-slate-200 whitespace-pre-line font-normal">
+                  <div className="text-sm leading-relaxed text-slate-800 whitespace-pre-line font-normal">
                     {maskPII(response.answer)}
                   </div>
 
@@ -1014,33 +1014,33 @@ export default function Home() {
                   {response.citations && response.citations.length > 0 && (
                     <div className="flex flex-col gap-2.5 pt-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                           <CheckCircle2 className="w-3.5 h-3.5 text-[#f48220]" />
                           <span>Grounded Evidence Citations ({response.citations.length})</span>
                         </span>
-                        <span className="text-[10px] text-slate-500 font-mono">Split-Second Accuracy</span>
+                        <span className="text-[10px] text-slate-400 font-mono">Split-Second Accuracy</span>
                       </div>
 
                       <div className="grid grid-cols-1 gap-2">
                         {response.citations.map((cite, idx) => (
                           <div
                             key={idx}
-                            className="glass-card p-3 rounded-xl flex items-start justify-between gap-3 text-xs"
+                            className="glass-card bg-slate-50/80 hover:bg-slate-100/80 p-3 rounded-xl flex items-start justify-between gap-3 text-xs border border-slate-200 shadow-sm"
                           >
                             <div className="flex items-start gap-2.5">
-                              <span className="px-2 py-0.5 rounded-md bg-orange-500/15 text-[#f48220] font-mono font-bold text-[11px] border border-[#f48220]/30">
+                              <span className="px-2 py-0.5 rounded-md bg-orange-100 text-[#ea580c] font-mono font-bold text-[11px] border border-orange-200">
                                 [{cite.timestamp}]
                               </span>
                               <div>
-                                <span className="font-semibold text-white mr-1.5">{cite.source}:</span>
-                                <span className="text-slate-300">{maskPII(cite.event_description)}</span>
+                                <span className="font-semibold text-slate-900 mr-1.5">{cite.source}:</span>
+                                <span className="text-slate-700">{maskPII(cite.event_description)}</span>
                               </div>
                             </div>
                             {cite.reviewer_status && (
                               <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold whitespace-nowrap border ${
                                 cite.reviewer_status === "CONFIRMED"
-                                  ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-                                  : "bg-amber-500/20 text-amber-300 border-amber-500/30"
+                                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                  : "bg-amber-50 text-amber-800 border-amber-200"
                               }`}>
                                 {cite.reviewer_status}
                               </span>
@@ -1053,8 +1053,8 @@ export default function Home() {
 
                   {/* Suggested Next Steps */}
                   {response.suggested_actions && (
-                    <div className="pt-4 border-t border-white/[0.08]">
-                      <h4 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2.5">
+                    <div className="pt-4 border-t border-slate-100">
+                      <h4 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5">
                         Recommended Operational Follow-Ups:
                       </h4>
                       <div className="flex flex-wrap gap-2">
@@ -1066,10 +1066,10 @@ export default function Home() {
                                 setActiveTab("artifacts");
                               }
                             }}
-                            className="px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] text-xs text-cyan-300 border border-white/[0.08] transition flex items-center gap-1.5 group"
+                            className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-xs text-slate-800 border border-slate-200 transition flex items-center gap-1.5 group shadow-sm"
                           >
                             <span>{act}</span>
-                            <ArrowUpRight className="w-3 h-3 text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
+                            <ArrowUpRight className="w-3 h-3 text-[#f48220] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition" />
                           </button>
                         ))}
                       </div>
@@ -1083,49 +1083,49 @@ export default function Home() {
             <div className="flex flex-col gap-4">
               
               {/* NWR Operational Scale Card */}
-              <div className="glass-panel p-5 rounded-3xl">
-                <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3.5 flex items-center gap-2">
-                  <BarChart3 className="w-4 h-4 text-cyan-400" />
+              <div className="glass-panel bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
+                <h3 className="text-xs font-semibold text-slate-900 uppercase tracking-wider mb-3.5 flex items-center gap-2">
+                  <BarChart3 className="w-4 h-4 text-[#009fce]" />
                   <span>North Western Railway (NWR) Scale</span>
                 </h3>
                 <div className="grid grid-cols-2 gap-2.5 text-center">
-                  <div className="p-3 rounded-2xl glass-card">
-                    <div className="text-lg font-bold text-white tracking-tight">11,354</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">Audio Recordings</div>
+                  <div className="p-3 rounded-2xl glass-card bg-slate-50 border border-slate-200">
+                    <div className="text-lg font-bold text-slate-900 tracking-tight">11,354</div>
+                    <div className="text-[10px] text-slate-500 mt-0.5">Audio Recordings</div>
                   </div>
-                  <div className="p-3 rounded-2xl glass-card">
-                    <div className="text-lg font-bold text-white tracking-tight">3.68M</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">Transcript Lines</div>
+                  <div className="p-3 rounded-2xl glass-card bg-slate-50 border border-slate-200">
+                    <div className="text-lg font-bold text-slate-900 tracking-tight">3.68M</div>
+                    <div className="text-[10px] text-slate-500 mt-0.5">Transcript Lines</div>
                   </div>
-                  <div className="p-3 rounded-2xl glass-card">
-                    <div className="text-lg font-bold text-white tracking-tight">1,583</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">Loco Pilots</div>
+                  <div className="p-3 rounded-2xl glass-card bg-slate-50 border border-slate-200">
+                    <div className="text-lg font-bold text-slate-900 tracking-tight">1,583</div>
+                    <div className="text-[10px] text-slate-500 mt-0.5">Loco Pilots</div>
                   </div>
-                  <div className="p-3 rounded-2xl glass-card">
-                    <div className="text-lg font-bold text-emerald-400 tracking-tight">15s</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">Inquiry vs 5 Days</div>
+                  <div className="p-3 rounded-2xl glass-card bg-slate-50 border border-slate-200">
+                    <div className="text-lg font-bold text-emerald-600 tracking-tight">15s</div>
+                    <div className="text-[10px] text-slate-500 mt-0.5">Inquiry vs 5 Days</div>
                   </div>
                 </div>
               </div>
 
               {/* Statutory & Voice Architecture */}
-              <div className="glass-panel p-5 rounded-3xl">
-                <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-emerald-400" />
+              <div className="glass-panel bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
+                <h3 className="text-xs font-semibold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-emerald-600" />
                   <span>Active Role Permissions ({currentRole.title})</span>
                 </h3>
-                <ul className="space-y-2.5 text-xs text-slate-300">
+                <ul className="space-y-2.5 text-xs text-slate-600">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                    <span><strong>Jurisdiction:</strong> {currentRole.division}</span>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                    <span><strong className="text-slate-900">Jurisdiction:</strong> {currentRole.division}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                    <span><strong>DPDP Privacy:</strong> {currentRole.forceMasking ? "Enforced Masking" : "Officer Clearance"}</span>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                    <span><strong className="text-slate-900">DPDP Privacy:</strong> {currentRole.forceMasking ? "Enforced Masking" : "Officer Clearance"}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                    <span><strong>Statutory Authority:</strong> {currentRole.canSignCRS ? "Preliminary Report Sign-Off" : "Operational Inquiry"}</span>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                    <span><strong className="text-slate-900">Statutory Authority:</strong> {currentRole.canSignCRS ? "Preliminary Report Sign-Off" : "Operational Inquiry"}</span>
                   </li>
                 </ul>
               </div>
@@ -1135,122 +1135,122 @@ export default function Home() {
 
         {/* Tab 2: Universal Railway File Analyzer */}
         {activeTab === "files" && currentRole.allowedTabs.includes("files") && (
-          <div className="glass-panel p-6 rounded-3xl flex flex-col gap-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-white/[0.08] gap-2">
+          <div className="glass-panel bg-white p-6 rounded-3xl flex flex-col gap-6 border border-slate-200 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-2">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <Upload className="w-4 h-4 text-cyan-400" />
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Upload className="w-4 h-4 text-[#009fce]" />
                   <span>Universal Railway Asset &amp; File Inspector</span>
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5">Ingests Audio (.wav), Video (.mp4), Gantry Images (.jpg), Caution Orders (.pdf), and Telemetry (.csv)</p>
+                <p className="text-xs text-slate-500 mt-0.5">Ingests Audio (.wav), Video (.mp4), Gantry Images (.jpg), Caution Orders (.pdf), and Telemetry (.csv)</p>
               </div>
-              <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-xs font-mono w-fit">
+              <span className="px-3 py-1 rounded-full bg-cyan-50 text-[#009fce] border border-cyan-200 text-xs font-mono font-semibold w-fit">
                 Gemini 1.5 Flash Multimodal
               </span>
             </div>
 
             {/* Preloaded Sample Railway Assets */}
             <div>
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2.5">
+              <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2.5">
                 Click any Sample Asset to trigger instant AI Multimodal Inspection:
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                 
                 <button
                   onClick={() => analyzeSampleFile("wav", "cab_radio_suratgarh_031415.wav")}
-                  className="glass-card p-3.5 rounded-2xl text-left transition hover:border-blue-500/50 flex flex-col justify-between"
+                  className="glass-card bg-slate-50 hover:bg-white p-3.5 rounded-2xl text-left transition border border-slate-200 hover:border-blue-300 shadow-sm flex flex-col justify-between"
                 >
-                  <div className="flex items-center gap-2 text-xs font-semibold text-blue-400 mb-1">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 mb-1">
                     <Radio className="w-3.5 h-3.5" />
                     <span>Audio (.wav)</span>
                   </div>
-                  <div className="text-xs text-white font-medium truncate">cab_radio_suratgarh.wav</div>
-                  <div className="text-[10px] text-slate-400 mt-1">Denoised VHF stream</div>
+                  <div className="text-xs text-slate-900 font-semibold truncate">cab_radio_suratgarh.wav</div>
+                  <div className="text-[10px] text-slate-500 mt-1">Denoised VHF stream</div>
                 </button>
 
                 <button
                   onClick={() => analyzeSampleFile("mp4", "cvvrs_cab_driver_phone.mp4")}
-                  className="glass-card p-3.5 rounded-2xl text-left transition hover:border-purple-500/50 flex flex-col justify-between"
+                  className="glass-card bg-slate-50 hover:bg-white p-3.5 rounded-2xl text-left transition border border-slate-200 hover:border-purple-300 shadow-sm flex flex-col justify-between"
                 >
-                  <div className="flex items-center gap-2 text-xs font-semibold text-purple-400 mb-1">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-purple-600 mb-1">
                     <Camera className="w-3.5 h-3.5" />
                     <span>Video (.mp4)</span>
                   </div>
-                  <div className="text-xs text-white font-medium truncate">cvvrs_driver_phone.mp4</div>
-                  <div className="text-[10px] text-slate-400 mt-1">CVVRS in-cab camera</div>
+                  <div className="text-xs text-slate-900 font-semibold truncate">cvvrs_driver_phone.mp4</div>
+                  <div className="text-[10px] text-slate-500 mt-1">CVVRS in-cab camera</div>
                 </button>
 
                 <button
                   onClick={() => analyzeSampleFile("jpg", "wdd_gantry_fractured_spring.jpg")}
-                  className="glass-card p-3.5 rounded-2xl text-left transition hover:border-emerald-500/50 flex flex-col justify-between"
+                  className="glass-card bg-slate-50 hover:bg-white p-3.5 rounded-2xl text-left transition border border-slate-200 hover:border-emerald-300 shadow-sm flex flex-col justify-between"
                 >
-                  <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400 mb-1">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-emerald-600 mb-1">
                     <Eye className="w-3.5 h-3.5" />
                     <span>Gantry Scan (.jpg)</span>
                   </div>
-                  <div className="text-xs text-white font-medium truncate">wdd_bogie_scan.jpg</div>
-                  <div className="text-[10px] text-slate-400 mt-1">OCR serial + broken spring</div>
+                  <div className="text-xs text-slate-900 font-semibold truncate">wdd_bogie_scan.jpg</div>
+                  <div className="text-[10px] text-slate-500 mt-1">OCR serial + broken spring</div>
                 </button>
 
                 <button
                   onClick={() => analyzeSampleFile("pdf", "caution_order_t409_sog.pdf")}
-                  className="glass-card p-3.5 rounded-2xl text-left transition hover:border-amber-500/50 flex flex-col justify-between"
+                  className="glass-card bg-slate-50 hover:bg-white p-3.5 rounded-2xl text-left transition border border-slate-200 hover:border-amber-300 shadow-sm flex flex-col justify-between"
                 >
-                  <div className="flex items-center gap-2 text-xs font-semibold text-amber-400 mb-1">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-amber-600 mb-1">
                     <FileText className="w-3.5 h-3.5" />
                     <span>Document (.pdf)</span>
                   </div>
-                  <div className="text-xs text-white font-medium truncate">caution_order_t409.pdf</div>
-                  <div className="text-[10px] text-slate-400 mt-1">30 kmph restriction sheet</div>
+                  <div className="text-xs text-slate-900 font-semibold truncate">caution_order_t409.pdf</div>
+                  <div className="text-[10px] text-slate-500 mt-1">30 kmph restriction sheet</div>
                 </button>
 
                 <button
                   onClick={() => analyzeSampleFile("csv", "speedometer_brake_curve.csv")}
-                  className="glass-card p-3.5 rounded-2xl text-left transition hover:border-rose-500/50 flex flex-col justify-between"
+                  className="glass-card bg-slate-50 hover:bg-white p-3.5 rounded-2xl text-left transition border border-slate-200 hover:border-rose-300 shadow-sm flex flex-col justify-between"
                 >
-                  <div className="flex items-center gap-2 text-xs font-semibold text-rose-400 mb-1">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-rose-600 mb-1">
                     <FileCode className="w-3.5 h-3.5" />
                     <span>Telemetry (.csv)</span>
                   </div>
-                  <div className="text-xs text-white font-medium truncate">spm_brake_curve.csv</div>
-                  <div className="text-[10px] text-slate-400 mt-1">Brake pipe exhaust drop</div>
+                  <div className="text-xs text-slate-900 font-semibold truncate">spm_brake_curve.csv</div>
+                  <div className="text-[10px] text-slate-500 mt-1">Brake pipe exhaust drop</div>
                 </button>
               </div>
             </div>
 
             {/* Analysis Loading State */}
             {analyzingFile && (
-              <div className="p-10 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-center gap-3 text-slate-400 text-xs">
-                <RefreshCw className="w-4 h-4 animate-spin text-cyan-400" />
+              <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center gap-3 text-slate-600 text-xs shadow-inner">
+                <RefreshCw className="w-4 h-4 animate-spin text-[#f48220]" />
                 <span>Multimodal Gemini extracting timestamps, OCR serials, and safety compliance rules...</span>
               </div>
             )}
 
             {/* Inspection Findings Display */}
             {fileResult && !analyzingFile && (
-              <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.08] flex flex-col gap-4">
-                <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+              <div className="p-6 rounded-2xl bg-slate-50/70 border border-slate-200 flex flex-col gap-4 shadow-sm">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-200">
                   <div className="flex items-center gap-2.5">
-                    <span className="font-mono text-xs font-bold text-cyan-400">{fileResult.filename}</span>
-                    <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 text-[10px] font-semibold border border-cyan-500/30">
+                    <span className="font-mono text-xs font-bold text-slate-900">{fileResult.filename}</span>
+                    <span className="px-2.5 py-0.5 rounded-full bg-cyan-50 text-[#009fce] text-[10px] font-semibold border border-cyan-200">
                       {fileResult.category}
                     </span>
                   </div>
                   {fileResult.critical_timestamp && (
-                    <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-300 font-mono text-xs font-bold border border-amber-500/30">
+                    <span className="px-2.5 py-0.5 rounded-md bg-orange-100 text-[#ea580c] font-mono text-xs font-bold border border-orange-200">
                       Timestamp: [{fileResult.critical_timestamp}]
                     </span>
                   )}
                 </div>
 
-                <div className="text-xs text-slate-300 leading-relaxed">
+                <div className="text-xs text-slate-700 leading-relaxed">
                   {fileResult.summary}
                 </div>
 
                 {/* Key dialogue */}
                 {fileResult.key_dialogue && (
-                  <div className="p-3.5 rounded-xl glass-card text-xs text-slate-200">
-                    <span className="font-semibold text-cyan-400">Denoised Audio Dialogue: </span>
+                  <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm text-xs text-slate-800">
+                    <span className="font-semibold text-[#009fce]">Denoised Audio Dialogue: </span>
                     <span>{fileResult.key_dialogue}</span>
                   </div>
                 )}
@@ -1258,28 +1258,28 @@ export default function Home() {
                 {/* Video Alert */}
                 {fileResult.violation_detected && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                    <div className="p-3.5 rounded-xl glass-card">
-                      <span className="text-slate-400">Violation Detected:</span>
-                      <div className="text-red-400 font-bold mt-1 text-sm">{fileResult.violation_detected} ({int((fileResult.confidence || 0.94) * 100)}% conf)</div>
+                    <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm">
+                      <span className="text-slate-500">Violation Detected:</span>
+                      <div className="text-red-600 font-bold mt-1 text-sm">{fileResult.violation_detected} ({int((fileResult.confidence || 0.94) * 100)}% conf)</div>
                     </div>
-                    <div className="p-3.5 rounded-xl glass-card">
-                      <span className="text-slate-400">Human Reviewer Verification:</span>
-                      <div className="text-emerald-400 font-bold mt-1 text-sm">{fileResult.reviewer_status}</div>
+                    <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm">
+                      <span className="text-slate-500">Human Reviewer Verification:</span>
+                      <div className="text-emerald-600 font-bold mt-1 text-sm">{fileResult.reviewer_status}</div>
                     </div>
                   </div>
                 )}
 
                 {/* Gantry OCR Scan */}
                 {fileResult.wagon_number_ocr && (
-                  <div className="p-3.5 rounded-xl glass-card text-xs flex flex-col gap-2">
+                  <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm text-xs flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-white">PaddleOCR Serial: <span className="text-cyan-400 font-mono">{fileResult.wagon_number_ocr}</span></span>
-                      <span className="text-emerald-400 font-semibold">{fileResult.transit_delta}</span>
+                      <span className="font-semibold text-slate-900">PaddleOCR Serial: <span className="text-[#009fce] font-mono font-bold">{fileResult.wagon_number_ocr}</span></span>
+                      <span className="text-emerald-600 font-semibold">{fileResult.transit_delta}</span>
                     </div>
                     {fileResult.defects_detected && (
                       <div className="flex flex-wrap gap-2 mt-1">
                         {fileResult.defects_detected.map((d, i) => (
-                          <span key={i} className="px-2.5 py-0.5 rounded-md bg-red-500/10 text-red-300 border border-red-500/30 text-[10px] font-mono">
+                          <span key={i} className="px-2.5 py-0.5 rounded-md bg-red-50 text-red-700 border border-red-200 text-[10px] font-mono font-semibold">
                             {d.class}: {d.detail}
                           </span>
                         ))}
@@ -1290,8 +1290,8 @@ export default function Home() {
 
                 {/* Document Restriction */}
                 {fileResult.speed_restriction && (
-                  <div className="p-3.5 rounded-xl glass-card text-xs text-slate-200">
-                    <span className="font-semibold text-amber-400">Statutory Mandate: </span>
+                  <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm text-xs text-slate-800">
+                    <span className="font-semibold text-amber-700">Statutory Mandate: </span>
                     <span>{fileResult.speed_restriction}</span>
                   </div>
                 )}
@@ -1302,55 +1302,55 @@ export default function Home() {
 
         {/* Tab 3: Chronological Timeline */}
         {activeTab === "timeline" && currentRole.allowedTabs.includes("timeline") && (
-          <div className="glass-panel p-6 rounded-3xl flex flex-col gap-5">
-            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+          <div className="glass-panel bg-white p-6 rounded-3xl flex flex-col gap-5 border border-slate-200 shadow-sm">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
-                <h3 className="text-base font-bold text-white">Chronological Multimodal Incident Timeline</h3>
-                <p className="text-xs text-slate-400">Cross-modal temporal fusion linking radio callouts to cabin video alerts</p>
+                <h3 className="text-base font-bold text-slate-900">Chronological Multimodal Incident Timeline</h3>
+                <p className="text-xs text-slate-500">Cross-modal temporal fusion linking radio callouts to cabin video alerts</p>
               </div>
               <div className="flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-blue-500/10 text-cyan-400 border border-cyan-500/30 text-xs font-mono">
+                <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-mono font-semibold">
                   Window: 03:10:00 – 03:15:00
                 </span>
                 {dpdpMasking && (
-                  <span className="px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 text-[11px] font-semibold">
+                  <span className="px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200 text-[11px] font-semibold">
                     PII Masked
                   </span>
                 )}
               </div>
             </div>
 
-            <div className="relative border-l border-white/[0.1] ml-4 my-2 space-y-6">
+            <div className="relative border-l-2 border-slate-200 ml-4 my-2 space-y-6">
               {timeline.map((event, idx) => (
                 <div key={idx} className="relative pl-6">
-                  <span className={`absolute -left-2.5 top-1.5 w-5 h-5 rounded-full border-2 border-[#040711] flex items-center justify-center ${
-                    event.severity === "CRITICAL" ? "bg-red-500 shadow-glow-indigo" : "bg-cyan-500 shadow-glow-cyan"
+                  <span className={`absolute -left-2.5 top-1.5 w-5 h-5 rounded-full border-2 border-white flex items-center justify-center ${
+                    event.severity === "CRITICAL" ? "bg-red-500 shadow-sm" : "bg-[#009fce] shadow-sm"
                   }`}>
                     {event.severity === "CRITICAL" ? (
                       <AlertTriangle className="w-3 h-3 text-white" />
                     ) : (
-                      <Clock className="w-3 h-3 text-black" />
+                      <Clock className="w-3 h-3 text-white" />
                     )}
                   </span>
 
-                  <div className="glass-card rounded-2xl p-4 flex flex-col gap-1.5">
+                  <div className="glass-card bg-slate-50/70 hover:bg-white rounded-2xl p-4 flex flex-col gap-1.5 border border-slate-200 shadow-sm">
                     <div className="flex items-center justify-between text-xs">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono font-bold text-cyan-300">[{event.time_str}]</span>
-                        <span className="font-semibold text-white">{event.source}</span>
-                        <span className="text-slate-400">• {maskPII(event.speaker)}</span>
+                        <span className="font-mono font-bold text-[#ea580c]">[{event.time_str}]</span>
+                        <span className="font-semibold text-slate-900">{event.source}</span>
+                        <span className="text-slate-500">• {maskPII(event.speaker)}</span>
                       </div>
                       {event.reviewer_status && (
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-semibold">
+                        <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold">
                           Reviewer: {event.reviewer_status}
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-slate-200 mt-1">
+                    <p className="text-sm text-slate-800 mt-1">
                       {maskPII(lang === "en" ? event.event : event.event_hi || event.event)}
                     </p>
                     {event.clarity && (
-                      <div className="flex items-center gap-3 text-[11px] text-slate-400 mt-1 font-mono">
+                      <div className="flex items-center gap-3 text-[11px] text-slate-500 mt-1 font-mono">
                         <span>Confidence: {int(event.clarity * 100)}%</span>
                         {event.fail_open !== undefined && (
                           <span>Fail-Open: {event.fail_open ? "BYPASS" : "NORMAL"}</span>
@@ -1366,11 +1366,11 @@ export default function Home() {
 
         {/* Tab 4: WDD Gantry Differential */}
         {activeTab === "wdd" && currentRole.allowedTabs.includes("wdd") && (
-          <div className="glass-panel p-6 rounded-3xl flex flex-col gap-5">
-            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+          <div className="glass-panel bg-white p-6 rounded-3xl flex flex-col gap-5 border border-slate-200 shadow-sm">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div>
-                <h3 className="text-base font-bold text-white">Wagon Damage Detection (WDD) • 6-Gantry Differential</h3>
-                <p className="text-xs text-slate-400">Rake: BOXN-542 (58 Wagons) • Suratgarh Entry Gantry #1 ➔ Lalgarh Exit Gantry #2</p>
+                <h3 className="text-base font-bold text-slate-900">Wagon Damage Detection (WDD) • 6-Gantry Differential</h3>
+                <p className="text-xs text-slate-500">Rake: BOXN-542 (58 Wagons) • Suratgarh Entry Gantry #1 ➔ Lalgarh Exit Gantry #2</p>
               </div>
               <div className="flex items-center gap-2">
                 {currentRole.canIssueWorkOrder && (
@@ -1382,7 +1382,7 @@ export default function Home() {
                     <span>Issue Sick-Line Repair Order</span>
                   </button>
                 )}
-                <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono">
+                <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-mono font-semibold">
                   PaddleOCR + YOLOv11-L
                 </span>
               </div>
@@ -1391,7 +1391,7 @@ export default function Home() {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-white/[0.08] text-slate-400 uppercase text-[10px] tracking-wider font-mono">
+                  <tr className="border-b border-slate-200 bg-slate-50 text-slate-600 uppercase text-[10px] tracking-wider font-mono">
                     <th className="py-3 px-3">Pos</th>
                     <th className="py-3 px-3">Wagon Serial (OCR)</th>
                     <th className="py-3 px-3">Suratgarh Entry (10:15)</th>
@@ -1400,42 +1400,42 @@ export default function Home() {
                     <th className="py-3 px-3">Liability Determination</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.04] text-slate-200">
-                  <tr className="hover:bg-white/[0.02]">
-                    <td className="py-3.5 px-3 font-mono">14</td>
-                    <td className="py-3.5 px-3 font-semibold text-white font-mono">BOXNHL 22011945123</td>
-                    <td className="py-3.5 px-3 text-emerald-400">CLEAR (0 Defects)</td>
-                    <td className="py-3.5 px-3 text-red-400 font-medium">DOOR_DEFECT + SPRING_BROKEN</td>
+                <tbody className="divide-y divide-slate-100 text-slate-700">
+                  <tr className="hover:bg-slate-50/80">
+                    <td className="py-3.5 px-3 font-mono font-semibold">14</td>
+                    <td className="py-3.5 px-3 font-bold text-slate-900 font-mono">BOXNHL 22011945123</td>
+                    <td className="py-3.5 px-3 text-emerald-600 font-medium">CLEAR (0 Defects)</td>
+                    <td className="py-3.5 px-3 text-red-600 font-medium">DOOR_DEFECT + SPRING_BROKEN</td>
                     <td className="py-3.5 px-3">
-                      <span className="px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-400 font-semibold text-[10px] border border-red-500/20">
+                      <span className="px-2.5 py-0.5 rounded-full bg-red-50 text-red-700 font-semibold text-[10px] border border-red-200">
                         NEW TRANSIT DAMAGE
                       </span>
                     </td>
-                    <td className="py-3.5 px-3 text-slate-300">Contractor siding damage during transit. Sick line tagged.</td>
+                    <td className="py-3.5 px-3 text-slate-600">Contractor siding damage during transit. Sick line tagged.</td>
                   </tr>
-                  <tr className="hover:bg-white/[0.02]">
-                    <td className="py-3.5 px-3 font-mono">15</td>
-                    <td className="py-3.5 px-3 font-semibold text-white font-mono">BOXNHL 22011945124</td>
-                    <td className="py-3.5 px-3 text-amber-400">BODY_PANEL (Dent &gt;150mm)</td>
-                    <td className="py-3.5 px-3 text-amber-400">BODY_PANEL (Dent &gt;150mm)</td>
+                  <tr className="hover:bg-slate-50/80">
+                    <td className="py-3.5 px-3 font-mono font-semibold">15</td>
+                    <td className="py-3.5 px-3 font-bold text-slate-900 font-mono">BOXNHL 22011945124</td>
+                    <td className="py-3.5 px-3 text-amber-700 font-medium">BODY_PANEL (Dent &gt;150mm)</td>
+                    <td className="py-3.5 px-3 text-amber-700 font-medium">BODY_PANEL (Dent &gt;150mm)</td>
                     <td className="py-3.5 px-3">
-                      <span className="px-2.5 py-0.5 rounded-full bg-white/[0.05] text-slate-300 font-semibold text-[10px] border border-white/[0.08]">
+                      <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold text-[10px] border border-slate-200">
                         PRE-EXISTING
                       </span>
                     </td>
-                    <td className="py-3.5 px-3 text-slate-400">Pre-existing before Suratgarh. Contractor exempt from debit.</td>
+                    <td className="py-3.5 px-3 text-slate-500">Pre-existing before Suratgarh. Contractor exempt from debit.</td>
                   </tr>
-                  <tr className="hover:bg-white/[0.02]">
-                    <td className="py-3.5 px-3 font-mono">28</td>
-                    <td className="py-3.5 px-3 font-semibold text-white font-mono">BCNHL 33022198001</td>
-                    <td className="py-3.5 px-3 text-emerald-400">CLEAR (0 Defects)</td>
-                    <td className="py-3.5 px-3 text-red-400 font-medium">BRAKE_BEAM_DEFECT</td>
+                  <tr className="hover:bg-slate-50/80">
+                    <td className="py-3.5 px-3 font-mono font-semibold">28</td>
+                    <td className="py-3.5 px-3 font-bold text-slate-900 font-mono">BCNHL 33022198001</td>
+                    <td className="py-3.5 px-3 text-emerald-600 font-medium">CLEAR (0 Defects)</td>
+                    <td className="py-3.5 px-3 text-red-600 font-medium">BRAKE_BEAM_DEFECT</td>
                     <td className="py-3.5 px-3">
-                      <span className="px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-400 font-semibold text-[10px] border border-red-500/20">
+                      <span className="px-2.5 py-0.5 rounded-full bg-red-50 text-red-700 font-semibold text-[10px] border border-red-200">
                         CRITICAL NEW DEFECT
                       </span>
                     </td>
-                    <td className="py-3.5 px-3 text-slate-300">Brake beam hanger pin dislodged. Urgent wheel flange hazard.</td>
+                    <td className="py-3.5 px-3 text-slate-600">Brake beam hanger pin dislodged. Urgent wheel flange hazard.</td>
                   </tr>
                 </tbody>
               </table>
@@ -1447,11 +1447,11 @@ export default function Home() {
         {activeTab === "artifacts" && currentRole.allowedTabs.includes("artifacts") && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* English Statutory Inquiry Report */}
-            <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4">
-              <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+            <div className="glass-panel bg-white p-6 rounded-3xl flex flex-col gap-4 border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
                   <FileText className="w-4 h-4 text-[#009fce]" />
-                  <h3 className="text-sm font-bold text-white">Statutory Inquiry Report (Rule 113 G&amp;SR)</h3>
+                  <h3 className="text-sm font-bold text-slate-900">Statutory Inquiry Report (Rule 113 G&amp;SR)</h3>
                 </div>
                 {currentRole.canSignCRS ? (
                   <button
@@ -1462,12 +1462,12 @@ export default function Home() {
                     <span>Download Signed PDF</span>
                   </button>
                 ) : (
-                  <span className="text-[10px] text-slate-400 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/[0.08]">
+                  <span className="text-[10px] text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 font-medium">
                     Read-Only (Requires Sr. DSO / CRS)
                   </span>
                 )}
               </div>
-              <div className="bg-[#050814] p-4 rounded-2xl font-mono text-xs text-slate-300 overflow-y-auto max-h-96 whitespace-pre-wrap leading-relaxed border border-white/[0.06]">
+              <div className="bg-slate-950 p-4 rounded-2xl font-mono text-xs text-slate-200 overflow-y-auto max-h-96 whitespace-pre-wrap leading-relaxed border border-slate-800 shadow-inner">
 {maskPII(`PRELIMINARY STATUTORY INQUIRY REPORT
 =====================================================
 Authority: Senior Divisional Safety Officer (Sr. DSO)
@@ -1494,11 +1494,11 @@ Date/Time: 18-Nov-2026 at 03:14:15 hrs
             </div>
 
             {/* Devanagari Hindi Crew Lobby Briefing */}
-            <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4">
-              <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+            <div className="glass-panel bg-white p-6 rounded-3xl flex flex-col gap-4 border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                 <div className="flex items-center gap-2">
                   <Volume2 className="w-4 h-4 text-[#f48220]" />
-                  <h3 className="text-sm font-bold text-white">संरक्षा निर्देश (क्रू लॉबी साइन-ऑन ब्रीफिंग)</h3>
+                  <h3 className="text-sm font-bold text-slate-900">संरक्षा निर्देश (क्रू लॉबी साइन-ऑन ब्रीफिंग)</h3>
                 </div>
                 <button
                   onClick={() => alert("Downloading Hindi Safety Briefing Note...")}
@@ -1508,7 +1508,7 @@ Date/Time: 18-Nov-2026 at 03:14:15 hrs
                   <span>Download Print</span>
                 </button>
               </div>
-              <div className="bg-[#050814] p-4 rounded-2xl text-xs text-slate-300 overflow-y-auto max-h-96 whitespace-pre-wrap leading-relaxed border border-white/[0.06]">
+              <div className="bg-amber-50/60 p-4 rounded-2xl text-xs text-slate-900 overflow-y-auto max-h-96 whitespace-pre-wrap leading-relaxed border border-amber-200/80 shadow-inner">
 {maskPII(`उत्तर पश्चिम रेलवे • बीकानेर मंडल
 क्रू लॉबी दैनिक संरक्षा चेतावनी निर्देश
 प्रकरण संख्या: INC-12414-20261118 | दिनांक: 18-नवंबर-2026
@@ -1537,8 +1537,8 @@ Date/Time: 18-Nov-2026 at 03:14:15 hrs
         )}
       </main>
 
-      {/* AiSPRY Corporate Footer */}
-      <footer className="border-t border-white/[0.08] bg-[#020514] px-6 py-8 text-xs text-slate-500">
+      {/* AiSPRY Corporate Footer (Clean Light Theme) */}
+      <footer className="border-t border-slate-200 bg-white px-6 py-8 text-xs text-slate-600 shadow-inner">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
           <div className="flex items-center gap-4">
             <a href="/" className="flex items-center">
@@ -1548,10 +1548,10 @@ Date/Time: 18-Nov-2026 at 03:14:15 hrs
                 className="h-7 w-auto object-contain shrink-0"
               />
             </a>
-            <div className="border-l border-white/[0.1] pl-4">
-              <p className="text-slate-300 font-semibold flex items-center gap-2">
+            <div className="border-l border-slate-200 pl-4">
+              <p className="text-slate-900 font-semibold flex items-center gap-2">
                 <span>AiSPRY Technologies Pvt Ltd</span>
-                <span className="text-[10px] font-normal px-2 py-0.5 rounded-full bg-orange-500/10 text-[#f48220] border border-[#f48220]/30">
+                <span className="text-[10px] font-normal px-2 py-0.5 rounded-full bg-orange-50 text-[#f48220] border border-orange-200">
                   RailKavach™
                 </span>
               </p>
@@ -1560,12 +1560,12 @@ Date/Time: 18-Nov-2026 at 03:14:15 hrs
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-3.5 text-slate-400 text-[11px]">
-            <span>Active Persona: <strong className="text-white">{currentRole.title}</strong></span>
+          <div className="flex flex-wrap items-center gap-3.5 text-slate-500 text-[11px]">
+            <span>Active Persona: <strong className="text-slate-900">{currentRole.title}</strong></span>
             <span>•</span>
-            <span className="text-purple-400">DPDP Act 2023 Compliant</span>
+            <span className="text-purple-600 font-medium">DPDP Act 2023 Compliant</span>
             <span>•</span>
-            <span className="text-emerald-400">Section 178 Fail-Open Radio</span>
+            <span className="text-emerald-600 font-medium">Section 178 Fail-Open Radio</span>
             <span>•</span>
             <span>WCAG 2.2 AA Certified</span>
           </div>
