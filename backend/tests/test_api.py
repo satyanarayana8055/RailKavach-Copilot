@@ -10,6 +10,8 @@ def test_health_check():
     data = response.json()
     assert data["status"] == "healthy"
     assert "WDD (Wagon Damage)" in data["platforms_connected"]
+    assert data["observability"]["provider"] == "langfuse"
+    assert isinstance(data["observability"]["enabled"], bool)
 
 def test_preloaded_scenarios():
     response = client.get("/api/scenarios")

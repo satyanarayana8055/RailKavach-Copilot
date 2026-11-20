@@ -3,7 +3,8 @@ import time
 import os
 from pathlib import Path
 from typing import Dict, Any, Optional, List
-from .config import DATA_DIR, GEMINI_API_KEY, DEFAULT_MODEL, ENABLE_CACHE_FALLBACK
+from .config import DATA_DIR, GEMINI_API_KEY, DEFAULT_MODEL, ENABLE_CACHE_FALLBACK, MAX_OUTPUT_TOKENS
+from .observability import observe, get_client, ENABLED as LANGFUSE_ENABLED
 from .schemas.chat import ChatQueryRequest, ChatQueryResponse
 from .schemas.evidence import Citation
 from .skills.timeline_sync import build_incident_timeline
@@ -27,6 +28,12 @@ def load_cache() -> Dict[str, Any]:
     with open(cache_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+def _tag_route(route: str, **extra: Any) -> None:
+    """Record which execution path answered the query on the current Langfuse span."""
+    if LANGFUSE_ENABLED:
+        get_client().update_current_span(metadata={"route": route, **extra})
+
+
 class CopilotEngine:
     """
     RailKavach Copilot Reasoning Engine.
@@ -45,6 +52,7 @@ class CopilotEngine:
             except Exception:
                 self.client = None
 
+    @observe(name="copilot.chat", as_type="agent")
     def process_query(self, req: ChatQueryRequest) -> ChatQueryResponse:
         start_t = time.time()
         q_lower = req.query.lower()
@@ -56,6 +64,7 @@ class CopilotEngine:
             # Scenario 1: SPAD / Train 12414 near Suratgarh
             if "12414" in q_lower or "suratgarh" in q_lower or "spad" in q_lower:
                 data = self.cache.get("scenario_1_spad_investigation", {})
+                _tag_route("cache", scenario="scenario_1_spad_investigation")
                 citations = [
                     Citation(
                         timestamp=c.get("time"),
@@ -83,6 +92,7 @@ class CopilotEngine:
             # Scenario 2: Fatigue / Alertness / Night shift (02:00 - 05:00)
             if "fatigue" in q_lower or "sleep" in q_lower or "night" in q_lower or "02:00" in q_lower:
                 data = self.cache.get("scenario_2_fatigue_pattern", {})
+                _tag_route("cache", scenario="scenario_2_fatigue_pattern")
                 citations = [
                     Citation(
                         timestamp=c.get("time"),
@@ -105,6 +115,7 @@ class CopilotEngine:
             # Scenario 4: Signal Miscommunications & Caution Orders on Bikaner Division
             if "miscommunication" in q_lower or "caution order" in q_lower or "exchange" in q_lower:
                 data = self.cache.get("scenario_signal_miscommunications", {})
+                _tag_route("cache", scenario="scenario_signal_miscommunications")
                 citations = [
                     Citation(
                         timestamp=c.get("time"),
@@ -131,6 +142,7 @@ class CopilotEngine:
             # Scenario 3: Freight Rake / Wagon Damage / BOXN-542
             if "wagon" in q_lower or "damage" in q_lower or "boxn" in q_lower or "gantry" in q_lower:
                 data = self.cache.get("scenario_3_wagon_damage_audit", {})
+                _tag_route("cache", scenario="scenario_3_wagon_damage_audit")
                 citations = [
                     Citation(
                         timestamp="16:45:10",
@@ -174,15 +186,35 @@ class CopilotEngine:
 
                 user_prompt = f"Operational Timeline Context:\n{timeline_summary}\n\nOfficer Inquiry: {req.query}"
 
-                resp = self.client.models.generate_content(
+                _tag_route("gemini", model=DEFAULT_MODEL)
+                with get_client().start_as_current_observation(
+                    name="gemini.generate_content",
+                    as_type="generation",
                     model=DEFAULT_MODEL,
-                    contents=user_prompt,
-                    config=types.GenerateContentConfig(
-                        system_instruction=system_instruction,
-                        temperature=0.2,
-                        max_output_tokens=1024,
+                    model_parameters={"temperature": 0.2, "max_output_tokens": MAX_OUTPUT_TOKENS},
+                    input=[
+                        {"role": "system", "content": system_instruction},
+                        {"role": "user", "content": user_prompt},
+                    ],
+                ) as generation:
+                    resp = self.client.models.generate_content(
+                        model=DEFAULT_MODEL,
+                        contents=user_prompt,
+                        config=types.GenerateContentConfig(
+                            system_instruction=system_instruction,
+                            temperature=0.2,
+                            max_output_tokens=MAX_OUTPUT_TOKENS,
+                        )
                     )
-                )
+                    usage = getattr(resp, "usage_metadata", None)
+                    generation.update(
+                        output=resp.text,
+                        usage_details={
+                            "input": getattr(usage, "prompt_token_count", 0) or 0,
+                            "output": getattr(usage, "candidates_token_count", 0) or 0,
+                            "total": getattr(usage, "total_token_count", 0) or 0,
+                        } if usage else None,
+                    )
 
                 citations = [
                     Citation(
@@ -212,11 +244,12 @@ class CopilotEngine:
                 )
             except Exception as e:
                 # Fallback on any API or network stutter
-                pass
+                _tag_route("gemini_error", error=f"{type(e).__name__}: {e}")
 
         # ---------------------------------------------------------
         # 3. Deterministic Local Skill Execution (Fallback)
         # ---------------------------------------------------------
+        _tag_route("local_skills")
         timeline = build_incident_timeline(TimelineSyncInput(train_no="12414"))
         citations = [
             Citation(

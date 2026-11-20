@@ -1,6 +1,8 @@
 from typing import Dict, Any
 from ..schemas.skills import ReportGenInput
+from ..observability import observe
 
+@observe(name="skill.generate_safety_artifacts", as_type="tool")
 def generate_safety_artifacts(params: ReportGenInput) -> Dict[str, Any]:
     """
     Generates formal Indian Railways inquiry reports (Rule 113 G&SR / CRS format)

@@ -3,6 +3,7 @@
 ## 1. Quick Reference & Technology Stack
 * **Frontend**: Next.js 14+ (App Router), TypeScript, Tailwind CSS, Lucide React.
 * **Backend**: FastAPI (Python 3.10+), Pydantic v2, Google GenAI SDK (`google-genai`), Uvicorn.
+* **Observability**: Langfuse v5 (`app/observability.py`). Off locally without keys; mandatory on Cloud Run (`LANGFUSE_REQUIRED=true`, keys in Secret Manager).
 * **Data Layer**: Structured synthetic JSON datasets (`data/`) modeling authentic NWR operations with zero live client exposure.
 
 ---

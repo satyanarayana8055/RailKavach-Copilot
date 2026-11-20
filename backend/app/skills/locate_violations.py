@@ -4,6 +4,7 @@ from typing import List, Dict, Any
 from ..config import DATA_DIR
 from ..schemas.skills import LocateViolationsInput
 from ..schemas.evidence import ReviewerStatus, ViolationType
+from ..observability import observe
 
 def load_locate_alerts() -> List[Dict[str, Any]]:
     path = DATA_DIR / "locate_alerts.json"
@@ -12,6 +13,7 @@ def load_locate_alerts() -> List[Dict[str, Any]]:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+@observe(name="skill.get_locate_cabin_violations", as_type="tool")
 def get_locate_cabin_violations(params: LocateViolationsInput) -> List[Dict[str, Any]]:
     """
     Queries CVVRS in-cab video analytics detections.

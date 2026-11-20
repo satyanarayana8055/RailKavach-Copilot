@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional
 from ..config import DATA_DIR
 from ..schemas.skills import RailcommSearchInput
+from ..observability import observe
 
 def load_transcripts() -> List[Dict[str, Any]]:
     path = DATA_DIR / "railcomm_transcripts.json"
@@ -11,6 +12,7 @@ def load_transcripts() -> List[Dict[str, Any]]:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+@observe(name="skill.search_railcomm_transcripts", as_type="tool")
 def search_railcomm_transcripts(params: RailcommSearchInput) -> List[Dict[str, Any]]:
     """
     Searches Railcomm denoised radio communication transcripts.

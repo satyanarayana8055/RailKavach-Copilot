@@ -2,7 +2,9 @@ from typing import Dict, Any, List
 from collections import defaultdict
 from ..schemas.skills import PatternAnomalyInput
 from .locate_violations import load_locate_alerts
+from ..observability import observe
 
+@observe(name="skill.analyze_safety_patterns", as_type="tool")
 def analyze_safety_patterns(params: PatternAnomalyInput) -> Dict[str, Any]:
     """
     Aggregates safety infractions across shifts and divisions to identify

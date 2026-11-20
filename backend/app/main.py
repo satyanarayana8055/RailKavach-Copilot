@@ -1,5 +1,6 @@
 import time
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 from .config import DEFAULT_MODEL
@@ -15,8 +16,16 @@ from .skills.wdd_damage import get_wdd_wagon_damages
 from .skills.railcomm_search import search_railcomm_transcripts
 from .skills.locate_violations import get_locate_cabin_violations
 from .engine import engine
+from . import observability
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    yield
+    observability.shutdown()  # flush remaining Langfuse spans on container stop
+
 
 app = FastAPI(
+    lifespan=lifespan,
     title="RailKavach Copilot API",
     description="Multimodal Operational Intelligence & Voice Assistant for Indian Railways (AiSPRY Technologies)",
     version="1.0.0"
@@ -45,15 +54,17 @@ def health_check():
             "DOCUMENTS (.pdf, .txt - Caution Orders T/409)",
             "TELEMETRY (.csv, .json - Speed & BP Pressure Logs)"
         ],
-        "platforms_connected": ["WDD (Wagon Damage)", "Locate (Cabin CVVRS)", "Railcomm (Audio Analytics)"]
+        "platforms_connected": ["WDD (Wagon Damage)", "Locate (Cabin CVVRS)", "Railcomm (Audio Analytics)"],
+        "observability": observability.status(),
     }
 
 @app.post("/api/chat", response_model=ChatQueryResponse)
-def chat_endpoint(req: ChatQueryRequest):
+def chat_endpoint(req: ChatQueryRequest, background: BackgroundTasks):
     """
     Main conversational copilot query endpoint.
     Supports text or voice-transcribed inputs with zero-latency caching and timestamp-grounded reasoning.
     """
+    background.add_task(observability.flush)
     return engine.process_query(req)
 
 @app.get("/api/scenarios")

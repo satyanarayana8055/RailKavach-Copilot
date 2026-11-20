@@ -3,7 +3,9 @@ from ..schemas.skills import TimelineSyncInput, RailcommSearchInput, LocateViola
 from .railcomm_search import search_railcomm_transcripts
 from .locate_violations import get_locate_cabin_violations
 from .wdd_damage import load_wdd_inspections
+from ..observability import observe
 
+@observe(name="skill.build_incident_timeline", as_type="tool")
 def build_incident_timeline(params: TimelineSyncInput) -> List[Dict[str, Any]]:
     """
     Cross-modal temporal synchronizer: fuses Railcomm radio dialogues,

@@ -4,6 +4,7 @@ from typing import List, Dict, Any
 from ..config import DATA_DIR
 from ..schemas.skills import WddDamagesInput
 from ..schemas.evidence import DamageClass
+from ..observability import observe
 
 def load_wdd_inspections() -> List[Dict[str, Any]]:
     path = DATA_DIR / "wdd_inspections.json"
@@ -12,6 +13,7 @@ def load_wdd_inspections() -> List[Dict[str, Any]]:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+@observe(name="skill.get_wdd_wagon_damages", as_type="tool")
 def get_wdd_wagon_damages(params: WddDamagesInput) -> List[Dict[str, Any]]:
     """
     Retrieves Wagon Damage Detection records from 6-gantry optical scans.
