@@ -5,13 +5,13 @@
 ---
 
 ## 📌 Fast Navigation
-* **[ARCHITECTURE_AND_PLAN.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/ARCHITECTURE_AND_PLAN.md)**: Master System Architecture & Phased Tactical Plan of Action (POA).
-* **[skills.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/skills.md)**: Google Agent Skills specification (WDD, Locate, Railcomm tool signatures).
+* **[docs/ARCHITECTURE_AND_PLAN.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/ARCHITECTURE_AND_PLAN.md)**: Master System Architecture & Phased Tactical Plan of Action (POA).
+* **[docs/skills.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/skills.md)**: Google Agent Skills specification (WDD, Locate, Railcomm tool signatures).
+* **[docs/EVALUATION_GUIDE.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/EVALUATION_GUIDE.md)**: Official evaluation matrix (30% Functional, 20% Architecture, 20% Google AI Depth) & winning pitch flow.
+* **[docs/initial.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/initial.md)**: Original shortlist briefing, schedule, and team communications.
 * **[assets/railkavach_architecture.jpg](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/railkavach_architecture.jpg)**: Pitch deck architecture infographic image (16:9 JPG).
 * **[assets/architecture_diagram.svg](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/architecture_diagram.svg)**: High-resolution visual architecture vector diagram (SVG).
 * **[assets/architecture_visual.html](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/architecture_visual.html)**: Interactive visual architecture web dashboard.
-* **[EVALUATION_GUIDE.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/EVALUATION_GUIDE.md)**: Official evaluation matrix (30% Functional, 20% Architecture, 20% Google AI Depth) & winning pitch flow.
-* **[initial.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/initial.md)**: Original shortlist briefing, schedule, and team communications.
 
 ---
 

@@ -4,6 +4,14 @@
 
 ---
 
+## 📌 Fast Navigation
+* **[ARCHITECTURE_AND_PLAN.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/ARCHITECTURE_AND_PLAN.md)**: Master System Architecture & Phased Tactical Plan of Action (POA).
+* **[skills.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/skills.md)**: Google Agent Skills specification (WDD, Locate, Railcomm tool signatures).
+* **[initial.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/initial.md)**: Original shortlist briefing, schedule, and team communications.
+* **[README.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/README.md)**: Project overview and system summary.
+
+---
+
 ## 1. Official Evaluation Matrix Breakdown
 
 | Evaluation Parameter | Weight | Criticality Level | Where the Jury Focuses |
