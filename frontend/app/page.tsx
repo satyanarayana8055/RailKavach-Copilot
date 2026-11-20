@@ -468,73 +468,80 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#040711] text-slate-100 relative overflow-hidden bg-grid selection:bg-cyan-500 selection:text-black">
+    <div className="min-h-screen flex flex-col bg-[#03061a] text-slate-100 relative overflow-hidden bg-grid selection:bg-[#f48220] selection:text-black">
       
-      {/* Top Ambient Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[350px] bg-aispry-glow pointer-events-none -z-10 blur-2xl"></div>
+      {/* Top Accent Strip (Exact AiSPRY Gradient) */}
+      <div className="h-[2.5px] bg-gradient-to-r from-[#f48220] via-[#c2945a] to-[#009fce] w-full sticky top-0 z-[60]"></div>
 
-      {/* Modern Navigation Bar (AiSPRY Brand Design) */}
-      <header className="sticky top-0 z-50 px-6 py-3.5 backdrop-blur-xl bg-[#030712]/90 border-b border-gray-800/60 shadow-lg shadow-black/40">
+      {/* Top Ambient Radial Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[350px] bg-aispry-radial pointer-events-none -z-10 blur-3xl"></div>
+
+      {/* Modern Navigation Bar (Official AiSPRY Brand Design) */}
+      <header className="sticky top-[2.5px] z-50 px-6 py-3 backdrop-blur-2xl bg-[#03061a]/90 border-b border-white/[0.08] shadow-2xl shadow-black/80">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
-          {/* AiSPRY Brand Identity */}
+          {/* AiSPRY Brand Identity with Official Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 p-[1px] shadow-lg shadow-blue-500/25 flex items-center justify-center">
-              <div className="w-full h-full bg-[#030712] rounded-[11px] flex items-center justify-center">
-                <span className="text-white font-extrabold text-xl tracking-tighter">A</span>
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-extrabold tracking-tight text-white">
-                  Ai<span className="text-blue-500">SPRY</span>
-                </span>
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 text-cyan-400 border border-blue-500/30">
-                  RailKavach™ Suite
-                </span>
-              </div>
-              <p className="text-[10px] text-slate-400 font-medium">Production AI for Indian Railways</p>
-            </div>
+            <a href="/" className="flex items-center">
+              <img
+                src="/images/brand/aispry-logo.png"
+                alt="AiSPRY"
+                className="h-8 sm:h-9 w-auto object-contain shrink-0"
+              />
+            </a>
+            <span className="hidden sm:inline-flex text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-orange-500/10 text-[#f48220] border border-[#f48220]/40">
+              RailKavach™ Suite
+            </span>
           </div>
 
           {/* Desktop Product Navigation */}
           <nav className="hidden lg:flex items-center space-x-1 text-xs font-medium text-slate-300">
             <button
               onClick={() => setActiveTab("copilot")}
-              className={`px-3 py-1.5 rounded-lg transition ${
-                activeTab === "copilot" ? "text-cyan-400 bg-white/[0.06] font-semibold" : "hover:text-white hover:bg-white/[0.03]"
+              className={`px-3 py-1.5 rounded-lg transition relative ${
+                activeTab === "copilot"
+                  ? "text-[#f48220] font-semibold bg-white/[0.05]"
+                  : "hover:text-white hover:bg-white/[0.03]"
               }`}
             >
               Voice Studio
             </button>
             <button
               onClick={() => setActiveTab("files")}
-              className={`px-3 py-1.5 rounded-lg transition ${
-                activeTab === "files" ? "text-cyan-400 bg-white/[0.06] font-semibold" : "hover:text-white hover:bg-white/[0.03]"
+              className={`px-3 py-1.5 rounded-lg transition relative ${
+                activeTab === "files"
+                  ? "text-[#f48220] font-semibold bg-white/[0.05]"
+                  : "hover:text-white hover:bg-white/[0.03]"
               }`}
             >
               Asset Inspector
             </button>
             <button
               onClick={() => setActiveTab("timeline")}
-              className={`px-3 py-1.5 rounded-lg transition ${
-                activeTab === "timeline" ? "text-cyan-400 bg-white/[0.06] font-semibold" : "hover:text-white hover:bg-white/[0.03]"
+              className={`px-3 py-1.5 rounded-lg transition relative ${
+                activeTab === "timeline"
+                  ? "text-[#f48220] font-semibold bg-white/[0.05]"
+                  : "hover:text-white hover:bg-white/[0.03]"
               }`}
             >
               Timeline Sync
             </button>
             <button
               onClick={() => setActiveTab("wdd")}
-              className={`px-3 py-1.5 rounded-lg transition ${
-                activeTab === "wdd" ? "text-cyan-400 bg-white/[0.06] font-semibold" : "hover:text-white hover:bg-white/[0.03]"
+              className={`px-3 py-1.5 rounded-lg transition relative ${
+                activeTab === "wdd"
+                  ? "text-[#f48220] font-semibold bg-white/[0.05]"
+                  : "hover:text-white hover:bg-white/[0.03]"
               }`}
             >
               WDD Gantry
             </button>
             <button
               onClick={() => setActiveTab("artifacts")}
-              className={`px-3 py-1.5 rounded-lg transition ${
-                activeTab === "artifacts" ? "text-cyan-400 bg-white/[0.06] font-semibold" : "hover:text-white hover:bg-white/[0.03]"
+              className={`px-3 py-1.5 rounded-lg transition relative ${
+                activeTab === "artifacts"
+                  ? "text-[#f48220] font-semibold bg-white/[0.05]"
+                  : "hover:text-white hover:bg-white/[0.03]"
               }`}
             >
               Statutory DPDP
@@ -548,9 +555,9 @@ export default function Home() {
             <div className="relative">
               <button
                 onClick={() => setShowRoleMenu(!showRoleMenu)}
-                className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-950/80 to-indigo-950/80 hover:bg-slate-800 border border-blue-500/40 text-xs font-semibold flex items-center gap-2 text-white shadow-sm transition"
+                className="px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.12] text-xs font-semibold flex items-center gap-2 text-white shadow-sm transition"
               >
-                <currentRole.icon className="w-3.5 h-3.5 text-cyan-400" />
+                <currentRole.icon className="w-3.5 h-3.5 text-[#009fce]" />
                 <span>{currentRole.title}</span>
                 <ChevronDown className="w-3 h-3 text-slate-400" />
               </button>
@@ -566,11 +573,11 @@ export default function Home() {
                       onClick={() => switchRole(role.code)}
                       className={`w-full text-left p-2.5 rounded-xl text-xs transition flex items-start gap-2.5 ${
                         activeRole === role.code
-                          ? "bg-blue-600/20 text-cyan-300 border border-blue-500/40"
+                          ? "bg-orange-500/15 text-[#f48220] border border-[#f48220]/40 font-semibold"
                           : "hover:bg-white/[0.04] text-slate-300"
                       }`}
                     >
-                      <role.icon className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                      <role.icon className="w-4 h-4 text-[#009fce] shrink-0 mt-0.5" />
                       <div>
                         <div className="font-semibold text-white">{role.title}</div>
                         <div className="text-[10px] text-slate-400 leading-tight mt-0.5">{role.division}</div>
@@ -586,7 +593,7 @@ export default function Home() {
               onClick={() => {
                 if (!currentRole.forceMasking) setDpdpMasking(!dpdpMasking);
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium border transition flex items-center gap-1.5 ${
                 dpdpMasking || currentRole.forceMasking
                   ? "bg-purple-600/30 border-purple-400 text-purple-200 shadow-sm shadow-purple-500/30"
                   : "bg-white/[0.04] hover:bg-white/[0.08] border-white/[0.08] text-slate-300"
@@ -600,7 +607,7 @@ export default function Home() {
             {/* Language Switcher */}
             <button
               onClick={() => setLang(lang === "en" ? "hi" : "en")}
-              className="px-3 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-xs font-medium border border-white/[0.08] text-slate-200 transition"
+              className="px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-xs font-medium border border-white/[0.08] text-slate-200 transition"
             >
               {lang === "en" ? "🇮🇳 हिन्दी" : "🌐 English"}
             </button>
@@ -614,42 +621,62 @@ export default function Home() {
         {/* AiSPRY Hero Section */}
         <section className="relative pt-6 pb-8 flex flex-col items-center text-center overflow-hidden">
           {/* Radial Glow Accents */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-blue-600/15 rounded-full blur-[140px] pointer-events-none"></div>
-          <div className="absolute top-1/3 right-10 w-[350px] h-[350px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-aispry-radial rounded-full blur-[140px] pointer-events-none"></div>
 
           {/* Pill Tag Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/60 border border-blue-800/50 text-blue-400 text-xs font-semibold mb-4 shadow-inner">
-            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-            Next-Gen Production AI for Indian Railways • Startup Buildathon India 2026
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-950/40 border border-orange-500/40 text-[#f48220] text-xs font-semibold mb-4 shadow-inner">
+            <span className="w-2 h-2 rounded-full bg-[#f48220] animate-pulse"></span>
+            ★ Indian Railways Production AI · Startup Buildathon India 2026
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight max-w-4xl mx-auto leading-[1.15]">
-            Empowering Rail Safety With <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">Production AI</span>
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight max-w-4xl mx-auto leading-[1.18]">
+            India&apos;s pioneering AI for{" "}
+            <em className="font-display italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#f48220] via-[#c2945a] to-[#009fce]">
+              railway safety intelligence
+            </em>
+            .
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-4 text-sm sm:text-base text-gray-400 max-w-3xl mx-auto font-normal leading-relaxed">
-            AiSPRY's RailKavach Suite unifies Loco Cab Audio (Railcomm), Driver Cabin Vision (Locate), Trackside Wagon Damage Scanners (WDD), and Caution Orders into one multimodal copilot with sub-second temporal synchronization and voice interaction.
+          <p className="mt-4 text-sm sm:text-base text-slate-300 max-w-3xl mx-auto font-normal leading-relaxed">
+            <strong className="text-white">RailKavach</strong> is AiSPRY&apos;s production-grade multimodal AI safety platform for Indian Railways — unifying <strong className="text-white">Loco Cab Audio (Railcomm)</strong>, <strong className="text-white">In-Cab Driver Vision (Locate)</strong>, <strong className="text-white">Wagon Damage Gantries (WDD)</strong>, and <strong className="text-white">Caution Orders</strong> into sub-second voice analytics with zero new hardware.
           </p>
 
-          {/* AiSPRY Trust Metrics */}
+          {/* Hero Action Buttons */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={() => setActiveTab("copilot")}
+              className="btn-primary-aispry px-7 py-3 text-xs sm:text-sm font-semibold flex items-center gap-2"
+            >
+              <span>Explore RailKavach Copilot</span>
+              <span>→</span>
+            </button>
+            <button
+              onClick={() => runScenario(1)}
+              className="btn-secondary-aispry px-6 py-3 text-xs sm:text-sm font-medium flex items-center gap-2"
+            >
+              <span>Run Scenario 01 (SPAD)</span>
+            </button>
+          </div>
+
+          {/* AiSPRY Trust Metrics Strip */}
           <div className="mt-8 pt-6 border-t border-gray-800/80 w-full grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="glass-card p-3 rounded-2xl">
-              <p className="text-xl sm:text-2xl font-bold text-white font-mono">2018</p>
-              <p className="text-[11px] text-gray-400 mt-0.5">Established Heritage</p>
+            <div className="glass-card p-4 rounded-2xl">
+              <p className="text-xl sm:text-3xl font-bold text-white font-mono">11,354</p>
+              <p className="text-[11px] text-slate-400 mt-1">Audio Transcripts (NWR)</p>
             </div>
-            <div className="glass-card p-3 rounded-2xl">
-              <p className="text-xl sm:text-2xl font-bold text-cyan-400 font-mono">Indian Railways</p>
-              <p className="text-[11px] text-gray-400 mt-0.5">WDD Deployment</p>
+            <div className="glass-card p-4 rounded-2xl">
+              <p className="text-xl sm:text-3xl font-bold text-[#f48220] font-mono">3.68M</p>
+              <p className="text-[11px] text-slate-400 mt-1">Lines Processed</p>
             </div>
-            <div className="glass-card p-3 rounded-2xl">
-              <p className="text-xl sm:text-2xl font-bold text-indigo-400 font-mono">3 Silos Unified</p>
-              <p className="text-[11px] text-gray-400 mt-0.5">Audio • Video • Gantry</p>
+            <div className="glass-card p-4 rounded-2xl">
+              <p className="text-xl sm:text-3xl font-bold text-[#009fce] font-mono">8 mins</p>
+              <p className="text-[11px] text-slate-400 mt-1">WDD Gantry vs 5.5h Manual</p>
             </div>
-            <div className="glass-card p-3 rounded-2xl">
-              <p className="text-xl sm:text-2xl font-bold text-emerald-400 font-mono">&lt; 1,800</p>
-              <p className="text-[11px] text-gray-400 mt-0.5">Tokens / Query (99.1% Saved)</p>
+            <div className="glass-card p-4 rounded-2xl">
+              <p className="text-xl sm:text-3xl font-bold text-emerald-400 font-mono">&lt; 1,800</p>
+              <p className="text-[11px] text-slate-400 mt-1">Tokens / Query (99.1% Saved)</p>
             </div>
           </div>
         </section>
@@ -687,7 +714,7 @@ export default function Home() {
         {/* AiSPRY Core Railway Pillars & Fast Jury Scenarios */}
         <div className="glass-panel p-6 rounded-3xl relative overflow-hidden">
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-cyan-400">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#f48220]">
               <Sparkles className="w-3.5 h-3.5" />
               <span>One-Click Jury Scenarios (Instant Zero-Latency Demos)</span>
             </div>
@@ -705,19 +732,19 @@ export default function Home() {
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[11px] font-semibold text-cyan-400 uppercase tracking-wider">Scenario 01</span>
-                  <span className="px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 text-[10px] font-mono">
+                  <span className="text-[11px] font-semibold text-[#f48220] uppercase tracking-wider">Scenario 01</span>
+                  <span className="px-2 py-0.5 rounded-full bg-orange-500/10 text-[#f48220] border border-orange-500/20 text-[10px] font-mono">
                     Near-SPAD
                   </span>
                 </div>
-                <h3 className="text-sm font-semibold text-white group-hover:text-cyan-300 transition">
+                <h3 className="text-sm font-semibold text-white group-hover:text-[#f48220] transition">
                   Train 12414 at Suratgarh
                 </h3>
                 <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
                   Correlates VHF caution order with cab driver phone distraction alert at [03:14:15].
                 </p>
               </div>
-              <div className="mt-4 flex items-center text-xs text-cyan-400 font-medium">
+              <div className="mt-4 flex items-center text-xs text-[#f48220] font-medium">
                 <span>Run Investigation</span>
                 <ChevronRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition" />
               </div>
@@ -755,19 +782,19 @@ export default function Home() {
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wider">Scenario 03</span>
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-mono">
+                  <span className="text-[11px] font-semibold text-[#009fce] uppercase tracking-wider">Scenario 03</span>
+                  <span className="px-2 py-0.5 rounded-full bg-cyan-500/10 text-[#009fce] border border-cyan-500/20 text-[10px] font-mono">
                     WDD Differential
                   </span>
                 </div>
-                <h3 className="text-sm font-semibold text-white group-hover:text-emerald-300 transition">
+                <h3 className="text-sm font-semibold text-white group-hover:text-[#009fce] transition">
                   Rake BOXN-542 Transit Damage
                 </h3>
                 <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
                   PaddleOCR wagon serials + 8 defect classes separating transit liability from pre-existing dents.
                 </p>
               </div>
-              <div className="mt-4 flex items-center text-xs text-emerald-400 font-medium">
+              <div className="mt-4 flex items-center text-xs text-[#009fce] font-medium">
                 <span>Audit Rake Differential</span>
                 <ChevronRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition" />
               </div>
@@ -782,8 +809,8 @@ export default function Home() {
               onClick={() => setActiveTab("copilot")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 shrink-0 ${
                 activeTab === "copilot"
-                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
-                  : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                  ? "bg-[#f48220] text-black font-bold shadow-lg shadow-orange-500/25"
+                  : "text-slate-300 hover:text-white hover:bg-white/[0.04]"
               }`}
             >
               <Shield className="w-3.5 h-3.5" />
@@ -796,8 +823,8 @@ export default function Home() {
               onClick={() => setActiveTab("files")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 shrink-0 ${
                 activeTab === "files"
-                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
-                  : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                  ? "bg-[#f48220] text-black font-bold shadow-lg shadow-orange-500/25"
+                  : "text-slate-300 hover:text-white hover:bg-white/[0.04]"
               }`}
             >
               <Upload className="w-3.5 h-3.5" />
@@ -810,8 +837,8 @@ export default function Home() {
               onClick={() => setActiveTab("timeline")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 shrink-0 ${
                 activeTab === "timeline"
-                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
-                  : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                  ? "bg-[#f48220] text-black font-bold shadow-lg shadow-orange-500/25"
+                  : "text-slate-300 hover:text-white hover:bg-white/[0.04]"
               }`}
             >
               <Clock className="w-3.5 h-3.5" />
@@ -824,8 +851,8 @@ export default function Home() {
               onClick={() => setActiveTab("wdd")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 shrink-0 ${
                 activeTab === "wdd"
-                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
-                  : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                  ? "bg-[#f48220] text-black font-bold shadow-lg shadow-orange-500/25"
+                  : "text-slate-300 hover:text-white hover:bg-white/[0.04]"
               }`}
             >
               <Train className="w-3.5 h-3.5" />
@@ -838,8 +865,8 @@ export default function Home() {
               onClick={() => setActiveTab("artifacts")}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 shrink-0 ${
                 activeTab === "artifacts"
-                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
-                  : "text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                  ? "bg-[#f48220] text-black font-bold shadow-lg shadow-orange-500/25"
+                  : "text-slate-300 hover:text-white hover:bg-white/[0.04]"
               }`}
             >
               <FileText className="w-3.5 h-3.5" />
@@ -898,7 +925,7 @@ export default function Home() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50 shadow-md shadow-blue-500/20"
+                    className="px-5 py-2.5 rounded-full bg-[#f48220] hover:bg-[#ea580c] text-white text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50 shadow-md shadow-orange-500/25"
                   >
                     {loading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
                     <span>{loading ? "Analyzing..." : "Search"}</span>
@@ -909,34 +936,34 @@ export default function Home() {
               {/* AiSPRY High-Impact Prompt Suggestion Chips */}
               <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px]">
                 <span className="text-slate-400 flex items-center gap-1 font-medium">
-                  <Sparkles className="w-3 h-3 text-cyan-400" />
+                  <Sparkles className="w-3 h-3 text-[#f48220]" />
                   <span>Suggested Prompts:</span>
                 </span>
                 <button
                   type="button"
                   onClick={() => executeSearch("क्या 12403 का सिग्नल लाल था?")}
-                  className="px-2.5 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-cyan-300 border border-blue-500/30 transition flex items-center gap-1 font-mono"
+                  className="px-3 py-1 rounded-full bg-orange-500/10 hover:bg-orange-500/20 text-[#f48220] border border-[#f48220]/30 transition flex items-center gap-1 font-mono"
                 >
                   🇮🇳 क्या 12403 का सिग्नल लाल था?
                 </button>
                 <button
                   type="button"
                   onClick={() => executeSearch("Investigate Train 12414 near Suratgarh")}
-                  className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.08] transition"
+                  className="px-3 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.08] transition"
                 >
                   Investigate Train 12414 Near-SPAD
                 </button>
                 <button
                   type="button"
                   onClick={() => executeSearch("Show driver alertness and fatigue trends between 02:00 and 05:00 AM")}
-                  className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.08] transition"
+                  className="px-3 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.08] transition"
                 >
                   Night Fatigue 02:00–05:00 AM
                 </button>
                 <button
                   type="button"
                   onClick={() => executeSearch("Audit entry-versus-exit wagon damage for freight rake BOXN-542")}
-                  className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.08] transition"
+                  className="px-3 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.08] transition"
                 >
                   WDD Transit Damage (BOXN-542)
                 </button>
@@ -949,9 +976,9 @@ export default function Home() {
                   {/* Telemetry Header */}
                   <div className="flex flex-wrap items-center justify-between pb-4 border-b border-white/[0.08] text-xs gap-3">
                     <div className="flex items-center gap-2 text-slate-300">
-                      <Zap className="w-4 h-4 text-cyan-400" />
+                      <Zap className="w-4 h-4 text-[#f48220]" />
                       <span className="font-semibold text-white">Reasoning Core:</span>
-                      <span className="text-cyan-300 font-mono">Gemini 1.5 Flash + Agent Skills</span>
+                      <span className="text-[#009fce] font-mono">Gemini 1.5 Flash + Agent Skills</span>
                     </div>
 
                     <div className="flex items-center gap-2.5">
@@ -964,7 +991,7 @@ export default function Home() {
                         }`}
                         title="Listen to response"
                       >
-                        <Volume2 className="w-3.5 h-3.5 text-cyan-400" />
+                        <Volume2 className="w-3.5 h-3.5 text-[#f48220]" />
                         <span>{isSpeaking ? "Pause Audio" : "Speak Aloud"}</span>
                       </button>
 
@@ -988,7 +1015,7 @@ export default function Home() {
                     <div className="flex flex-col gap-2.5 pt-2">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#f48220]" />
                           <span>Grounded Evidence Citations ({response.citations.length})</span>
                         </span>
                         <span className="text-[10px] text-slate-500 font-mono">Split-Second Accuracy</span>
@@ -1001,7 +1028,7 @@ export default function Home() {
                             className="glass-card p-3 rounded-xl flex items-start justify-between gap-3 text-xs"
                           >
                             <div className="flex items-start gap-2.5">
-                              <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-cyan-300 font-mono font-bold text-[11px] border border-cyan-500/30">
+                              <span className="px-2 py-0.5 rounded-md bg-orange-500/15 text-[#f48220] font-mono font-bold text-[11px] border border-[#f48220]/30">
                                 [{cite.timestamp}]
                               </span>
                               <div>
@@ -1349,7 +1376,7 @@ export default function Home() {
                 {currentRole.canIssueWorkOrder && (
                   <button
                     onClick={() => alert("Sick-Line Shunting Work Order Issued to Lalgarh Yard!")}
-                    className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"
+                    className="px-3.5 py-1.5 rounded-full bg-[#f48220] hover:bg-[#ea580c] text-white text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-orange-500/20 transition"
                   >
                     <Wrench className="w-3.5 h-3.5" />
                     <span>Issue Sick-Line Repair Order</span>
@@ -1423,13 +1450,13 @@ export default function Home() {
             <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4">
               <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                 <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-cyan-400" />
+                  <FileText className="w-4 h-4 text-[#009fce]" />
                   <h3 className="text-sm font-bold text-white">Statutory Inquiry Report (Rule 113 G&amp;SR)</h3>
                 </div>
                 {currentRole.canSignCRS ? (
                   <button
                     onClick={() => alert("Downloading Signed Statutory Inquiry Report PDF...")}
-                    className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold flex items-center gap-1.5 transition"
+                    className="px-3.5 py-1.5 rounded-full bg-[#f48220] hover:bg-[#ea580c] text-white text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-orange-500/20 transition"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download Signed PDF</span>
@@ -1470,12 +1497,12 @@ Date/Time: 18-Nov-2026 at 03:14:15 hrs
             <div className="glass-panel p-6 rounded-3xl flex flex-col gap-4">
               <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
                 <div className="flex items-center gap-2">
-                  <Volume2 className="w-4 h-4 text-amber-400" />
+                  <Volume2 className="w-4 h-4 text-[#f48220]" />
                   <h3 className="text-sm font-bold text-white">संरक्षा निर्देश (क्रू लॉबी साइन-ऑन ब्रीफिंग)</h3>
                 </div>
                 <button
                   onClick={() => alert("Downloading Hindi Safety Briefing Note...")}
-                  className="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold flex items-center gap-1.5 transition"
+                  className="px-3.5 py-1.5 rounded-full bg-[#f48220] hover:bg-[#ea580c] text-white text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-orange-500/20 transition"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download Print</span>
@@ -1511,22 +1538,29 @@ Date/Time: 18-Nov-2026 at 03:14:15 hrs
       </main>
 
       {/* AiSPRY Corporate Footer */}
-      <footer className="border-t border-gray-800/80 bg-[#030712] px-6 py-6 text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-xs">
-              A
-            </div>
-            <div>
-              <p className="text-slate-300 font-semibold">
-                AiSPRY Technologies <span className="text-slate-500 font-normal">• RailKavach™ Suite</span>
+      <footer className="border-t border-white/[0.08] bg-[#020514] px-6 py-8 text-xs text-slate-500">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
+          <div className="flex items-center gap-4">
+            <a href="/" className="flex items-center">
+              <img
+                src="/images/brand/aispry-logo.png"
+                alt="AiSPRY Technologies"
+                className="h-7 w-auto object-contain shrink-0"
+              />
+            </a>
+            <div className="border-l border-white/[0.1] pl-4">
+              <p className="text-slate-300 font-semibold flex items-center gap-2">
+                <span>AiSPRY Technologies Pvt Ltd</span>
+                <span className="text-[10px] font-normal px-2 py-0.5 rounded-full bg-orange-500/10 text-[#f48220] border border-[#f48220]/30">
+                  RailKavach™
+                </span>
               </p>
-              <p className="text-[11px] text-slate-500">
-                Headquartered in Hyderabad, India • Production AI Solutions for Indian Railways
+              <p className="text-[11px] text-slate-500 mt-0.5">
+                Headquartered in Hyderabad, India • Official Wagon Damage Detector (WDD) AI Partner for Indian Railways
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-4 text-slate-400 text-[11px]">
+          <div className="flex flex-wrap items-center gap-3.5 text-slate-400 text-[11px]">
             <span>Active Persona: <strong className="text-white">{currentRole.title}</strong></span>
             <span>•</span>
             <span className="text-purple-400">DPDP Act 2023 Compliant</span>
