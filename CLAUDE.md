@@ -50,7 +50,7 @@ npm run lint
 * **Deterministic Fallback**: All core demo scenarios must have verified entries in `data/cached_demo_responses.json`.
 * **Accessibility**: Next.js UI must target WCAG 2.2 AA (color contrast, keyboard navigation, clear ARIA labels).
 * **AiSPRY design system**: Tokens live in `frontend/tailwind.config.ts` (values from aispry.ai). Fonts: Fraunces (display), Geist (sans), JetBrains Mono (labels), Noto Sans Devanagari (Hindi). Orange `#f48220` is a fill; use `text-orange-ink` for orange text on light surfaces. Buttons 6px radius, cards 12px. Visual-first, minimal copy; every animation must degrade under `prefers-reduced-motion`.
-* **Product links**: WDD → nwrwdd.aispry.ai, Locate → nwrlcva.aispry.ai, Railcomm → nwradt.aispry.ai; logo → aispry.ai.
+* **Product order (always, everywhere)**: 1) Railcomm Analytics — Audio Analytics → nwradt.aispry.ai, 2) Locate — Locomotive Cabin Video Analytics → nwrlcva.aispry.ai, 3) Wagon Damage Detection → nwrwdd.aispry.ai. Logo → aispry.ai.
 
 ---
 

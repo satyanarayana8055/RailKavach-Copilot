@@ -1,9 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
 
 const LINKS = [
-  { href: "https://nwrwdd.aispry.ai", label: "Wagon Damage Detection" },
+  { href: "https://nwradt.aispry.ai", label: "Railcomm Analytics" },
   { href: "https://nwrlcva.aispry.ai", label: "Locate" },
-  { href: "https://nwradt.aispry.ai", label: "Railcomm" },
+  { href: "https://nwrwdd.aispry.ai", label: "Wagon Damage Detection" },
 ];
 
 export function Footer() {

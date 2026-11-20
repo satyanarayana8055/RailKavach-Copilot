@@ -19,31 +19,32 @@ interface Product {
   url: string;
 }
 
-/* Copy and figures mirror aispry.ai/products/railkavach. */
+/* Copy and figures mirror aispry.ai/products/railkavach.
+ * Display order is fixed: 01 Railcomm Analytics → 02 Locate → 03 Wagon Damage Detection. */
 const PRODUCTS: Product[] = [
   {
     num: "01",
-    name: "Wagon Damage Detection",
-    kicker: "WDD",
+    name: "Railcomm Analytics",
+    kicker: "Audio Analytics",
     title: (
       <>
-        AI vision for <em>wagon inspection.</em>
+        Clean radio for <em>railway operations.</em>
       </>
     ),
-    tags: ["YOLOv11", "PaddleOCR", "Entry + exit gantries"],
+    tags: ["Deep-learning denoise", "9+ noise classes", "Fail-open"],
     stats: [
-      { value: 6, label: "Cameras" },
-      { value: 8, label: "Damage classes" },
-      { value: 99.2, decimals: 1, suffix: "%", label: "Frame detection" },
-      { value: 2, prefix: "5–8→", suffix: "h", label: "Inspection / train" },
+      { value: 85, suffix: "%", label: "Noise reduction" },
+      { value: 95, suffix: "%", label: "Clarity" },
+      { value: 60, suffix: "%", label: "Fewer miscommunications" },
+      { value: 9, suffix: "+", label: "Noise classes" },
     ],
-    visual: (a) => <WddVisual active={a} />,
-    url: "https://nwrwdd.aispry.ai",
+    visual: (a) => <RailcommVisual active={a} />,
+    url: "https://nwradt.aispry.ai",
   },
   {
     num: "02",
     name: "Locate",
-    kicker: "Cabin video analytics",
+    kicker: "Locomotive Cabin Video Analytics",
     title: (
       <>
         AI eyes inside the <em>locomotive cabin.</em>
@@ -61,22 +62,22 @@ const PRODUCTS: Product[] = [
   },
   {
     num: "03",
-    name: "Railcomm",
-    kicker: "Audio analytics",
+    name: "Wagon Damage Detection",
+    kicker: "WDD",
     title: (
       <>
-        Clean radio for <em>railway operations.</em>
+        AI vision for <em>wagon inspection.</em>
       </>
     ),
-    tags: ["Deep-learning denoise", "9+ noise classes", "Fail-open"],
+    tags: ["YOLOv11", "PaddleOCR", "Entry + exit gantries"],
     stats: [
-      { value: 85, suffix: "%", label: "Noise reduction" },
-      { value: 95, suffix: "%", label: "Clarity" },
-      { value: 60, suffix: "%", label: "Fewer miscommunications" },
-      { value: 9, suffix: "+", label: "Noise classes" },
+      { value: 6, label: "Cameras" },
+      { value: 8, label: "Damage classes" },
+      { value: 99.2, decimals: 1, suffix: "%", label: "Frame detection" },
+      { value: 2, prefix: "5–8→", suffix: "h", label: "Inspection / train" },
     ],
-    visual: (a) => <RailcommVisual active={a} />,
-    url: "https://nwradt.aispry.ai",
+    visual: (a) => <WddVisual active={a} />,
+    url: "https://nwrwdd.aispry.ai",
   },
 ];
 

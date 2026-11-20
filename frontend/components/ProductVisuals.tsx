@@ -23,7 +23,7 @@ function LiveHeader({ left, right }: { left: string; right: React.ReactNode }) {
 }
 
 
-/* ---------- 01 · WDD: rake passes six gantry streams ---------- */
+/* ---------- 03 · WDD: rake passes six gantry streams ---------- */
 
 const STREAMS = [
   { id: "ENTRY · L", det: { label: "DENT 0.94", x: 30, y: 38, w: 26, h: 26, tone: "amber" } },
@@ -151,7 +151,7 @@ export function LocateVisual({ active }: { active: boolean }) {
   );
 }
 
-/* ---------- 03 · Railcomm: noise in → clean voice sweeps out ---------- */
+/* ---------- 01 · Railcomm: noise in → clean voice sweeps out ---------- */
 
 export function RailcommVisual({ active }: { active: boolean }) {
   const snr = -12 + useCountUp(30, active, 2200);

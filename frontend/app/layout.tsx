@@ -10,7 +10,7 @@ const deva = Noto_Sans_Devanagari({ subsets: ["devanagari"], weight: ["400", "50
 export const metadata: Metadata = {
   title: "RailKavach Copilot · AiSPRY",
   description:
-    "Multimodal AI safety copilot for Indian Railways — unifying Wagon Damage Detection, Locate cabin video analytics and Railcomm audio analytics.",
+    "Multimodal AI safety copilot for Indian Railways — unifying Railcomm audio analytics, Locate locomotive cabin video analytics and Wagon Damage Detection.",
   icons: { icon: "/images/brand/aispry-logo.png" },
 };
 

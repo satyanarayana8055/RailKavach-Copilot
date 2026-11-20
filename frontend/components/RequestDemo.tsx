@@ -3,7 +3,7 @@
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 import { useState } from "react";
 
-const INTERESTS = ["Wagon Damage Detection", "Locate", "Railcomm", "RailKavach Copilot"] as const;
+const INTERESTS = ["Railcomm Analytics", "Locate", "Wagon Damage Detection", "RailKavach Copilot"] as const;
 
 type State = { kind: "idle" } | { kind: "sending" } | { kind: "done"; ref: string } | { kind: "error"; msg: string };
 
