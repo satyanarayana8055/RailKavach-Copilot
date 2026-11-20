@@ -1,0 +1,352 @@
+[
+  {
+    "id": "WDD-BOXN542-01",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945123",
+    "position_in_rake": 14,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:20",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:10",
+    "exit_damage_status": "DAMAGED",
+    "exit_defects": [
+      {
+        "class": "DOOR_DEFECT",
+        "severity": "HIGH",
+        "description": "Left middle discharge flap unlatched and hanging.",
+        "camera_id": "CAM-03 (Side View Port)"
+      },
+      {
+        "class": "SPRING_BROKEN",
+        "severity": "CRITICAL",
+        "description": "Inner coil spring fractured on Bogie #2 right side.",
+        "camera_id": "CAM-05 (Underframe Port)"
+      }
+    ],
+    "delta_transit_damage": true,
+    "liability_attribution": "Damage occurred in transit between Suratgarh and Lalgarh.",
+    "ocr_confidence": 0.98
+  },
+  {
+    "id": "WDD-BOXN542-02",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945124",
+    "position_in_rake": 15,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:35",
+    "entry_damage_status": "DAMAGED",
+    "entry_defects": [
+      {
+        "class": "BODY_PANEL",
+        "severity": "MEDIUM",
+        "description": "Dent on side wall panel > 150mm.",
+        "camera_id": "CAM-02 (Top Angle)"
+      }
+    ],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:25",
+    "exit_damage_status": "DAMAGED",
+    "exit_defects": [
+      {
+        "class": "BODY_PANEL",
+        "severity": "MEDIUM",
+        "description": "Dent on side wall panel > 150mm (pre-existing).",
+        "camera_id": "CAM-02 (Top Angle)"
+      }
+    ],
+    "delta_transit_damage": false,
+    "liability_attribution": "Pre-existing damage prior to Suratgarh departure. Contractor not liable.",
+    "ocr_confidence": 0.97
+  },
+  {
+    "id": "WDD-BOXN542-03",
+    "train_no": "BOXN-542",
+    "rake_type": "BCNHL",
+    "wagon_no": "BCNHL 33022198001",
+    "position_in_rake": 28,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:17:10",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:47:05",
+    "exit_damage_status": "DAMAGED",
+    "exit_defects": [
+      {
+        "class": "BRAKE_BEAM_DEFECT",
+        "severity": "CRITICAL",
+        "description": "Brake beam hanger pin detached; beam rubbing against wheel flange.",
+        "camera_id": "CAM-06 (Underframe Starboard)"
+      }
+    ],
+    "delta_transit_damage": true,
+    "liability_attribution": "New mechanical failure in transit. Urgent sick line marking required.",
+    "ocr_confidence": 0.99
+  },
+  {
+    "id": "WDD-BOXN542-04",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945104",
+    "position_in_rake": 4,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:08",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:08",
+    "exit_damage_status": "CLEAR",
+    "exit_defects": [],
+    "delta_transit_damage": false,
+    "liability_attribution": "Clean inspection.",
+    "ocr_confidence": 0.99
+  },
+  {
+    "id": "WDD-BOXN542-05",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945105",
+    "position_in_rake": 5,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:10",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:10",
+    "exit_damage_status": "CLEAR",
+    "exit_defects": [],
+    "delta_transit_damage": false,
+    "liability_attribution": "Clean inspection.",
+    "ocr_confidence": 0.95
+  },
+  {
+    "id": "WDD-BOXN542-06",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945106",
+    "position_in_rake": 6,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:12",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:12",
+    "exit_damage_status": "DAMAGED",
+    "exit_defects": [
+      {
+        "class": "HANDRAIL_BROKEN",
+        "severity": "LOW",
+        "description": "Handrail deformed at end ladder",
+        "camera_id": "CAM-01"
+      }
+    ],
+    "delta_transit_damage": true,
+    "liability_attribution": "Transit damage verified.",
+    "ocr_confidence": 0.96
+  },
+  {
+    "id": "WDD-BOXN542-07",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945107",
+    "position_in_rake": 7,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:14",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:14",
+    "exit_damage_status": "CLEAR",
+    "exit_defects": [],
+    "delta_transit_damage": false,
+    "liability_attribution": "Clean inspection.",
+    "ocr_confidence": 0.97
+  },
+  {
+    "id": "WDD-BOXN542-08",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945108",
+    "position_in_rake": 8,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:16",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:16",
+    "exit_damage_status": "CLEAR",
+    "exit_defects": [],
+    "delta_transit_damage": false,
+    "liability_attribution": "Clean inspection.",
+    "ocr_confidence": 0.98
+  },
+  {
+    "id": "WDD-BOXN542-09",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945109",
+    "position_in_rake": 9,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:18",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:18",
+    "exit_damage_status": "DAMAGED",
+    "exit_defects": [
+      {
+        "class": "COUPLER_DAMAGE",
+        "severity": "HIGH",
+        "description": "CBC coupler knuckle excessive wear",
+        "camera_id": "CAM-01"
+      }
+    ],
+    "delta_transit_damage": true,
+    "liability_attribution": "Transit damage verified.",
+    "ocr_confidence": 0.99
+  },
+  {
+    "id": "WDD-BOXN542-10",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945110",
+    "position_in_rake": 10,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:20",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:20",
+    "exit_damage_status": "CLEAR",
+    "exit_defects": [],
+    "delta_transit_damage": false,
+    "liability_attribution": "Clean inspection.",
+    "ocr_confidence": 0.95
+  },
+  {
+    "id": "WDD-BOXN542-11",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945111",
+    "position_in_rake": 11,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:22",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:22",
+    "exit_damage_status": "CLEAR",
+    "exit_defects": [],
+    "delta_transit_damage": false,
+    "liability_attribution": "Clean inspection.",
+    "ocr_confidence": 0.96
+  },
+  {
+    "id": "WDD-BOXN542-12",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945112",
+    "position_in_rake": 12,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:24",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:24",
+    "exit_damage_status": "DAMAGED",
+    "exit_defects": [
+      {
+        "class": "HANDRAIL_BROKEN",
+        "severity": "LOW",
+        "description": "Handrail deformed at end ladder",
+        "camera_id": "CAM-01"
+      }
+    ],
+    "delta_transit_damage": true,
+    "liability_attribution": "Transit damage verified.",
+    "ocr_confidence": 0.97
+  },
+  {
+    "id": "WDD-BOXN542-13",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945113",
+    "position_in_rake": 13,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:26",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:26",
+    "exit_damage_status": "CLEAR",
+    "exit_defects": [],
+    "delta_transit_damage": false,
+    "liability_attribution": "Clean inspection.",
+    "ocr_confidence": 0.98
+  },
+  {
+    "id": "WDD-BOXN542-14",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945114",
+    "position_in_rake": 14,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:28",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:28",
+    "exit_damage_status": "CLEAR",
+    "exit_defects": [],
+    "delta_transit_damage": false,
+    "liability_attribution": "Clean inspection.",
+    "ocr_confidence": 0.99
+  },
+  {
+    "id": "WDD-BOXN542-15",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945115",
+    "position_in_rake": 15,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:30",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:30",
+    "exit_damage_status": "DAMAGED",
+    "exit_defects": [
+      {
+        "class": "COUPLER_DAMAGE",
+        "severity": "HIGH",
+        "description": "CBC coupler knuckle excessive wear",
+        "camera_id": "CAM-01"
+      }
+    ],
+    "delta_transit_damage": true,
+    "liability_attribution": "Transit damage verified.",
+    "ocr_confidence": 0.95
+  },
+  {
+    "id": "WDD-BOXN542-16",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL",
+    "wagon_no": "BOXNHL 22011945116",
+    "position_in_rake": 16,
+    "entry_gantry": "Suratgarh West Gate Gantry #1",
+    "entry_timestamp": "2026-11-18 10:15:32",
+    "entry_damage_status": "CLEAR",
+    "entry_defects": [],
+    "exit_gantry": "Lalgarh Yard Exit Gantry #2",
+    "exit_timestamp": "2026-11-18 16:45:32",
+    "exit_damage_status": "CLEAR",
+    "exit_defects": [],
+    "delta_transit_damage": false,
+    "liability_attribution": "Clean inspection.",
+    "ocr_confidence": 0.96
+  }
+]

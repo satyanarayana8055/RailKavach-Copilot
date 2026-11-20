@@ -1,30 +1,19 @@
-# RailKavach AI Platform & RailKavach Copilot 🚆🛡️
-> **Integrated AI Ecosystem for Indian Railways Safety, Inspection & Operational Intelligence**  
-> *Developed by AiSPRY Technologies • Startup Buildathon India 2026 (Google DeepMind × Google Cloud × Hack2skill)*
+# RailKavach Copilot 🚆🛡️
+> **Integrated Multimodal Operational Intelligence & Safety Assistant for Indian Railways**  
+> *Developed by AiSPRY Technologies for North Western Railway (NWR) • Startup Buildathon India 2026 (Google DeepMind × Google Cloud × Hack2skill)*
 
 ---
 
-## 📌 Fast Navigation
-* **[docs/ARCHITECTURE_AND_PLAN.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/ARCHITECTURE_AND_PLAN.md)**: Master System Architecture & Phased Tactical Plan of Action (POA).
-* **[docs/skills.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/skills.md)**: Google Agent Skills specification (WDD, Locate, Railcomm tool signatures).
-* **[docs/EVALUATION_GUIDE.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/EVALUATION_GUIDE.md)**: Official evaluation matrix (30% Functional, 20% Architecture, 20% Google AI Depth) & winning pitch flow.
-* **[docs/initial.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/initial.md)**: Original shortlist briefing, schedule, and team communications.
-* **[assets/railkavach_architecture.jpg](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/railkavach_architecture.jpg)**: Pitch deck architecture infographic image (16:9 JPG).
-* **[assets/architecture_diagram.svg](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/architecture_diagram.svg)**: High-resolution visual architecture vector diagram (SVG).
-* **[assets/architecture_visual.html](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/architecture_visual.html)**: Interactive visual architecture web dashboard.
+## 📌 Executive Architecture & Ecosystem Overview
 
----
-
-## 🏗️ The RailKavach Ecosystem: 3 Production Platforms
-
-RailKavach is an integrated operational intelligence ecosystem connecting three specialized AI solutions:
+RailKavach Copilot provides an autonomous conversational query layer across Indian Railways' three operational AI safety platforms:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                               RAILKAVACH AI PLATFORMS                                  │
+│                              RAILKAVACH PLATFORM CORE                                  │
 │                                                                                        │
 │   ┌──────────────────────┐    ┌──────────────────────┐    ┌────────────────────────┐   │
-│   │     PROJECT 01       │    │     PROJECT 02       │    │      PROJECT 03        │   │
+│   │     PLATFORM 01      │    │     PLATFORM 02      │    │      PLATFORM 03       │   │
 │   │ Wagon Damage         │    │ Locate: Cabin Video  │    │ Railcomm: Audio        │   │
 │   │ Detection (WDD)      │    │ Analytics            │    │ Analytics              │   │
 │   │                      │    │                      │    │                        │   │
@@ -44,31 +33,53 @@ RailKavach is an integrated operational intelligence ecosystem connecting three 
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-1. **Wagon Damage Detection (WDD):** Automated freight wagon inspection using 6 gantry cameras, YOLOv11-L, and PaddleOCR across 8 damage classes. Automates entry-vs-exit condition differentials, slashing manual review from 5–8 hours to ~2 hours.
-2. **Locate – Locomotive Cabin Video Analytics:** 24×7 edge-deployed CVVRS camera monitoring. Classifies **5 safety violations** (phone use, sleeping, eating/drinking, hand signal not returned, unauthorized occupant) while explicitly respecting **3 compliant activities** (walkie-talkie, reading/writing, controlling). Enforces human reviewer verification.
-3. **Railcomm – Audio Analytics:** Real-time deep learning denoising pipeline (CNN + RNN + U-Net + Transformer) filtering 9+ noise classes while preserving safety-critical vocabulary (Caution, Stop, Signal, Block, Line Clear, BP Pressure). Enforces the strict **FAIL-OPEN** safety architecture (audio never goes silent if AI stalls).
+1. **Wagon Damage Detection (WDD)**: Automated rolling stock inspection via 6 gantry cameras, YOLOv11-L, and PaddleOCR across 8 damage classes. Automates entry-vs-exit condition differentials, slashing inspection times from 5–8 hours to ~2 hours.
+2. **Locate – Locomotive Cabin Video Analytics**: 24×7 edge CVVRS camera monitoring classifying **5 safety violations** (`MOBILE_PHONE`, `SLEEPING`, `EATING_DRINKING`, `HAND_SIGNAL_NOT_RETURNED`, `UNAUTHORIZED_PERSON`) while explicitly recognizing **3 compliant activities** (`WALKIE_TALKIE`, `READING_WRITING`, `CONTROLLING`).
+3. **Railcomm – Audio Analytics**: Real-time deep learning denoising pipeline filtering 9+ noise classes while preserving safety vocabulary (*Caution, Stop, Signal, Loop Line, Brake Pipe 5 kg/cm²*). Governed by the strict **Fail-Open** safety mandate.
 
 ---
 
-## 🎯 What is RailKavach Copilot?
-Indian Railways safety officers (Sr DEE/TRO, crew controllers, zonal safety cells) currently spend 3–5 days manually scrubbing gigabytes of audio and video dashboards to investigate incidents. At North Western Railway (NWR) alone, RailKavach processes **11,354 audio files**, **3.68M transcript lines**, and **1,583 loco pilots**.
+## 🚀 Quickstart & Running Locally
 
-**RailKavach Copilot** provides an autonomous conversational query layer on top of all three platforms:
-1. **Cross-Modal Evidence Correlation:** Instantly links what was *said* (Railcomm radio transcript) with what was *seen* (Locate cab camera alert) and what was *sensed* (WDD wagon damage).
-2. **Strict Grounding with Timestamp Citations:** Anchors every finding to exact split-second timestamps (`[03:14:15]`) and video clips.
-3. **Bilingual Statutory Generation:** Drafts formal Indian Railways Inquiry Reports in English and crew lobby sign-on safety warning slips in Devanagari Hindi.
-4. **Predictive Anomaly Engine:** Aggregates risk patterns (e.g. 02:00–05:00 AM micro-sleep clusters on specific sections).
+### 1. Backend (FastAPI + Google GenAI Engine)
+```bash
+cd backend
+source .venv/bin/activate
+# Run test suite (14 passing tests)
+PYTHONPATH=. pytest -v
+
+# Start FastAPI server on port 8000
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+API Documentation will be available at: `http://localhost:8000/docs`
+
+### 2. Frontend (Next.js 14 + TypeScript + Tailwind CSS)
+```bash
+cd frontend
+# Start Next.js development server on port 3000
+npm run dev
+```
+Open your browser to: `http://localhost:3000`
 
 ---
 
-## ⚙️ Architecture: Cloud-Agnostic & On-Premise Priority
+## 🎯 Buildathon Evaluation Strategy (The 70% Core)
 
-The architecture is designed to operate seamlessly across on-premise railway infrastructure and cloud environments:
-* **Core Base Stack:** FastAPI, React + Vite, PostgreSQL (relational/audit), MongoDB (events/detections), Celery + Redis (background processing), Edge Computing.
-* **Storage & Vector Search Adapters:**
-  * *Adapter A (On-Prem / Air-Gapped Priority):* PostgreSQL + `pgvector` / Qdrant, MinIO / Local Object Store.
-  * *Adapter B (Cloud / Buildathon Mode):* Google Cloud Storage (GCS) and BigQuery Vector Search.
-* **Pluggable Reasoning Engine:**
-  * *Cloud / Buildathon Mode:* Google Gemini 1.5 Pro / Flash (long-context multimodal reasoning & function calling).
-  * *On-Prem / Edge Mode:* Gemma 2B/7B or local LLM running directly inside locomotive cabs or division servers.
-* **Zero-Latency Fallback Cache (`cached_demo_responses.json`):** Ensures 100% demo uptime at the Buildathon venue even during Wi-Fi dropouts.
+In compliance with the official evaluation matrix (30% Functional Implementation, 20% Architecture, 20% Google AI Depth):
+
+1. **One-Click Preloaded Scenarios**:
+   - 🚨 **Scenario 1 (Near-SPAD Inquiry)**: Query Train 12414 near Suratgarh. Correlates VHF caution order with cab camera mobile phone detection and emergency brake application at `[03:14:15]`.
+   - 🌙 **Scenario 2 (Fatigue Clustering)**: Detects 02:00–05:00 AM micro-sleep clusters on long-distance night freight runs.
+   - 🔍 **Scenario 3 (Transit Damage Audit)**: 6-gantry optical differential isolating newly sustained in-transit damage from pre-existing dents.
+2. **Zero-Latency Fallback Cache (`data/cached_demo_responses.json`)**: Guarantees 100% demo uptime and 0 token cost even during venue Wi-Fi stutters.
+3. **Token & Cost Optimization**: Clamps context windows to $\pm 15$m around incident timestamps, saving > 99.5% tokens versus raw log dumping.
+4. **Bilingual Statutory Generation**: 1-click export of English CRS inquiry reports (Rule 113 G&SR) and Devanagari Hindi crew lobby sign-on warning slips.
+
+---
+
+## 📚 Key Governance & Instruction Files
+* **[AGENTS.md](file:///Users/saibhargav/Documents/Projects/RailKavach-Copilot/AGENTS.md)**: Multi-agent coordination, Google Antigravity & Gemini guidelines.
+* **[CLAUDE.md](file:///Users/saibhargav/Documents/Projects/RailKavach-Copilot/CLAUDE.md)**: Developer command reference & architecture rules.
+* **[SKILLS.md](file:///Users/saibhargav/Documents/Projects/RailKavach-Copilot/SKILLS.md)**: Agent skills specifications & Pydantic tool schemas.
+* **[docs/cloud-costs-and-tokenometrics.md](file:///Users/saibhargav/Documents/Projects/RailKavach-Copilot/docs/cloud-costs-and-tokenometrics.md)**: Mathematical token budget & cloud cost analysis.
+* **[docs/requirements-traceability-matrix.md](file:///Users/saibhargav/Documents/Projects/RailKavach-Copilot/docs/requirements-traceability-matrix.md)**: Requirements traceability matrix (REQ-01 to REQ-10).

@@ -1,0 +1,110 @@
+{
+  "scenario_1_spad_investigation": {
+    "query": "Investigate safety events for Train 12414 near Suratgarh on 2026-11-18.",
+    "incident_id": "INC-12414-20261118",
+    "summary": "Train 12414 (Mandore Express, Loco WAP-7 30452) experienced a severe near-SPAD incident approaching Suratgarh Junction at 03:14:15. At 03:11:05, Station Master advised Down Loop Line and Home Signal at RED. Between 03:14:02 and 03:14:30, Loco Pilot Rajesh Kumar was distracted by personal mobile phone usage (Locate AI Alert LOC-20261118-001, confirmed by Reviewer DSO-BKN). Assistant Loco Pilot shouted emergency warning at 03:14:15. Emergency brake applied at 03:14:24; train halted safely 60 meters before the Home Signal at Danger.",
+    "timestamp_citations": [
+      {
+        "time": "03:11:05",
+        "source": "Railcomm VHF",
+        "event": "SM advises Caution Order 30 kmph, Home Signal RED."
+      },
+      {
+        "time": "03:14:02",
+        "source": "Locate Cabin Cam",
+        "event": "LP mobile phone distraction detected (28s duration, 94% conf). Reviewer Status: CONFIRMED by DSO-BKN."
+      },
+      {
+        "time": "03:14:15",
+        "source": "Railcomm Cabin Intercom",
+        "event": "ALP Amit Singh shouts: 'सामने होम सिग्नल लाल है! फोन रखिए! ब्रेक लगाइए!'"
+      },
+      {
+        "time": "03:14:24",
+        "source": "Loco Telemetry",
+        "event": "Emergency RS Valve tripped; BP drops to 0 kg/cm²."
+      },
+      {
+        "time": "03:14:48",
+        "source": "Railcomm VHF",
+        "event": "Train halted safely 60m before Home Signal. SPAD averted."
+      }
+    ],
+    "root_cause": "Driver inattention and rule violation (personal mobile phone usage in active cab) leading to delayed brake application approaching a stop signal.",
+    "bilingual_report": {
+      "english_statutory": "PRELIMINARY INQUIRY REPORT (RULE 113 G&SR)\nDivision: Bikaner | Train: 12414 Exp | Date: 18-Nov-2026\nFinding: Complete stoppage 60 meters prior to Home Signal. Crew violation under Railway Board Mobile Usage Directive 2020 confirmed via CVVRS footage.",
+      "hindi_briefing": "सुरक्षा निर्देश (क्रू लॉबी साइन-ऑन ब्रीफिंग):\nदिनांक 18-नवंबर-2026 को सूरतगढ़ दृष्टिकोण पर 12414 के चालक द्वारा मोबाइल उपयोग से सिग्नल अनदेखी की गंभीर घटना टली। सभी लोको पायलटों को सख्त चेतावनी: रनिंग ड्यूटी के दौरान मोबाइल पूर्णतः बंद रखें। होम सिग्नल पर कौशन गति (30 किमी/घंटा) का अनिवार्य पालन करें।"
+    }
+  },
+  "scenario_2_fatigue_pattern": {
+    "query": "Show driver alertness and fatigue trends between 02:00 and 05:00 AM on Bikaner Division.",
+    "summary": "Analysis of Locate CVVRS alerts on Bikaner Division identifies a concentrated cluster of driver micro-sleep infractions (4 confirmed incidents) strictly occurring between 03:30 AM and 04:45 AM. All incidents occurred on long-distance night freight trains (BOXN-542, BOXN-611) and express run 14707. No fatigue violations occurred during day shifts (06:00 - 18:00).",
+    "cluster_data": [
+      {
+        "time": "03:45:12",
+        "loco": "WAG-9 31204",
+        "train": "BOXN-542",
+        "crew": "LP-3108",
+        "duration": "12s micro-sleep",
+        "status": "CONFIRMED"
+      },
+      {
+        "time": "04:12:05",
+        "loco": "WAG-9 31882",
+        "train": "BOXN-611",
+        "crew": "LP-2891",
+        "duration": "16s micro-sleep",
+        "status": "CONFIRMED"
+      },
+      {
+        "time": "04:38:22",
+        "loco": "WDP-4D 40112",
+        "train": "14707",
+        "crew": "LP-5012",
+        "duration": "9s micro-sleep",
+        "status": "PENDING"
+      }
+    ],
+    "corrective_actions": [
+      "Mandate audio vigilance confirmation intervals reduced from 60s to 30s during 02:00 - 05:00 AM window.",
+      "Conduct surprise breathalyzer and alertness checks at Lalgarh and Suratgarh crew lobbies."
+    ]
+  },
+  "scenario_3_wagon_damage_audit": {
+    "query": "Audit entry-versus-exit wagon damage for freight rake BOXN-542.",
+    "train_no": "BOXN-542",
+    "rake_type": "BOXNHL (58 Wagons)",
+    "summary": "Automated 6-camera WDD gantry differential between Suratgarh Entry (10:15) and Lalgarh Exit (16:45) identified 2 wagons with newly sustained in-transit damage, while 1 pre-existing defect was correctly cleared of contractor liability.",
+    "findings": [
+      {
+        "wagon_no": "BOXNHL 22011945123",
+        "position": 14,
+        "status": "NEW TRANSIT DAMAGE",
+        "defects": [
+          "DOOR_DEFECT (Hanging bottom flap)",
+          "SPRING_BROKEN (Inner coil fracture)"
+        ],
+        "liability": "Railway transit failure / siding handling damage."
+      },
+      {
+        "wagon_no": "BOXNHL 22011945124",
+        "position": 15,
+        "status": "PRE-EXISTING DEFECT",
+        "defects": [
+          "BODY_PANEL (150mm dent detected at entry gantry)"
+        ],
+        "liability": "Contractor exempt from liability (pre-existing)."
+      },
+      {
+        "wagon_no": "BCNHL 33022198001",
+        "position": 28,
+        "status": "CRITICAL NEW TRANSIT FAILURE",
+        "defects": [
+          "BRAKE_BEAM_DEFECT (Hanger pin detached, rubbing flange)"
+        ],
+        "liability": "Immediate mechanical sick-line diversion ordered."
+      }
+    ],
+    "inspection_time_savings": "WDD automated audit completed in 8 minutes versus 5 hours 30 minutes manual examination."
+  }
+}

@@ -1,0 +1,1692 @@
+[
+  {
+    "id": "RC-12414-001",
+    "timestamp": "2026-11-18 03:10:15",
+    "time_str": "03:10:15",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn (SOG)",
+    "channel": "VHF-CH02",
+    "speaker": "Station Master SOG",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "गाड़ी संख्या 12414 लोको पायलट, सूरतगढ़ स्टेशन मास्टर सुनिए।",
+    "transcript_en": "Train 12414 Loco Pilot, this is Suratgarh Station Master, acknowledge.",
+    "safety_keywords": [
+      "Train No 12414",
+      "Station Master"
+    ],
+    "clarity_score": 0.95,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-12414-002",
+    "timestamp": "2026-11-18 03:10:28",
+    "time_str": "03:10:28",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn (SOG)",
+    "channel": "VHF-CH02",
+    "speaker": "LP Rajesh Kumar",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "हाँ स्टेशन मास्टर साहब, 12414 लोको पायलट राजेश बोल रहा हूँ। बोलिए।",
+    "transcript_en": "Yes Station Master sir, LP Rajesh on 12414. Go ahead.",
+    "safety_keywords": [
+      "Loco Pilot",
+      "12414"
+    ],
+    "clarity_score": 0.92,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-12414-003",
+    "timestamp": "2026-11-18 03:11:05",
+    "time_str": "03:11:05",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn (SOG)",
+    "channel": "VHF-CH02",
+    "speaker": "Station Master SOG",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "12414, आपके लिए डाउन लूप लाइन तय की गई है। होम सिग्नल अभी लाल है, कौशन ऑर्डर 30 किमी/घंटा का पालन करें।",
+    "transcript_en": "12414, Down Loop Line is set for you. Home Signal is at Danger (RED), maintain Caution Order 30 kmph.",
+    "safety_keywords": [
+      "Loop Line",
+      "Home Signal",
+      "लाल सिग्नल",
+      "Caution Order 30 kmph"
+    ],
+    "clarity_score": 0.94,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-12414-004",
+    "timestamp": "2026-11-18 03:11:22",
+    "time_str": "03:11:22",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn (SOG)",
+    "channel": "VHF-CH02",
+    "speaker": "ALP Amit Singh",
+    "speaker_role": "ASSISTANT_LOCO_PILOT",
+    "transcript_hi": "रिपीट: डाउन लूप लाइन, कौशन ऑर्डर 30 किमी/घंटा, होम सिग्नल लाल है। समझ गए।",
+    "transcript_en": "Repeat: Down Loop Line, Caution Order 30 kmph, Home Signal Red. Acknowledged.",
+    "safety_keywords": [
+      "Loop Line",
+      "Caution Order",
+      "Home Signal",
+      "Red"
+    ],
+    "clarity_score": 0.91,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-12414-005",
+    "timestamp": "2026-11-18 03:13:45",
+    "time_str": "03:13:45",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn Approach",
+    "channel": "CAB-INTERCOM",
+    "speaker": "ALP Amit Singh",
+    "speaker_role": "ASSISTANT_LOCO_PILOT",
+    "transcript_hi": "डिस्टेंट सिग्नल येलो है, गति कम कीजिए सर।",
+    "transcript_en": "Distant Signal is Yellow (Attention), reduce speed sir.",
+    "safety_keywords": [
+      "Distant Signal",
+      "Yellow",
+      "Speed Reduction"
+    ],
+    "clarity_score": 0.89,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-12414-006",
+    "timestamp": "2026-11-18 03:14:15",
+    "time_str": "03:14:15",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn Approach",
+    "channel": "CAB-INTERCOM",
+    "speaker": "ALP Amit Singh",
+    "speaker_role": "ASSISTANT_LOCO_PILOT",
+    "transcript_hi": "सर ध्यान दीजिए! फोन रखिए, सामने होम सिग्नल लाल (Danger) है! ब्रेक लगाइए!",
+    "transcript_en": "Sir pay attention! Put down the phone, Home Signal ahead is RED (Danger)! Apply brakes!",
+    "safety_keywords": [
+      "Phone",
+      "Home Signal",
+      "लाल (Danger)",
+      "Emergency Brake"
+    ],
+    "clarity_score": 0.96,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-12414-007",
+    "timestamp": "2026-11-18 03:14:24",
+    "time_str": "03:14:24",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn Approach",
+    "channel": "CAB-INTERCOM",
+    "speaker": "LP Rajesh Kumar",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "आपातकालीन ब्रेक (RS Valve) लगाया! बीपी प्रेशर 0 हो गया!",
+    "transcript_en": "Emergency brake (RS Valve) applied! Brake Pipe pressure dropped to 0 kg/cm²!",
+    "safety_keywords": [
+      "Emergency Brake",
+      "RS Valve",
+      "Brake Pipe Pressure 0 kg/cm²"
+    ],
+    "clarity_score": 0.94,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-12414-008",
+    "timestamp": "2026-11-18 03:14:48",
+    "time_str": "03:14:48",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn Approach",
+    "channel": "VHF-CH02",
+    "speaker": "LP Rajesh Kumar",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सूरतगढ़ स्टेशन मास्टर, 12414 होम सिग्नल से 60 मीटर पहले पूर्ण विराम में खड़ी है।",
+    "transcript_en": "Suratgarh Station Master, 12414 has come to a complete halt 60 meters before Home Signal.",
+    "safety_keywords": [
+      "Home Signal",
+      "Complete Halt",
+      "Safety Margin 60m"
+    ],
+    "clarity_score": 0.93,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-12414-009",
+    "timestamp": "2026-11-18 03:15:10",
+    "time_str": "03:15:10",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn (SOG)",
+    "channel": "VHF-CH02",
+    "speaker": "Station Master SOG",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "12414 लोको पायलट, सिग्नल क्रॉस नहीं हुआ। अपनी स्थिति वहीं बनाए रखें। कंट्रोलर को सूचित कर रहा हूँ।",
+    "transcript_en": "12414 LP, signal not passed (no SPAD). Maintain position. Informing Section Controller.",
+    "safety_keywords": [
+      "No SPAD",
+      "Maintain Position",
+      "Section Controller"
+    ],
+    "clarity_score": 0.95,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-010",
+    "timestamp": "2026-11-18 02:45:10",
+    "time_str": "02:45:10",
+    "train_no": "BOXN-542",
+    "loco_id": "WAG-9 31204",
+    "section": "Lalgarh-Bikaner",
+    "station": "Lalgarh Jn",
+    "channel": "VHF-CH01",
+    "speaker": "LP S. Sharma",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "लाल सिग्नल क्लीयर हुआ, ग्रीन आस्पेक्ट। बीपी प्रेशर 5.0 किग्रा/सेमी² नॉर्मल।",
+    "transcript_en": "Red signal cleared to Green aspect. Brake Pipe pressure 5.0 kg/cm² normal.",
+    "safety_keywords": [
+      "Green Aspect",
+      "Brake Pipe Pressure 5.0 kg/cm²"
+    ],
+    "clarity_score": 0.88,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-011",
+    "timestamp": "2026-11-18 04:15:20",
+    "time_str": "04:15:20",
+    "train_no": "14707",
+    "loco_id": "WDP-4D 40112",
+    "section": "Bikaner-Suratgarh",
+    "station": "Lunkaransar",
+    "channel": "VHF-CH02",
+    "speaker": "LP V. Joshi",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "कौशन ऑर्डर टी/409 प्राप्त हुआ, किलोमीटर 140 पर गति प्रतिबंध 45 किमी/घंटा।",
+    "transcript_en": "Caution Order T/409 received, speed restriction 45 kmph at KM 140.",
+    "safety_keywords": [
+      "Caution Order T/409",
+      "Speed Restriction 45 kmph"
+    ],
+    "clarity_score": 0.72,
+    "fail_open_bypassed": true
+  },
+  {
+    "id": "RC-GEN-012",
+    "timestamp": "2026-11-18 02:36:24",
+    "time_str": "02:36:24",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 12 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 12 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.87,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-013",
+    "timestamp": "2026-11-18 02:39:31",
+    "time_str": "02:39:31",
+    "train_no": "BOXN-513",
+    "loco_id": "WAG-9 31013",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 13 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 13 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.88,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-014",
+    "timestamp": "2026-11-18 02:42:38",
+    "time_str": "02:42:38",
+    "train_no": "BOXN-514",
+    "loco_id": "WAG-9 31014",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 14 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 14 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.89,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-015",
+    "timestamp": "2026-11-18 02:45:45",
+    "time_str": "02:45:45",
+    "train_no": "BOXN-515",
+    "loco_id": "WAG-9 31015",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 15 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 15 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.9,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-016",
+    "timestamp": "2026-11-18 02:48:52",
+    "time_str": "02:48:52",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 16 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 16 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.91,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-017",
+    "timestamp": "2026-11-18 02:51:59",
+    "time_str": "02:51:59",
+    "train_no": "BOXN-517",
+    "loco_id": "WAG-9 31017",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 17 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 17 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.92,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-018",
+    "timestamp": "2026-11-18 02:54:06",
+    "time_str": "02:54:06",
+    "train_no": "BOXN-518",
+    "loco_id": "WAG-9 31018",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 18 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 18 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.93,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-019",
+    "timestamp": "2026-11-18 02:57:13",
+    "time_str": "02:57:13",
+    "train_no": "BOXN-519",
+    "loco_id": "WAG-9 31019",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 19 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 19 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.94,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-020",
+    "timestamp": "2026-11-18 02:00:20",
+    "time_str": "02:00:20",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 20 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 20 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.85,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-021",
+    "timestamp": "2026-11-18 02:03:27",
+    "time_str": "02:03:27",
+    "train_no": "BOXN-521",
+    "loco_id": "WAG-9 31021",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 21 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 21 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.86,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-022",
+    "timestamp": "2026-11-18 02:06:34",
+    "time_str": "02:06:34",
+    "train_no": "BOXN-522",
+    "loco_id": "WAG-9 31022",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 22 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 22 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.87,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-023",
+    "timestamp": "2026-11-18 02:09:41",
+    "time_str": "02:09:41",
+    "train_no": "BOXN-523",
+    "loco_id": "WAG-9 31023",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 23 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 23 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.88,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-024",
+    "timestamp": "2026-11-18 02:12:48",
+    "time_str": "02:12:48",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 24 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 24 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.89,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-025",
+    "timestamp": "2026-11-18 03:15:55",
+    "time_str": "03:15:55",
+    "train_no": "BOXN-525",
+    "loco_id": "WAG-9 31025",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 25 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 25 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.9,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-026",
+    "timestamp": "2026-11-18 03:18:02",
+    "time_str": "03:18:02",
+    "train_no": "BOXN-526",
+    "loco_id": "WAG-9 31026",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 26 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 26 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.91,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-027",
+    "timestamp": "2026-11-18 03:21:09",
+    "time_str": "03:21:09",
+    "train_no": "BOXN-527",
+    "loco_id": "WAG-9 31027",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 27 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 27 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.92,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-028",
+    "timestamp": "2026-11-18 03:24:16",
+    "time_str": "03:24:16",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 28 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 28 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.93,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-029",
+    "timestamp": "2026-11-18 03:27:23",
+    "time_str": "03:27:23",
+    "train_no": "BOXN-529",
+    "loco_id": "WAG-9 31029",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 29 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 29 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.94,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-030",
+    "timestamp": "2026-11-18 03:30:30",
+    "time_str": "03:30:30",
+    "train_no": "BOXN-530",
+    "loco_id": "WAG-9 31030",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 30 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 30 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.85,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-031",
+    "timestamp": "2026-11-18 03:33:37",
+    "time_str": "03:33:37",
+    "train_no": "BOXN-531",
+    "loco_id": "WAG-9 31031",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 31 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 31 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.86,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-032",
+    "timestamp": "2026-11-18 03:36:44",
+    "time_str": "03:36:44",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 32 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 32 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.87,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-033",
+    "timestamp": "2026-11-18 03:39:51",
+    "time_str": "03:39:51",
+    "train_no": "BOXN-533",
+    "loco_id": "WAG-9 31033",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 33 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 33 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.88,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-034",
+    "timestamp": "2026-11-18 03:42:58",
+    "time_str": "03:42:58",
+    "train_no": "BOXN-534",
+    "loco_id": "WAG-9 31034",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 34 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 34 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.89,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-035",
+    "timestamp": "2026-11-18 03:45:05",
+    "time_str": "03:45:05",
+    "train_no": "BOXN-535",
+    "loco_id": "WAG-9 31035",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 35 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 35 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.9,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-036",
+    "timestamp": "2026-11-18 03:48:12",
+    "time_str": "03:48:12",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 36 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 36 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.91,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-037",
+    "timestamp": "2026-11-18 03:51:19",
+    "time_str": "03:51:19",
+    "train_no": "BOXN-537",
+    "loco_id": "WAG-9 31037",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 37 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 37 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.92,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-038",
+    "timestamp": "2026-11-18 03:54:26",
+    "time_str": "03:54:26",
+    "train_no": "BOXN-538",
+    "loco_id": "WAG-9 31038",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 38 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 38 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.93,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-039",
+    "timestamp": "2026-11-18 03:57:33",
+    "time_str": "03:57:33",
+    "train_no": "BOXN-539",
+    "loco_id": "WAG-9 31039",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 39 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 39 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.94,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-040",
+    "timestamp": "2026-11-18 03:00:40",
+    "time_str": "03:00:40",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 40 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 40 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.85,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-041",
+    "timestamp": "2026-11-18 03:03:47",
+    "time_str": "03:03:47",
+    "train_no": "BOXN-541",
+    "loco_id": "WAG-9 31041",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 41 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 41 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.86,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-042",
+    "timestamp": "2026-11-18 03:06:54",
+    "time_str": "03:06:54",
+    "train_no": "BOXN-542",
+    "loco_id": "WAG-9 31042",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 42 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 42 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.87,
+    "fail_open_bypassed": true
+  },
+  {
+    "id": "RC-GEN-043",
+    "timestamp": "2026-11-18 03:09:01",
+    "time_str": "03:09:01",
+    "train_no": "BOXN-543",
+    "loco_id": "WAG-9 31043",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 43 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 43 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.88,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-044",
+    "timestamp": "2026-11-18 03:12:08",
+    "time_str": "03:12:08",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 44 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 44 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.89,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-045",
+    "timestamp": "2026-11-18 03:15:15",
+    "time_str": "03:15:15",
+    "train_no": "BOXN-545",
+    "loco_id": "WAG-9 31045",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 45 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 45 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.9,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-046",
+    "timestamp": "2026-11-18 03:18:22",
+    "time_str": "03:18:22",
+    "train_no": "BOXN-546",
+    "loco_id": "WAG-9 31046",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 46 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 46 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.91,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-047",
+    "timestamp": "2026-11-18 03:21:29",
+    "time_str": "03:21:29",
+    "train_no": "BOXN-547",
+    "loco_id": "WAG-9 31047",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 47 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 47 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.92,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-048",
+    "timestamp": "2026-11-18 03:24:36",
+    "time_str": "03:24:36",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 48 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 48 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.93,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-049",
+    "timestamp": "2026-11-18 03:27:43",
+    "time_str": "03:27:43",
+    "train_no": "BOXN-549",
+    "loco_id": "WAG-9 31049",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 49 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 49 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.94,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-050",
+    "timestamp": "2026-11-18 04:30:50",
+    "time_str": "04:30:50",
+    "train_no": "BOXN-550",
+    "loco_id": "WAG-9 31050",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 50 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 50 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.85,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-051",
+    "timestamp": "2026-11-18 04:33:57",
+    "time_str": "04:33:57",
+    "train_no": "BOXN-551",
+    "loco_id": "WAG-9 31051",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 51 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 51 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.86,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-052",
+    "timestamp": "2026-11-18 04:36:04",
+    "time_str": "04:36:04",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 52 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 52 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.87,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-053",
+    "timestamp": "2026-11-18 04:39:11",
+    "time_str": "04:39:11",
+    "train_no": "BOXN-553",
+    "loco_id": "WAG-9 31053",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 53 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 53 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.88,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-054",
+    "timestamp": "2026-11-18 04:42:18",
+    "time_str": "04:42:18",
+    "train_no": "BOXN-554",
+    "loco_id": "WAG-9 31054",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 54 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 54 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.89,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-055",
+    "timestamp": "2026-11-18 04:45:25",
+    "time_str": "04:45:25",
+    "train_no": "BOXN-555",
+    "loco_id": "WAG-9 31055",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 55 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 55 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.9,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-056",
+    "timestamp": "2026-11-18 04:48:32",
+    "time_str": "04:48:32",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 56 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 56 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.91,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-057",
+    "timestamp": "2026-11-18 04:51:39",
+    "time_str": "04:51:39",
+    "train_no": "BOXN-557",
+    "loco_id": "WAG-9 31057",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 57 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 57 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.92,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-058",
+    "timestamp": "2026-11-18 04:54:46",
+    "time_str": "04:54:46",
+    "train_no": "BOXN-558",
+    "loco_id": "WAG-9 31058",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 58 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 58 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.93,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-059",
+    "timestamp": "2026-11-18 04:57:53",
+    "time_str": "04:57:53",
+    "train_no": "BOXN-559",
+    "loco_id": "WAG-9 31059",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 59 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 59 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.94,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-060",
+    "timestamp": "2026-11-18 04:00:00",
+    "time_str": "04:00:00",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 60 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 60 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.85,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-061",
+    "timestamp": "2026-11-18 04:03:07",
+    "time_str": "04:03:07",
+    "train_no": "BOXN-561",
+    "loco_id": "WAG-9 31061",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 61 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 61 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.86,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-062",
+    "timestamp": "2026-11-18 04:06:14",
+    "time_str": "04:06:14",
+    "train_no": "BOXN-562",
+    "loco_id": "WAG-9 31062",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 62 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 62 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.87,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-063",
+    "timestamp": "2026-11-18 04:09:21",
+    "time_str": "04:09:21",
+    "train_no": "BOXN-563",
+    "loco_id": "WAG-9 31063",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 63 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 63 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.88,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-064",
+    "timestamp": "2026-11-18 04:12:28",
+    "time_str": "04:12:28",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 64 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 64 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.89,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-065",
+    "timestamp": "2026-11-18 04:15:35",
+    "time_str": "04:15:35",
+    "train_no": "BOXN-565",
+    "loco_id": "WAG-9 31065",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 65 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 65 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.9,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-066",
+    "timestamp": "2026-11-18 04:18:42",
+    "time_str": "04:18:42",
+    "train_no": "BOXN-566",
+    "loco_id": "WAG-9 31066",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 66 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 66 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.91,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-067",
+    "timestamp": "2026-11-18 04:21:49",
+    "time_str": "04:21:49",
+    "train_no": "BOXN-567",
+    "loco_id": "WAG-9 31067",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 67 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 67 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.92,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-068",
+    "timestamp": "2026-11-18 04:24:56",
+    "time_str": "04:24:56",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 68 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 68 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.93,
+    "fail_open_bypassed": true
+  },
+  {
+    "id": "RC-GEN-069",
+    "timestamp": "2026-11-18 04:27:03",
+    "time_str": "04:27:03",
+    "train_no": "BOXN-569",
+    "loco_id": "WAG-9 31069",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 69 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 69 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.94,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-070",
+    "timestamp": "2026-11-18 04:30:10",
+    "time_str": "04:30:10",
+    "train_no": "BOXN-570",
+    "loco_id": "WAG-9 31070",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 70 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 70 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.85,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-071",
+    "timestamp": "2026-11-18 04:33:17",
+    "time_str": "04:33:17",
+    "train_no": "BOXN-571",
+    "loco_id": "WAG-9 31071",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 71 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 71 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.86,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-072",
+    "timestamp": "2026-11-18 04:36:24",
+    "time_str": "04:36:24",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 72 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 72 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.87,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-073",
+    "timestamp": "2026-11-18 04:39:31",
+    "time_str": "04:39:31",
+    "train_no": "BOXN-573",
+    "loco_id": "WAG-9 31073",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 73 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 73 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.88,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-074",
+    "timestamp": "2026-11-18 04:42:38",
+    "time_str": "04:42:38",
+    "train_no": "BOXN-574",
+    "loco_id": "WAG-9 31074",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 74 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 74 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.89,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-075",
+    "timestamp": "2026-11-18 05:45:45",
+    "time_str": "05:45:45",
+    "train_no": "BOXN-575",
+    "loco_id": "WAG-9 31075",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 75 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 75 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.9,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-076",
+    "timestamp": "2026-11-18 05:48:52",
+    "time_str": "05:48:52",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 76 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 76 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.91,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-077",
+    "timestamp": "2026-11-18 05:51:59",
+    "time_str": "05:51:59",
+    "train_no": "BOXN-577",
+    "loco_id": "WAG-9 31077",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 77 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 77 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.92,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-078",
+    "timestamp": "2026-11-18 05:54:06",
+    "time_str": "05:54:06",
+    "train_no": "BOXN-578",
+    "loco_id": "WAG-9 31078",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 78 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 78 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.93,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-079",
+    "timestamp": "2026-11-18 05:57:13",
+    "time_str": "05:57:13",
+    "train_no": "BOXN-579",
+    "loco_id": "WAG-9 31079",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 79 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 79 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.94,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-080",
+    "timestamp": "2026-11-18 05:00:20",
+    "time_str": "05:00:20",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 80 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 80 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.85,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-081",
+    "timestamp": "2026-11-18 05:03:27",
+    "time_str": "05:03:27",
+    "train_no": "BOXN-581",
+    "loco_id": "WAG-9 31081",
+    "section": "Lalgarh-Bikaner",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 81 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 81 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.86,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-082",
+    "timestamp": "2026-11-18 05:06:34",
+    "time_str": "05:06:34",
+    "train_no": "BOXN-582",
+    "loco_id": "WAG-9 31082",
+    "section": "Bikaner-Suratgarh",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 82 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 82 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.87,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-083",
+    "timestamp": "2026-11-18 05:09:41",
+    "time_str": "05:09:41",
+    "train_no": "BOXN-583",
+    "loco_id": "WAG-9 31083",
+    "section": "Lalgarh-Bikaner",
+    "station": "Suratgarh Jn",
+    "channel": "VHF-CH02",
+    "speaker": "STATION_MASTER",
+    "speaker_role": "STATION_MASTER",
+    "transcript_hi": "सिग्नल नंबर 83 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 83 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.88,
+    "fail_open_bypassed": false
+  },
+  {
+    "id": "RC-GEN-084",
+    "timestamp": "2026-11-18 05:12:48",
+    "time_str": "05:12:48",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "section": "Bikaner-Suratgarh",
+    "station": "Bikaner Jn",
+    "channel": "VHF-CH02",
+    "speaker": "LOCO_PILOT",
+    "speaker_role": "LOCO_PILOT",
+    "transcript_hi": "सिग्नल नंबर 84 की स्थिति सामान्य, लाइन क्लीयर है।",
+    "transcript_en": "Signal No 84 status normal, line is clear.",
+    "safety_keywords": [
+      "Signal Status Normal",
+      "Line Clear"
+    ],
+    "clarity_score": 0.89,
+    "fail_open_bypassed": false
+  }
+]
