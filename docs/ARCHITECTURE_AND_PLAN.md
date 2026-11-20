@@ -116,12 +116,20 @@ flowchart TD
             GEMMA["Gemma 2B/7B / Local LLM<br/>(On-Prem Cab / Division Air-Gapped Mode)"]
         end
 
-        subgraph SKILLS ["5 Google AI Agent Skills"]
+        subgraph SKILLS ["Google AI Agent Skills & Dynamic Connector Registry (ROCP)"]
+            REG["Dynamic Connector Registry<br/>(Auto-discovers endpoints: WDD, Locate, Railcomm + WILD, OHE, Kavach)"]
             S1["Skill 1: railcomm_audio_search"]
             S2["Skill 2: locate_cabin_violation_check"]
             S3["Skill 3: wdd_wagon_damage_query"]
             S4["Skill 4: multimodal_timeline_synchronizer"]
             S5["Skill 5: bilingual_safety_report_generator"]
+            SN["Dynamic Skill N: query_new_product_endpoint"]
+            REG --> S1
+            REG --> S2
+            REG --> S3
+            REG --> S4
+            REG --> S5
+            REG --> SN
         end
 
         CACHE["Zero-Latency Fail-Safe Cache<br/>(cached_demo_responses.json)"]
@@ -311,24 +319,33 @@ The 5 Google AI Agent Skills are upgraded to seamlessly integrate with the authe
 
 ### Phase 1: Context & Dataset Alignment (`data/`)
 * [x] Integrate Master Context across WDD, Locate, and Railcomm.
-* [ ] Generate realistic synthetic data reflecting authentic schemas:
-  * `data/railcomm_transcripts.json`: 75+ lines of VHF audio transcripts with safety vocabulary (Caution, Stop, Signal, Block, Line Clear, BP Pressure) in Hindi/English with fail-open status.
-  * `data/locate_alerts.json`: 25+ CVVRS detections (5 violation types + 3 compliant activities, confidence, reviewer confirmation state).
-  * `data/wdd_inspections.json`: 15+ wagon gantry records (PaddleOCR wagon numbers, 8 damage classes, entry-vs-exit comparison).
+* [x] Generate realistic synthetic data reflecting authentic schemas:
+  * `data/railcomm_transcripts.json`: Authentic NWR VHF radio transcripts with safety vocabulary (Caution, Stop, Signal, Block, Line Clear, BP Pressure) in Hindi/English with fail-open status.
+  * `data/locate_alerts.json`: CVVRS detections (5 violation types + 3 compliant activities, confidence, reviewer confirmation state).
+  * `data/wdd_inspections.json`: Wagon gantry records (PaddleOCR wagon numbers, 8 damage classes, entry-vs-exit comparison).
+  * `data/wild_telemetry.json`: 4th plug-and-play product data (Wheel Impact Load Detector - WILD dynamic impact and axle loads).
   * `data/cached_demo_responses.json`: 5 pre-computed responses ensuring 100% demo uptime at the event venue.
 
-### Phase 2: Core Engine & Skills Scaffolding (`src/`)
-* [ ] Implement `src/skills/railcomm_search.py`
-* [ ] Implement `src/skills/locate_violations.py`
-* [ ] Implement `src/skills/wdd_damage.py`
-* [ ] Implement `src/skills/timeline_sync.py`
-* [ ] Implement `src/skills/report_gen.py`
-* [ ] Build `src/engine.py`: Supports both Gemini API (cloud/Buildathon mode) and Local/Gemma mode via modular abstraction. Includes automatic failover to `cached_demo_responses.json`.
+### Phase 2: Core Engine & Pluggable Connectors (`src/` & `connectors/`)
+* [x] Implement RailKavach Open Connector Protocol (ROCP) Base (`src/connectors/base.py`) & Canonical Railway Event Schema.
+* [x] Implement Dynamic Connector Registry (`src/connectors/registry.py`) supporting zero-code YAML manifests (`connectors/*.yaml`).
+* [x] Implement Multimodal Timeline Synchronizer (`src/skills/timeline_sync.py`).
+* [x] Implement Statutory CRS Inquiry Report Generator & Section 63 BSA 2023 Electronic Evidence Certificate (`src/skills/report_gen.py`).
+* [x] Implement Circadian Fatigue & Pattern Anomaly Engine (`src/skills/pattern_engine.py`).
+* [x] Build `src/engine.py`: Google Gemini API multimodal orchestrator with automatic failover to `cached_demo_responses.json`.
 
 ### Phase 3: Unified Dashboard & Copilot Console (`app.py`)
-* [ ] Streamlit interface implementing:
-  * Top navigation covering the Unified RailKavach ecosystem (Overview, WDD, Locate, Railcomm, Copilot Console).
+* [x] Streamlit interface implementing:
+  * Top navigation covering 5 core operational views (Copilot Console, Multimodal Timeline, Plug & Play ROCP Connectors, Statutory CRS Report & BSA Cert, and Legal Radar).
   * 3 One-Click Scenario Buttons (SPAD Investigation, Fatigue Trend Analysis, Entry-vs-Exit Wagon Damage Audit).
+  * Multi-Source Evidence Inspector with polymorphic cards for Audio, Video, Image, and Sensor Telemetry.
+  * Reviewer verification status badge (`🟢 Confirmed` vs `🟡 Pending Verification`).
+  * Instant bilingual toggle (English ⇋ हिन्दी Devanagari).
+  * 1-Click Markdown Statutory Inquiry Export with Master SHA-256 hash.
+
+### Phase 4: Pitch Deck & Presentation Prep
+* [ ] Update presentation slides with the 3 pillars, the 5 stages, and the flexible/on-prem architecture.
+* [ ] Rehearse the 3-minute pitch emphasizing zero hardware footprint, NWR scale, and safety fail-open resilience.
   * Multi-Source Evidence Inspector (Side-by-side radio transcript + cab video badge + wagon damage record).
   * Reviewer verification status badge (`🟢 Verified by Reviewer` vs `🟡 Pending Verification`).
   * Bilingual toggle (English ⇋ हिन्दी Devanagari).

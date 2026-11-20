@@ -5,10 +5,18 @@
 ---
 
 ## 📌 Fast Navigation
-* **[docs/ARCHITECTURE_AND_PLAN.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/ARCHITECTURE_AND_PLAN.md)**: Master System Architecture & Phased Tactical Plan of Action (POA).
-* **[docs/skills.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/skills.md)**: Google Agent Skills specification (WDD, Locate, Railcomm tool signatures).
-* **[docs/EVALUATION_GUIDE.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/EVALUATION_GUIDE.md)**: Official evaluation matrix (30% Functional, 20% Architecture, 20% Google AI Depth) & winning pitch flow.
-* **[docs/initial.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/initial.md)**: Original shortlist briefing, schedule, and team communications.
+* **[docs/ENTERPRISE_SCALE_BEYOND_CLOUD_RUN.md](docs/ENTERPRISE_SCALE_BEYOND_CLOUD_RUN.md)**: Enterprise Scale Beyond Cloud Run (Dedicated GKE GPUs, Kafka, Cloud Interconnect, Edge AI).
+* **[docs/HIGH_CONCURRENCY_ZERO_FAILURE_GUIDE.md](docs/HIGH_CONCURRENCY_ZERO_FAILURE_GUIDE.md)**: High-Concurrency & Zero-Failure Architecture (10,000+ users without Docker, K8s, or cloud services).
+* **[docs/MASTER_STRATEGIC_DOSSIER.md](docs/MASTER_STRATEGIC_DOSSIER.md)**: Master Strategic, Technical & Presentation Dossier (Pitch Narrative, Google Cloud Suite, Legal Acts, ROCP Protocol).
+* **[docs/GOOGLE_CLOUD_ENTERPRISE_ARCHITECTURE.md](docs/GOOGLE_CLOUD_ENTERPRISE_ARCHITECTURE.md)**: National-scale Google Cloud Backend Architecture (Cloud Run, AlloyDB, BigQuery, GCS, MCP, Vertex AI, Pub/Sub).
+* **[docs/GOOGLE_AI_STUDIO_GUIDE.md](docs/GOOGLE_AI_STUDIO_GUIDE.md)**: Google AI Studio System Prompt & 3 Golden Demo Prompts.
+* **[docs/HACK2SKILL_SUBMISSION_TEMPLATE.md](docs/HACK2SKILL_SUBMISSION_TEMPLATE.md)**: Official Event Submission answers (Problem, Solution, Architecture, Models).
+* **[docs/PLUGGABLE_CONNECTORS_AND_EXTENSIBILITY.md](docs/PLUGGABLE_CONNECTORS_AND_EXTENSIBILITY.md)**: Open Connector Protocol (ROCP) & Pluggable Architecture for connecting future railway products (WILD, OHE, Kavach-TCAS).
+* **[docs/STATUTORY_AND_LEGAL_COMPLIANCE.md](docs/STATUTORY_AND_LEGAL_COMPLIANCE.md)**: Statutory, Legal & Regulatory Compliance Framework (DPDP Act, Railways Act, BSA 2023, RDSO, CERT-In, RPF/RPUP, HOER).
+* **[docs/ARCHITECTURE_AND_PLAN.md](docs/ARCHITECTURE_AND_PLAN.md)**: Master System Architecture & Phased Tactical Plan of Action (POA).
+* **[docs/skills.md](docs/skills.md)**: Google Agent Skills specification (WDD, Locate, Railcomm tool signatures).
+* **[docs/EVALUATION_GUIDE.md](docs/EVALUATION_GUIDE.md)**: Official evaluation matrix (30% Functional, 20% Architecture, 20% Google AI Depth) & winning pitch flow.
+* **[docs/initial.md](docs/initial.md)**: Original shortlist briefing, schedule, and team communications.
 * **[assets/railkavach_architecture.jpg](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/railkavach_architecture.jpg)**: Pitch deck architecture infographic image (16:9 JPG).
 * **[assets/architecture_diagram.svg](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/architecture_diagram.svg)**: High-resolution visual architecture vector diagram (SVG).
 * **[assets/architecture_visual.html](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/architecture_visual.html)**: Interactive visual architecture web dashboard.
@@ -72,3 +80,34 @@ The architecture is designed to operate seamlessly across on-premise railway inf
   * *Cloud / Buildathon Mode:* Google Gemini 1.5 Pro / Flash (long-context multimodal reasoning & function calling).
   * *On-Prem / Edge Mode:* Gemma 2B/7B or local LLM running directly inside locomotive cabs or division servers.
 * **Zero-Latency Fallback Cache (`cached_demo_responses.json`):** Ensures 100% demo uptime at the Buildathon venue even during Wi-Fi dropouts.
+
+---
+
+## 🚀 How to Run the End-to-End Full-Stack System
+
+### Quick Start (One Command)
+```bash
+./run_fullstack.sh
+```
+This launches:
+1. **FastAPI Backend:** [http://localhost:8000](http://localhost:8000) (Interactive Swagger Docs: [http://localhost:8000/docs](http://localhost:8000/docs))
+2. **Next.js Frontend:** [http://localhost:3000](http://localhost:3000)
+
+### Manual Service Launch
+
+#### 1. Backend (FastAPI + GCS + Postgres + Gemini)
+```bash
+cd backend
+.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+#### 2. Frontend (Next.js 16 + React 19 + Tailwind CSS)
+```bash
+cd frontend
+npm run dev
+```
+
+#### 3. Lightweight Streamlit Alternative
+```bash
+streamlit run app.py
+```

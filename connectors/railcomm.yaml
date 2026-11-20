@@ -1,0 +1,39 @@
+product_id: "railcomm_audio_analytics"
+display_name: "Railcomm Audio Analytics"
+version: "1.2.0"
+category: "ONBOARD_RADIO_AUDIO"
+modality: "AUDIO"
+endpoint:
+  url: "local://data/railcomm_transcripts.json"
+  auth_type: "none"
+  timeout_seconds: 5
+query_capabilities:
+  can_filter_by_train: true
+  can_filter_by_time_window: true
+  can_filter_by_keyword: true
+  can_filter_by_section: true
+gemini_tool_definition:
+  name: "search_railcomm_transcripts"
+  description: "Searches Railcomm speech-to-text radio communications across VHF, Tetra, and cab intercom channels for railway vocabulary (e.g. Caution, Stop, Signal, Block, Line Clear, BP Pressure) in Hindi or English."
+  parameters:
+    type: "object"
+    properties:
+      train_no:
+        type: "string"
+        description: "Train number or rake ID (e.g., '12414', 'BOXN-542')"
+      section:
+        type: "string"
+        description: "Railway division/section (e.g., 'Suratgarh-Bikaner')"
+      keyword:
+        type: "string"
+        description: "Keyword in Hindi or English (e.g., 'लाल सिग्नल', 'Caution Order', 'Loop Line')"
+      start_time:
+        type: "string"
+      end_time:
+        type: "string"
+    required: ["keyword"]
+ui_rendering:
+  badge_color: "#0288D1"
+  icon: "mic"
+  primary_metric: "audio_quality_score"
+  metric_unit: "score"
