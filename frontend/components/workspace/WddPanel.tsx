@@ -106,6 +106,39 @@ export function WddPanel({ canIssue, onIssue }: { canIssue: boolean; onIssue: (s
           </div>
         </div>
         <p className="mt-3 text-[13px] text-ink-500">{wagon.note}</p>
+
+        {wagon.image_url && (
+          <div className="mt-4 overflow-hidden rounded-card border border-[var(--line)] bg-white p-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-2">
+              <span className="mono-label text-ink-500">6-Gantry Optical & Laser Scan Frame · Section 63 BSA 2023 Evidence</span>
+              {wagon.defect_tag && (
+                <span className={`chip text-[10px] font-bold ${
+                  wagon.status === "CRITICAL"
+                    ? "border-danger/40 bg-danger-soft text-danger-ink"
+                    : wagon.status === "NEW_DAMAGE"
+                    ? "border-orange/40 bg-orange-soft text-orange-ink"
+                    : wagon.status === "PRE_EXISTING"
+                    ? "border-amber/40 bg-amber-soft text-amber-ink"
+                    : "border-ok/30 bg-ok-soft text-ok-ink"
+                }`}>
+                  {wagon.defect_tag}
+                </span>
+              )}
+            </div>
+            <div className="relative mt-1 max-h-56 overflow-hidden rounded-btn bg-black/5 border border-[var(--line)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={wagon.image_url}
+                alt={`Wagon scan for ${wagon.serial}`}
+                className="h-48 w-full object-cover transition hover:scale-105"
+              />
+              <div className="absolute bottom-2 left-2 flex items-center gap-2 rounded bg-black/75 px-2 py-1 text-[11px] font-mono text-white shadow-xs">
+                <span>GANTRY: CAM-03 PORT</span>
+                <span className="text-amber">OCR: {wagon.serial}</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

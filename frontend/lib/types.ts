@@ -86,4 +86,6 @@ export interface Wagon {
   exit: string;
   status: WagonStatus;
   note: string;
+  image_url?: string;
+  defect_tag?: string;
 }

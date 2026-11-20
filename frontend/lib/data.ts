@@ -152,16 +152,49 @@ export const TIMELINE: TimelineEvent[] = [
 
 /** BOXN-542 rake: 58 wagons; three carry findings from the entry/exit gantry differential. */
 const FINDINGS: Record<number, Omit<Wagon, "pos">> = {
-  14: { serial: "BOXNHL 22011945123", entry: "Clear", exit: "Door defect + broken spring", status: "NEW_DAMAGE", note: "Transit damage at contractor siding · sick line tagged" },
-  15: { serial: "BOXNHL 22011945124", entry: "Body dent >150 mm", exit: "Body dent >150 mm", status: "PRE_EXISTING", note: "Pre-existing before Suratgarh · contractor exempt" },
-  28: { serial: "BCNHL 33022198001", entry: "Clear", exit: "Brake beam defect", status: "CRITICAL", note: "Hanger pin dislodged · wheel-flange hazard" },
+  14: { 
+    serial: "BOXNHL 22011945123", 
+    entry: "Clear", 
+    exit: "Door defect (unlatched) + broken spring", 
+    status: "NEW_DAMAGE", 
+    note: "Transit damage sustained at contractor siding · Lalgarh Yard Sick-Line tagged",
+    image_url: "/evidence_wdd/open_door/Railways_goods_wagon_in_yard_0aa9832a.png",
+    defect_tag: "DOOR_UNLATCHED (HIGH)"
+  },
+  15: { 
+    serial: "BOXNHL 22011945124", 
+    entry: "Body dent >150 mm", 
+    exit: "Body dent >150 mm", 
+    status: "PRE_EXISTING", 
+    note: "Pre-existing before Suratgarh · contractor exempt from transit penalty",
+    image_url: "/evidence_wdd/dent/Indian_Railways_freight_wagon_view_58bef7e0.jpg",
+    defect_tag: "BODY_PANEL_DENT (PRE-EXISTING)"
+  },
+  28: { 
+    serial: "BCNHL 33022198001", 
+    entry: "Clear", 
+    exit: "Missing discharge door + brake rigging defect", 
+    status: "CRITICAL", 
+    note: "Catastrophic missing door · wheel-flange hazard · immediate mechanical shunting required",
+    image_url: "/evidence_wdd/no_door/Railways_wagon_with_open_door_b4768ba3.png",
+    defect_tag: "MISSING_DOOR (CRITICAL)"
+  },
 };
 
 export const RAKE: Wagon[] = Array.from({ length: 58 }, (_, i) => {
   const pos = i + 1;
   const finding = FINDINGS[pos];
   if (finding) return { pos, ...finding };
-  return { pos, serial: `BOXNHL 2201194${5100 + pos}`, entry: "Clear", exit: "Clear", status: "CLEAR", note: "No change between gantries" };
+  return { 
+    pos, 
+    serial: `BOXNHL 2201194${5100 + pos}`, 
+    entry: "Clear", 
+    exit: "Clear", 
+    status: "CLEAR", 
+    note: "Compliant optical scan · zero defects detected across all 6 gantry angles",
+    image_url: "/evidence_wdd/side_view/Actual-Image-1-_jpg.rf.607437793c10197e9c59ee78ab7fdc4c.jpg",
+    defect_tag: "CLEAR (NOMINAL)"
+  };
 });
 
 export const SAMPLE_FILES = [

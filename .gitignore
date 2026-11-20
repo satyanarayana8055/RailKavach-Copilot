@@ -249,6 +249,8 @@ data/audio_denoising/
 data/drive_ingest/
 data/locate_cabin/
 frontend/public/evidence_cabin
+data/wdd_images/
+frontend/public/evidence_wdd
 
 # Raw Drive/ZIP ingest downloads (large, may contain operational data)
 data/drive_ingest/
