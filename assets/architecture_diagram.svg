@@ -1,0 +1,312 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 1020" width="100%" height="100%" style="background:#090d16; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Background & Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080c14"/>
+      <stop offset="50%" stop-color="#0d1424"/>
+      <stop offset="100%" stop-color="#05080f"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#182234"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="copilotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="50%" stop-color="#2e1065"/>
+      <stop offset="100%" stop-color="#172554"/>
+    </linearGradient>
+    <linearGradient id="accentWdd" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="accentLocate" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="accentRailcomm" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+
+    <!-- Filter Shadows -->
+    <filter id="shadow" x="-10%" y="-5%" width="120%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1520" height="1020" fill="url(#bgGrad)"/>
+  
+  <!-- Subtle Grid -->
+  <g opacity="0.04" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="110" x2="1520" y2="110"/>
+    <line x1="0" y1="360" x2="1520" y2="360"/>
+    <line x1="0" y1="520" x2="1520" y2="520"/>
+    <line x1="0" y1="760" x2="1520" y2="760"/>
+    <line x1="506" y1="0" x2="506" y2="1020"/>
+    <line x1="1013" y1="0" x2="1013" y2="1020"/>
+  </g>
+
+  <!-- TOP HEADER -->
+  <g id="header" transform="translate(50, 30)">
+    <rect x="0" y="0" width="48" height="48" rx="12" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+    <path d="M14 14 h20 v16 a6 6 0 0 1 -6 6 h-8 a6 6 0 0 1 -6 -6 z M18 36 l-4 4 M30 36 l4 4 M19 28 a2 2 0 1 0 0.1 0 M29 28 a2 2 0 1 0 0.1 0 M17 19 h14" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+    
+    <text x="64" y="24" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="0.5">RailKavach AI Platform &amp; RailKavach Copilot</text>
+    <text x="560" y="24" font-size="13" font-weight="700" fill="#38bdf8" letter-spacing="1">| MASTER SYSTEM ARCHITECTURE</text>
+    <text x="64" y="44" font-size="12" font-weight="400" fill="#94a3b8">AiSPRY Technologies • Indian Railways • 5-Stage Operational Architecture (WDD • Locate • Railcomm)</text>
+    
+    <rect x="1170" y="6" width="250" height="32" rx="16" fill="#111c33" stroke="#1d4ed8" stroke-width="1"/>
+    <circle cx="1186" cy="22" r="5" fill="#10b981"/>
+    <text x="1198" y="26" font-size="11.5" font-weight="600" fill="#e2e8f0">Cloud-Agnostic / On-Prem Ready</text>
+  </g>
+
+  <!-- ================= SECTION 1: THE 3 RAILKAVACH SOLUTIONS ================= -->
+  <g id="solutions" transform="translate(50, 95)">
+    <!-- Main Outer Container -->
+    <rect x="0" y="0" width="1420" height="235" rx="16" fill="#0b1322" stroke="#1e293b" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="1420" height="32" rx="16" fill="#172554" opacity="0.4"/>
+    <text x="24" y="22" font-size="12" font-weight="700" fill="#60a5fa" letter-spacing="1">THE 3 PRODUCTION AI PLATFORMS (STAGE 01: CAPTURE ➔ STAGE 02: INFER ➔ STAGE 03: ATTRIBUTE)</text>
+    <text x="1230" y="22" font-size="11" font-weight="500" fill="#94a3b8">24×7 Active Monitoring</text>
+
+    <!-- PILLAR 1: WDD -->
+    <g transform="translate(20, 42)">
+      <rect x="0" y="0" width="440" height="175" rx="12" fill="url(#cardGrad)" stroke="#059669" stroke-width="1.5"/>
+      <rect x="0" y="0" width="440" height="28" rx="12" fill="#064e3b" opacity="0.7"/>
+      <text x="14" y="19" font-size="12" font-weight="700" fill="#34d399">PROJECT 01: WAGON DAMAGE DETECTION (WDD)</text>
+      
+      <text x="14" y="48" font-size="11" font-weight="600" fill="#e2e8f0">Stage 01 Capture:</text>
+      <text x="125" y="48" font-size="11" font-weight="400" fill="#94a3b8">6 Gantry Cameras (Entry &amp; Exit Tracks)</text>
+
+      <text x="14" y="68" font-size="11" font-weight="600" fill="#e2e8f0">Stage 02 Infer:</text>
+      <text x="125" y="68" font-size="11" font-weight="400" fill="#94a3b8">YOLOv11-L (8 Damage Classes) + PaddleOCR</text>
+
+      <text x="14" y="88" font-size="11" font-weight="600" fill="#e2e8f0">Damage Classes:</text>
+      <text x="125" y="88" font-size="10.5" font-weight="400" fill="#94a3b8">Body, Door, Bogie, Coupler, Spring, Handrail, Ladder</text>
+
+      <text x="14" y="108" font-size="11" font-weight="600" fill="#e2e8f0">Stage 03 Attribute:</text>
+      <text x="125" y="108" font-size="11" font-weight="400" fill="#34d399">Entry-vs-Exit Condition Differential (Dispute Proof)</text>
+
+      <rect x="14" y="125" width="412" height="36" rx="6" fill="#064e3b" opacity="0.3" stroke="#059669" stroke-width="0.8"/>
+      <text x="24" y="147" font-size="10.5" font-weight="500" fill="#a7f3d0">KPI: 5-8h review reduced to ~2h • 99.2% frame detection • 98% OCR</text>
+    </g>
+
+    <!-- PILLAR 2: LOCATE -->
+    <g transform="translate(480, 42)">
+      <rect x="0" y="0" width="460" height="175" rx="12" fill="url(#cardGrad)" stroke="#d97706" stroke-width="1.5"/>
+      <rect x="0" y="0" width="460" height="28" rx="12" fill="#78350f" opacity="0.7"/>
+      <text x="14" y="19" font-size="12" font-weight="700" fill="#fbbf24">PROJECT 02: LOCATE — CABIN VIDEO ANALYTICS</text>
+      
+      <text x="14" y="48" font-size="11" font-weight="600" fill="#e2e8f0">Stage 01 Capture:</text>
+      <text x="125" y="48" font-size="11" font-weight="400" fill="#94a3b8">CVVRS Continuous In-Cab Camera Footage</text>
+
+      <text x="14" y="68" font-size="11" font-weight="600" fill="#e2e8f0">Stage 02 Infer:</text>
+      <text x="125" y="68" font-size="11" font-weight="400" fill="#94a3b8">YOLOv8 Edge Activity &amp; Object Detection</text>
+
+      <text x="14" y="88" font-size="11" font-weight="600" fill="#e2e8f0">5 Violations:</text>
+      <text x="125" y="88" font-size="10.5" font-weight="400" fill="#f87171">Mobile Phone, Sleep/Fatigue, Food, Hand Signal, Unauth</text>
+
+      <text x="14" y="108" font-size="11" font-weight="600" fill="#e2e8f0">3 Compliant Acts:</text>
+      <text x="125" y="108" font-size="10.5" font-weight="400" fill="#34d399">Walkie-Talkie, Reading/Writing, Train Control (No False Alarm)</text>
+
+      <rect x="14" y="125" width="432" height="36" rx="6" fill="#78350f" opacity="0.3" stroke="#d97706" stroke-width="0.8"/>
+      <text x="24" y="147" font-size="10.5" font-weight="500" fill="#fde68a">Rule: Every alert has Reviewer Verification Queue (Pending vs Confirmed)</text>
+    </g>
+
+    <!-- PILLAR 3: RAILCOMM -->
+    <g transform="translate(960, 42)">
+      <rect x="0" y="0" width="440" height="175" rx="12" fill="url(#cardGrad)" stroke="#2563eb" stroke-width="1.5"/>
+      <rect x="0" y="0" width="440" height="28" rx="12" fill="#1e3a8a" opacity="0.7"/>
+      <text x="14" y="19" font-size="12" font-weight="700" fill="#60a5fa">PROJECT 03: RAILCOMM — AUDIO ANALYTICS</text>
+      
+      <text x="14" y="48" font-size="11" font-weight="600" fill="#e2e8f0">Stage 01 Capture:</text>
+      <text x="125" y="48" font-size="11" font-weight="400" fill="#94a3b8">Operational VHF / Tetra Radio &amp; Intercom Streams</text>
+
+      <text x="14" y="68" font-size="11" font-weight="600" fill="#e2e8f0">Stage 02 Infer:</text>
+      <text x="125" y="68" font-size="11" font-weight="400" fill="#94a3b8">U-Net Denoising (9+ Noise Classes) + Transformer</text>
+
+      <text x="14" y="88" font-size="11" font-weight="600" fill="#e2e8f0">Safety Vocab:</text>
+      <text x="125" y="88" font-size="10.5" font-weight="400" fill="#93c5fd">Caution, Stop, Signal, Block, Line Clear, BP Pressure</text>
+
+      <text x="14" y="108" font-size="11" font-weight="600" fill="#e2e8f0">Bilingual Output:</text>
+      <text x="125" y="108" font-size="11" font-weight="400" fill="#94a3b8">Real-time Hindi &amp; English Transcript Generation</text>
+
+      <rect x="14" y="125" width="412" height="36" rx="6" fill="#1e3a8a" opacity="0.3" stroke="#2563eb" stroke-width="0.8"/>
+      <text x="24" y="147" font-size="10.5" font-weight="700" fill="#38bdf8">SAFETY RULE: FAIL-OPEN (AI stall never blocks original voice channel)</text>
+    </g>
+  </g>
+
+  <!-- Flow Arrows Downward -->
+  <g stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="4,4" opacity="0.6">
+    <line x1="260" y1="330" x2="260" y2="355"/>
+    <line x1="710" y1="330" x2="710" y2="355"/>
+    <line x1="1180" y1="330" x2="1180" y2="355"/>
+  </g>
+
+  <!-- ================= SECTION 2: PLUGGABLE DATA & STORAGE BACKEND ================= -->
+  <g id="storage" transform="translate(50, 355)">
+    <rect x="0" y="0" width="1420" height="135" rx="16" fill="#0d1424" stroke="#1e293b" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="1420" height="28" rx="16" fill="#1e293b" opacity="0.5"/>
+    <text x="24" y="19" font-size="12" font-weight="700" fill="#38bdf8" letter-spacing="1">PLUGGABLE DATA BACKEND &amp; STORAGE ADAPTERS (MODULAR / CLOUD-AGNOSTIC)</text>
+    <text x="1170" y="19" font-size="11" font-weight="500" fill="#94a3b8">No Hard Cloud Lock-In</text>
+
+    <!-- Adapter A: On-Premise Default -->
+    <g transform="translate(20, 38)">
+      <rect x="0" y="0" width="690" height="85" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="22" font-size="12" font-weight="700" fill="#e2e8f0">ADAPTER A: ON-PREMISE / AIR-GAPPED (RAILWAY DATA CENTER PRIORITY)</text>
+      <text x="14" y="44" font-size="11" font-weight="400" fill="#94a3b8">• <strong class="text-white">PostgreSQL:</strong> Roster, train schedules, audit trails, and reviewer decisions.</text>
+      <text x="14" y="60" font-size="11" font-weight="400" fill="#94a3b8">• <strong class="text-white">MongoDB:</strong> High-volume telemetry detections, bounding boxes, and event payloads.</text>
+      <text x="14" y="76" font-size="11" font-weight="400" fill="#94a3b8">• <strong class="text-white">pgvector / Qdrant &amp; MinIO:</strong> On-prem semantic vector search &amp; object media store.</text>
+    </g>
+
+    <!-- Adapter B: Cloud / GCP Option -->
+    <g transform="translate(730, 38)">
+      <rect x="0" y="0" width="670" height="85" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="14" y="22" font-size="12" font-weight="700" fill="#60a5fa">ADAPTER B: CLOUD DEPLOYMENT (GOOGLE CLOUD ADAPTER FOR BUILDATHON)</text>
+      <text x="14" y="44" font-size="11" font-weight="400" fill="#94a3b8">• <strong class="text-white">Google Cloud Storage (GCS):</strong> Cloud object store for audio WAVs and video MP4 clips.</text>
+      <text x="14" y="60" font-size="11" font-weight="400" fill="#94a3b8">• <strong class="text-white">BigQuery + Vector Search:</strong> Managed serverless vector indexing over 3.68M lines.</text>
+      <text x="14" y="76" font-size="11" font-weight="400" fill="#94a3b8">• <strong class="text-white">Cloud Run / Vertex AI:</strong> Managed container serving &amp; Gemini API gateway.</text>
+    </g>
+  </g>
+
+  <!-- Flow Arrows Downward -->
+  <g stroke="#a855f7" stroke-width="1.8" stroke-dasharray="4,4" opacity="0.6">
+    <line x1="365" y1="490" x2="365" y2="515"/>
+    <line x1="1065" y1="490" x2="1065" y2="515"/>
+  </g>
+
+  <!-- ================= SECTION 3: RAILKAVACH COPILOT & AGENT SKILLS ================= -->
+  <g id="copilot" transform="translate(50, 515)">
+    <rect x="0" y="0" width="1420" height="235" rx="16" fill="url(#copilotGrad)" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+    
+    <rect x="0" y="0" width="1420" height="36" rx="16" fill="#1e1b4b" opacity="0.8"/>
+    <circle cx="24" cy="18" r="6" fill="#818cf8"/>
+    <text x="38" y="22" font-size="13" font-weight="800" fill="#ffffff" letter-spacing="1">RAILKAVACH COPILOT: CONVERSATIONAL REASONING CORE &amp; AGENT SKILLS</text>
+    <rect x="1010" y="6" width="395" height="24" rx="6" fill="#312e81" stroke="#818cf8" stroke-width="0.8"/>
+    <text x="1022" y="22" font-size="11" font-weight="600" fill="#e0e7ff">Pluggable Reasoning: Gemini 1.5 Pro (Cloud) ⇋ Gemma Edge (On-Prem)</text>
+
+    <!-- 5 Agent Skills Cards -->
+    <!-- Skill 1 -->
+    <g transform="translate(20, 50)">
+      <rect x="0" y="0" width="260" height="115" rx="10" fill="#0f172a" stroke="#2563eb" stroke-width="1.2"/>
+      <rect x="10" y="10" width="22" height="22" rx="5" fill="#1d4ed8"/>
+      <text x="17" y="26" font-size="12" font-weight="800" fill="#ffffff">1</text>
+      <text x="38" y="24" font-size="11" font-weight="700" fill="#93c5fd">railcomm_audio_search</text>
+      <text x="10" y="52" font-size="10.5" font-weight="400" fill="#cbd5e1">• Denoised VHF voice logs</text>
+      <text x="10" y="68" font-size="10.5" font-weight="400" fill="#cbd5e1">• Hindi/Eng safety vocabulary</text>
+      <text x="10" y="84" font-size="10.5" font-weight="400" fill="#cbd5e1">• Caution, Stop, Signal, BP</text>
+      <text x="10" y="102" font-size="9.5" font-weight="600" fill="#38bdf8">search_railcomm_transcripts()</text>
+    </g>
+
+    <!-- Skill 2 -->
+    <g transform="translate(300, 50)">
+      <rect x="0" y="0" width="260" height="115" rx="10" fill="#0f172a" stroke="#d97706" stroke-width="1.2"/>
+      <rect x="10" y="10" width="22" height="22" rx="5" fill="#b45309"/>
+      <text x="17" y="26" font-size="12" font-weight="800" fill="#ffffff">2</text>
+      <text x="38" y="24" font-size="11" font-weight="700" fill="#fcd34d">locate_cabin_violations</text>
+      <text x="10" y="52" font-size="10.5" font-weight="400" fill="#cbd5e1">• 5 Violations (Phone, Sleep, etc.)</text>
+      <text x="10" y="68" font-size="10.5" font-weight="400" fill="#cbd5e1">• 3 Compliant Acts (Walkie, etc.)</text>
+      <text x="10" y="84" font-size="10.5" font-weight="400" fill="#cbd5e1">• Reviewer Verification Check</text>
+      <text x="10" y="102" font-size="9.5" font-weight="600" fill="#f59e0b">get_locate_cabin_violations()</text>
+    </g>
+
+    <!-- Skill 3 -->
+    <g transform="translate(580, 50)">
+      <rect x="0" y="0" width="260" height="115" rx="10" fill="#0f172a" stroke="#059669" stroke-width="1.2"/>
+      <rect x="10" y="10" width="22" height="22" rx="5" fill="#047857"/>
+      <text x="17" y="26" font-size="12" font-weight="800" fill="#ffffff">3</text>
+      <text x="38" y="24" font-size="11" font-weight="700" fill="#6ee7b7">wdd_wagon_damages</text>
+      <text x="10" y="52" font-size="10.5" font-weight="400" fill="#cbd5e1">• 6-Cam Gantry Records</text>
+      <text x="10" y="68" font-size="10.5" font-weight="400" fill="#cbd5e1">• PaddleOCR Wagon Numbers</text>
+      <text x="10" y="84" font-size="10.5" font-weight="400" fill="#cbd5e1">• Entry vs Exit Damage Delta</text>
+      <text x="10" y="102" font-size="9.5" font-weight="600" fill="#10b981">get_wdd_wagon_damages()</text>
+    </g>
+
+    <!-- Skill 4 -->
+    <g transform="translate(860, 50)">
+      <rect x="0" y="0" width="265" height="115" rx="10" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.5"/>
+      <rect x="10" y="10" width="22" height="22" rx="5" fill="#7c3aed"/>
+      <text x="17" y="26" font-size="12" font-weight="800" fill="#ffffff">4</text>
+      <text x="38" y="24" font-size="11" font-weight="700" fill="#d8b4fe">multimodal_timeline_sync</text>
+      <text x="10" y="52" font-size="10.5" font-weight="400" fill="#e9d5ff">• Fuses Audio + Video + Wagons</text>
+      <text x="10" y="68" font-size="10.5" font-weight="400" fill="#e9d5ff">• Split-second [03:14:15] citations</text>
+      <text x="10" y="84" font-size="10.5" font-weight="400" fill="#e9d5ff">• Root-Cause sequence builder</text>
+      <text x="10" y="102" font-size="9.5" font-weight="600" fill="#c084fc">build_incident_timeline()</text>
+    </g>
+
+    <!-- Skill 5 -->
+    <g transform="translate(1145, 50)">
+      <rect x="0" y="0" width="255" height="115" rx="10" fill="#0f172a" stroke="#ec4899" stroke-width="1.2"/>
+      <rect x="10" y="10" width="22" height="22" rx="5" fill="#be185d"/>
+      <text x="17" y="26" font-size="12" font-weight="800" fill="#ffffff">5</text>
+      <text x="38" y="24" font-size="11" font-weight="700" fill="#f472b6">bilingual_safety_reports</text>
+      <text x="10" y="52" font-size="10.5" font-weight="400" fill="#cbd5e1">• Statutory CRS Inquiry Report</text>
+      <text x="10" y="68" font-size="10.5" font-weight="400" fill="#cbd5e1">• Hindi Crew Sign-On Slips</text>
+      <text x="10" y="84" font-size="10.5" font-weight="400" fill="#cbd5e1">• Pattern &amp; Fatigue Clustering</text>
+      <text x="10" y="102" font-size="9.5" font-weight="600" fill="#fb7185">generate_safety_artifacts()</text>
+    </g>
+
+    <!-- Resiliency Fallback Bar -->
+    <g transform="translate(20, 180)">
+      <rect x="0" y="0" width="1380" height="40" rx="8" fill="#0c192e" stroke="#2563eb" stroke-width="1"/>
+      <circle cx="20" cy="20" r="5" fill="#38bdf8"/>
+      <text x="36" y="24" font-size="11.5" font-weight="700" fill="#93c5fd">Zero-Latency Fallback Resiliency Engine (cached_demo_responses.json):</text>
+      <text x="510" y="24" font-size="11" font-weight="400" fill="#cbd5e1">Guarantees 100% demo uptime at Buildathon. Pre-validated grounded answers serve in &lt;150ms even if venue Wi-Fi stutters.</text>
+    </g>
+  </g>
+
+  <!-- Flow Arrows Downward -->
+  <g stroke="#10b981" stroke-width="1.8" stroke-dasharray="4,4" opacity="0.6">
+    <line x1="710" y1="750" x2="710" y2="775"/>
+  </g>
+
+  <!-- ================= SECTION 4: UNIFIED SURFACE & EVIDENCE ================= -->
+  <g id="surface" transform="translate(50, 775)">
+    <rect x="0" y="0" width="1420" height="185" rx="16" fill="#0a1526" stroke="#059669" stroke-width="1.8" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="1420" height="32" rx="16" fill="#064e3b" opacity="0.7"/>
+    <text x="24" y="22" font-size="12" font-weight="700" fill="#34d399" letter-spacing="1">STAGE 04: SURFACE (UNIFIED DASHBOARD) &amp; STAGE 05: EVIDENCE MANAGEMENT (AUDIT &amp; GOVERNANCE)</text>
+    <text x="1190" y="22" font-size="11" font-weight="500" fill="#a7f3d0">Enterprise Operational Console</text>
+
+    <!-- Dashboard 1: Overview -->
+    <g transform="translate(20, 45)">
+      <rect x="0" y="0" width="320" height="120" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+      <text x="14" y="24" font-size="12" font-weight="700" fill="#ffffff">Unified Operations Dashboard</text>
+      <text x="14" y="46" font-size="11" font-weight="500" fill="#38bdf8">• Consolidated 3-Pillar Telemetry</text>
+      <text x="14" y="66" font-size="10.5" font-weight="400" fill="#94a3b8">Trains processed, wagons inspected, active journeys, verified violations, channel quality.</text>
+      <text x="14" y="102" font-size="10" font-weight="600" fill="#64748b">React + Vite / Streamlit frontend</text>
+    </g>
+
+    <!-- Dashboard 2: Copilot Console -->
+    <g transform="translate(360, 45)">
+      <rect x="0" y="0" width="340" height="120" rx="10" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.2"/>
+      <text x="14" y="24" font-size="12" font-weight="700" fill="#c7d2fe">RailKavach Copilot Console</text>
+      <text x="14" y="46" font-size="11" font-weight="500" fill="#a855f7">• 1-Click Investigation Scenarios</text>
+      <text x="14" y="66" font-size="10.5" font-weight="400" fill="#cbd5e1">Natural language Q&amp;A in English &amp; Hindi; synchronized audio/video timeline cards.</text>
+      <text x="14" y="102" font-size="10" font-weight="600" fill="#c084fc">Grounding with [03:14:15] timestamps</text>
+    </g>
+
+    <!-- Dashboard 3: Evidence & Verification -->
+    <g transform="translate(720, 45)">
+      <rect x="0" y="0" width="340" height="120" rx="10" fill="#0f172a" stroke="#d97706" stroke-width="1"/>
+      <text x="14" y="24" font-size="12" font-weight="700" fill="#ffffff">Reviewer Verification Queue</text>
+      <text x="14" y="46" font-size="11" font-weight="500" fill="#fbbf24">• AI vs Confirmed Violation</text>
+      <text x="14" y="66" font-size="10.5" font-weight="400" fill="#94a3b8">Safety officers review evidence clips; records reviewer ID, timestamp &amp; decision.</text>
+      <text x="14" y="102" font-size="10" font-weight="600" fill="#f59e0b">Cryptographic chain of custody</text>
+    </g>
+
+    <!-- Dashboard 4: Statutory Export -->
+    <g transform="translate(1080, 45)">
+      <rect x="0" y="0" width="320" height="120" rx="10" fill="#0f172a" stroke="#059669" stroke-width="1"/>
+      <text x="14" y="24" font-size="12" font-weight="700" fill="#ffffff">1-Click Statutory Export</text>
+      <text x="14" y="46" font-size="11" font-weight="500" fill="#34d399">• Regulatory &amp; Lobby Slips</text>
+      <text x="14" y="66" font-size="10.5" font-weight="400" fill="#94a3b8">Ready-to-sign formal CRS Inquiry Reports &amp; Devanagari Hindi sign-on warning slips.</text>
+      <text x="14" y="102" font-size="10" font-weight="600" fill="#10b981">Downloadable PDF &amp; Markdown</text>
+    </g>
+  </g>
+
+  <!-- Bottom Bar -->
+  <g transform="translate(50, 980)">
+    <text x="0" y="16" font-size="11.5" font-weight="500" fill="#64748b">AiSPRY Technologies • Startup Buildathon India 2026 • Platform: RailKavach (WDD • Locate • Railcomm) &amp; RailKavach Copilot</text>
+    <text x="1190" y="16" font-size="11.5" font-weight="600" fill="#38bdf8">Fail-Open Audio • Human-in-the-Loop Review</text>
+  </g>
+</svg>

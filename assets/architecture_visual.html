@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RailKavach AI Platform & Copilot — Master Architecture</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #080d1a;
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    .tier-card {
+      background: linear-gradient(180deg, rgba(24, 34, 52, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1px solid rgba(51, 65, 85, 0.8);
+      backdrop-filter: blur(8px);
+    }
+    .copilot-card {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.9) 0%, rgba(46, 16, 101, 0.7) 50%, rgba(23, 37, 84, 0.8) 100%);
+      border: 2px solid rgba(99, 102, 241, 0.7);
+      box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.25);
+    }
+  </style>
+</head>
+<body class="p-6 md:p-10 min-h-screen">
+  <div class="max-w-7xl mx-auto space-y-6">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-slate-800 gap-4">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/50 flex items-center justify-center text-3xl shadow-lg shadow-blue-500/10">
+          🚆
+        </div>
+        <div>
+          <div class="flex items-center gap-3">
+            <h1 class="text-2xl font-extrabold tracking-tight text-white">RailKavach AI Platform &amp; RailKavach Copilot</h1>
+            <span class="px-2.5 py-0.5 text-xs font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/40 rounded-full">Master Architecture</span>
+          </div>
+          <p class="text-sm text-slate-400 mt-1">
+            AiSPRY Technologies • Indian Railways • 5-Stage Operational Architecture (WDD • Locate • Railcomm)
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="px-3.5 py-1.5 text-xs font-medium bg-slate-900 border border-slate-700 rounded-lg text-slate-300">
+          Architecture: <strong class="text-emerald-400">Cloud-Agnostic &amp; On-Prem Ready</strong>
+        </span>
+      </div>
+    </div>
+
+    <!-- SECTION 1: THE 3 RAILKAVACH SOLUTIONS -->
+    <div class="tier-card p-5 rounded-2xl space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-blue-400 font-bold text-sm tracking-wider uppercase">
+          <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+          The 3 Production AI Platforms (Stage 01: Capture ➔ Stage 02: Infer ➔ Stage 03: Attribute)
+        </div>
+        <span class="text-xs text-slate-400 font-mono">24×7 Continuous Railway Monitoring</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+        
+        <!-- WDD -->
+        <div class="p-4 rounded-xl bg-slate-900/90 border border-emerald-500/50 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-emerald-400 text-sm flex items-center gap-2">
+              <span>🛤️</span> Project 01: WDD (Wagon Damage)
+            </div>
+            <span class="text-[10px] font-mono bg-emerald-950/60 text-emerald-300 px-2 py-0.5 rounded border border-emerald-700/40">YOLOv11-L</span>
+          </div>
+          <div class="text-xs text-slate-300 space-y-1">
+            <p><strong class="text-white">Capture:</strong> 6 Gantry Cameras (Entry &amp; Exit Tracks)</p>
+            <p><strong class="text-white">Inference:</strong> YOLOv11-L (8 Damage Classes) + PaddleOCR for wagon codes</p>
+            <p><strong class="text-white">Attribute:</strong> Entry vs Exit condition differential (Dispute accountability)</p>
+          </div>
+          <div class="text-[11px] text-emerald-300/90 bg-emerald-950/30 p-2 rounded border border-emerald-500/30">
+            ✓ 5–8h manual review reduced to ~2h • 99.2% frame detection • 98% OCR
+          </div>
+        </div>
+
+        <!-- LOCATE -->
+        <div class="p-4 rounded-xl bg-slate-900/90 border border-amber-500/50 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-amber-400 text-sm flex items-center gap-2">
+              <span>👁️</span> Project 02: Locate (Cabin Analytics)
+            </div>
+            <span class="text-[10px] font-mono bg-amber-950/60 text-amber-300 px-2 py-0.5 rounded border border-amber-700/40">YOLOv8 Edge</span>
+          </div>
+          <div class="text-xs text-slate-300 space-y-1">
+            <p><strong class="text-white">Capture:</strong> CVVRS continuous in-cab video &amp; audio footage</p>
+            <p><strong class="text-white">5 Violations:</strong> Mobile phone, sleep/drowsiness, food, hand signal, unauthorized</p>
+            <p><strong class="text-white">3 Compliant Acts:</strong> Walkie-talkie, reading/writing, controlling (No false alarms!)</p>
+          </div>
+          <div class="text-[11px] text-amber-300/90 bg-amber-950/30 p-2 rounded border border-amber-500/30">
+            ✓ Reviewer Verification Queue: Every alert is verified before being marked confirmed
+          </div>
+        </div>
+
+        <!-- RAILCOMM -->
+        <div class="p-4 rounded-xl bg-slate-900/90 border border-blue-500/50 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-blue-400 text-sm flex items-center gap-2">
+              <span>📻</span> Project 03: Railcomm (Audio Analytics)
+            </div>
+            <span class="text-[10px] font-mono bg-blue-950/60 text-blue-300 px-2 py-0.5 rounded border border-blue-700/40">U-Net Audio</span>
+          </div>
+          <div class="text-xs text-slate-300 space-y-1">
+            <p><strong class="text-white">Capture:</strong> Operational VHF / Tetra radio channels &amp; intercom</p>
+            <p><strong class="text-white">Inference:</strong> Denoising 9+ noise classes (CNN+RNN+U-Net) + Transformer</p>
+            <p><strong class="text-white">Safety Vocab:</strong> Caution, Stop, Signal, Block, Line Clear, BP Pressure</p>
+          </div>
+          <div class="text-[11px] text-sky-300 bg-blue-950/40 p-2 rounded border border-blue-500/30 font-semibold">
+            🛡️ Safety Mandate: FAIL-OPEN (AI stall never blocks original voice channel)
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Indicator -->
+    <div class="flex justify-center text-slate-500 select-none">
+      <div class="px-4 py-1 rounded-full bg-slate-900 border border-slate-800 font-mono text-xs text-slate-400 flex items-center gap-2">
+        <span>⬇</span> Normalized Event Streams &amp; Storage Routing
+      </div>
+    </div>
+
+    <!-- SECTION 2: PLUGGABLE DATA BACKEND -->
+    <div class="tier-card p-5 rounded-2xl space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-sky-400 font-bold text-sm tracking-wider uppercase">
+          <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span>
+          Pluggable Data Backend &amp; Storage Adapters (Zero Proprietary Cloud Lock-In)
+        </div>
+        <span class="text-xs text-slate-400 font-mono">Air-Gapped On-Prem Priority</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+        
+        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-700">
+          <div class="font-bold text-slate-200 mb-1.5 flex items-center gap-2">
+            <span>🏢</span> Adapter A: On-Premise / Air-Gapped (Railway Priority)
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            • <strong class="text-white">PostgreSQL:</strong> Roster, train schedules, audit trails, and reviewer decisions.<br>
+            • <strong class="text-white">MongoDB:</strong> High-volume telemetry detections, bounding boxes, and event payloads.<br>
+            • <strong class="text-white">pgvector / Qdrant &amp; MinIO:</strong> On-prem semantic vector search &amp; object media store.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-700">
+          <div class="font-bold text-sky-400 mb-1.5 flex items-center gap-2">
+            <span>☁️</span> Adapter B: Cloud Deployment (Google Cloud Adapter for Buildathon)
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            • <strong class="text-white">Google Cloud Storage (GCS):</strong> Cloud object store for audio WAVs and video MP4 clips.<br>
+            • <strong class="text-white">BigQuery + Vector Search:</strong> Managed serverless vector indexing over 3.68M lines.<br>
+            • <strong class="text-white">Cloud Run / Vertex AI:</strong> Managed container serving &amp; Gemini API gateway.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Indicator -->
+    <div class="flex justify-center text-slate-500 select-none">
+      <div class="px-4 py-1 rounded-full bg-slate-900 border border-slate-800 font-mono text-xs text-slate-400 flex items-center gap-2">
+        <span>⬇</span> Cross-Modal Query Engine &amp; Tool Calling
+      </div>
+    </div>
+
+    <!-- SECTION 3: RAILKAVACH COPILOT & AGENT SKILLS -->
+    <div class="copilot-card p-6 rounded-2xl space-y-4">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5 text-white font-extrabold text-base tracking-wide uppercase">
+          <span class="w-3 h-3 rounded-full bg-indigo-400 animate-pulse"></span>
+          RailKavach Copilot: Conversational Intelligence &amp; Agent Skills
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-indigo-200 font-mono bg-indigo-900/80 px-3 py-1 rounded-md border border-indigo-400/40">
+            Pluggable Engine: Gemini 1.5 Pro (Cloud) ⇋ Gemma Edge (On-Prem)
+          </span>
+        </div>
+      </div>
+
+      <!-- 5 Skills Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3 pt-2">
+        
+        <div class="p-3.5 rounded-xl bg-slate-900/90 border border-blue-500/40 flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold text-blue-400 mb-1">1. Railcomm Search</div>
+            <p class="text-[11px] text-slate-300 leading-tight">Searches denoised VHF voice logs with Hindi/Eng safety vocabulary (Caution, Stop, Signal, BP).</p>
+          </div>
+          <div class="mt-3 text-[10px] font-mono text-blue-300 bg-blue-950/60 p-1.5 rounded border border-blue-800/50">
+            search_railcomm_transcripts()
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-900/90 border border-amber-500/40 flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold text-amber-400 mb-1">2. Locate Violations</div>
+            <p class="text-[11px] text-slate-300 leading-tight">Queries 5 violations &amp; filters 3 compliant acts. Tracks reviewer verification state.</p>
+          </div>
+          <div class="mt-3 text-[10px] font-mono text-amber-300 bg-amber-950/60 p-1.5 rounded border border-amber-800/50">
+            get_locate_cabin_violations()
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-900/90 border border-emerald-500/40 flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold text-emerald-400 mb-1">3. WDD Damage Query</div>
+            <p class="text-[11px] text-slate-300 leading-tight">Retrieves 6-cam gantry records, PaddleOCR wagon numbers &amp; entry-vs-exit damage deltas.</p>
+          </div>
+          <div class="mt-3 text-[10px] font-mono text-emerald-300 bg-emerald-950/60 p-1.5 rounded border border-emerald-800/50">
+            get_wdd_wagon_damages()
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-purple-950/60 border border-purple-500/60 flex flex-col justify-between shadow-lg">
+          <div>
+            <div class="text-xs font-bold text-purple-300 mb-1">4. Timeline Synchronizer</div>
+            <p class="text-[11px] text-purple-200 leading-tight">Cross-modal temporal fusion: aligns radio audio with cabin video and wagon defect logs.</p>
+          </div>
+          <div class="mt-3 text-[10px] font-mono text-purple-200 bg-purple-900/60 p-1.5 rounded border border-purple-700/50">
+            build_incident_timeline()
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-900/90 border border-rose-500/40 flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-bold text-rose-400 mb-1">5. Bilingual Reports</div>
+            <p class="text-[11px] text-slate-300 leading-tight">Drafts statutory CRS inquiry reports in English &amp; Devanagari Hindi crew lobby sign-on slips.</p>
+          </div>
+          <div class="mt-3 text-[10px] font-mono text-rose-300 bg-rose-950/60 p-1.5 rounded border border-rose-800/50">
+            generate_safety_artifacts()
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Resiliency Callout -->
+      <div class="p-3 rounded-xl bg-blue-950/50 border border-blue-500/40 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs gap-2">
+        <div class="flex items-center gap-2">
+          <span class="text-blue-400 font-bold">🛡️ Zero-Latency Fallback Resiliency Engine:</span>
+          <span class="text-slate-300"><code class="text-blue-300 font-mono">cached_demo_responses.json</code> guarantees 100% demo uptime at the event venue.</span>
+        </div>
+        <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-semibold text-[11px] border border-emerald-500/30">
+          Zero Hallucination Grounding
+        </span>
+      </div>
+    </div>
+
+    <!-- Indicator -->
+    <div class="flex justify-center text-slate-500 select-none">
+      <div class="px-4 py-1 rounded-full bg-slate-900 border border-slate-800 font-mono text-xs text-slate-400 flex items-center gap-2">
+        <span>⬇</span> Unified Operational Surface &amp; Traceable Governance
+      </div>
+    </div>
+
+    <!-- SECTION 4: SURFACE & EVIDENCE MANAGEMENT -->
+    <div class="tier-card p-5 rounded-2xl space-y-3 border-emerald-500/40">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm tracking-wider uppercase">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          Stage 04: Surface (Unified Dashboard) &amp; Stage 05: Evidence Management (Governance)
+        </div>
+        <span class="text-xs text-slate-400">Target Users: Sr DEE/TRO • Crew Controllers • Safety Cells</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-1">
+        
+        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+          <div class="font-bold text-blue-400 mb-1.5 flex items-center gap-2">
+            <span>📊</span> Unified Platform Overview
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Consolidated operational view across WDD, Locate, and Railcomm: trains processed, verified violations, and system health.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+          <div class="font-bold text-purple-400 mb-1.5 flex items-center gap-2">
+            <span>⚡</span> 1-Click Copilot Scenarios
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            One-touch execution for SPAD cross-modal queries, night-shift fatigue clusters, and inquiry drafting (guarantees a 90s pitch).
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+          <div class="font-bold text-amber-400 mb-1.5 flex items-center gap-2">
+            <span>⚖️</span> Reviewer Verification Queue
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Traceable human-in-the-loop audit trail: distinguishes raw AI alerts from reviewer-confirmed decisions.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+          <div class="font-bold text-emerald-400 mb-1.5 flex items-center gap-2">
+            <span>📄</span> 1-Click Statutory Export
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Download formal statutory inquiry reports (Markdown/PDF) and Devanagari Hindi crew lobby sign-on safety slips.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="pt-4 text-center text-xs text-slate-500 border-t border-slate-800/80">
+      AiSPRY Technologies • Indian Railways • RailKavach Ecosystem (WDD • Locate • Railcomm) &amp; RailKavach Copilot
+    </div>
+
+  </div>
+</body>
+</html>
