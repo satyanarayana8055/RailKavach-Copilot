@@ -3,7 +3,8 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
 import type { TabId } from "@/lib/types";
-import { useInView } from "./hooks";
+import { useInView, useScrollVar } from "./hooks";
+import { rv } from "./reveal";
 import { LocateVisual, RailcommVisual, WddVisual } from "./ProductVisuals";
 import { Stat } from "./Stat";
 
@@ -14,7 +15,7 @@ interface Product {
   title: ReactNode;
   tags: string[];
   stats: Array<{ value: number; decimals?: number; prefix?: string; suffix?: string; label: string }>;
-  visual: ReactNode;
+  visual: (active: boolean) => ReactNode;
   tab: TabId;
   cta: string;
   /** Live AiSPRY production platform for this product */
@@ -39,7 +40,7 @@ const PRODUCTS: Product[] = [
       { value: 99.2, decimals: 1, suffix: "%", label: "Frame detection" },
       { value: 2, prefix: "5–8→", suffix: "h", label: "Inspection / train" },
     ],
-    visual: <WddVisual />,
+    visual: (a) => <WddVisual active={a} />,
     tab: "wdd",
     url: "https://nwrwdd.aispry.ai",
     cta: "Open gantry differential",
@@ -60,7 +61,7 @@ const PRODUCTS: Product[] = [
       { value: 100, suffix: "%", label: "Journey coverage" },
       { value: 24, suffix: "×7", label: "Monitoring" },
     ],
-    visual: <LocateVisual />,
+    visual: (a) => <LocateVisual active={a} />,
     tab: "timeline",
     url: "https://nwrlcva.aispry.ai",
     cta: "Open incident timeline",
@@ -81,7 +82,7 @@ const PRODUCTS: Product[] = [
       { value: 60, suffix: "%", label: "Fewer miscommunications" },
       { value: 9, suffix: "+", label: "Noise classes" },
     ],
-    visual: <RailcommVisual />,
+    visual: (a) => <RailcommVisual active={a} />,
     tab: "copilot",
     cta: "Ask the voice copilot",
     url: "https://nwradt.aispry.ai",
@@ -89,18 +90,27 @@ const PRODUCTS: Product[] = [
 ];
 
 function ProductRow({ p, flip, onOpen }: { p: Product; flip: boolean; onOpen: (t: TabId) => void }) {
-  const { ref, inView } = useInView<HTMLElement>(0.2);
+  const { ref, inView } = useInView<HTMLDivElement>(0.3);
+  const scrollRef = useScrollVar<HTMLElement>();
+  const visualLeft = !flip;
   return (
-    <article
-      ref={ref}
-      aria-labelledby={`p-${p.num}`}
-      className={`grid items-center gap-10 py-14 lg:grid-cols-2 lg:gap-16 lg:py-20 ${inView ? "animate-fade-up" : "opacity-0"}`}
-    >
-      <div className={flip ? "lg:order-2" : ""}>{p.visual}</div>
+    <article ref={scrollRef} aria-labelledby={`p-${p.num}`} className="py-14 [--p:.5] lg:py-20">
+      <div ref={ref} data-on={inView} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div className={`reveal ${flip ? "lg:order-2" : ""}`} style={rv(0, { rx: visualLeft ? -48 : 48, ry: 0 })}>
+        {/* gentle counter-scroll parallax on the visual */}
+        <div className="will-change-transform" style={{ transform: "translateY(calc((var(--p) - .5) * -36px))" }}>
+          {p.visual(inView)}
+        </div>
+      </div>
 
-      <div className={flip ? "lg:order-1" : ""}>
+      <div className={`reveal ${flip ? "lg:order-1" : ""}`} style={rv(0.15, { rx: visualLeft ? 48 : -48, ry: 0 })}>
         <div className="flex items-baseline gap-4">
-          <span className="font-mono text-5xl font-semibold text-transparent [-webkit-text-stroke:1px_rgba(244,130,32,.7)] sm:text-6xl">{p.num}</span>
+          <span
+            className="font-mono text-5xl font-semibold text-transparent will-change-transform [-webkit-text-stroke:1px_rgba(244,130,32,.7)] sm:text-6xl"
+            style={{ transform: "translateY(calc((var(--p) - .5) * 60px))" }}
+          >
+            {p.num}
+          </span>
           <span className="mono-label text-ink-300">
             {p.name} · {p.kicker}
           </span>
@@ -109,15 +119,21 @@ function ProductRow({ p, flip, onOpen }: { p: Product; flip: boolean; onOpen: (t
           {p.title}
         </h3>
         <ul className="mt-5 flex flex-wrap gap-2" aria-label="Technology">
-          {p.tags.map((t) => (
-            <li key={t} className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium text-ink-200">
+          {p.tags.map((t, i) => (
+            <li
+              key={t}
+              className="reveal rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium text-ink-200"
+              style={rv(0.4 + i * 0.08, { ry: 6 })}
+            >
               {t}
             </li>
           ))}
         </ul>
         <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-white/[0.08] pt-6">
-          {p.stats.map((s) => (
-            <Stat key={s.label} {...s} />
+          {p.stats.map((s, i) => (
+            <div key={s.label} className="reveal" style={rv(0.55 + i * 0.1, { ry: 10 })}>
+              <Stat {...s} />
+            </div>
           ))}
         </div>
         <div className="mt-8 flex flex-wrap gap-3">
@@ -129,6 +145,7 @@ function ProductRow({ p, flip, onOpen }: { p: Product; flip: boolean; onOpen: (t
             {p.cta} <ArrowRight className="h-4 w-4" aria-hidden />
           </button>
         </div>
+      </div>
       </div>
     </article>
   );
@@ -142,8 +159,10 @@ function PlugInBand() {
     ["modality", '"SENSOR_TELEMETRY"'],
     ["endpoint.url", '"local://data/wild_telemetry.json"'],
   ];
+  const { ref, inView } = useInView<HTMLDivElement>(0.35);
+  const line = (i: number) => rv(0.3 + i * 0.35, { rx: -8, ry: 0 });
   return (
-    <div className="mb-16 grid items-center gap-8 rounded-panel border border-dashed border-white/15 bg-white/[0.02] p-6 sm:p-8 lg:mb-24 lg:grid-cols-[1fr_1.1fr]">
+    <div ref={ref} data-on={inView} className="mb-16 grid items-center gap-8 rounded-panel border border-dashed border-white/15 bg-white/[0.02] p-6 sm:p-8 lg:mb-24 lg:grid-cols-[1fr_1.1fr]">
       <div>
         <div className="flex items-baseline gap-4">
           <span className="font-mono text-5xl font-semibold text-transparent [-webkit-text-stroke:1px_rgba(245,158,11,.7)]">+</span>
@@ -175,19 +194,19 @@ function PlugInBand() {
       <figure className="overflow-hidden rounded-card border border-white/[0.08] bg-[#070a14]">
         <figcaption className="flex items-center justify-between border-b border-white/[0.07] px-4 py-2.5 font-mono text-[11px] text-ink-300">
           <span>connectors/wild.yaml</span>
-          <span className="flex items-center gap-1.5 text-ok">
+          <span className="reveal flex items-center gap-1.5 text-ok" style={line(5)}>
             <span className="h-1.5 w-1.5 animate-blink rounded-full bg-ok" aria-hidden /> registered
           </span>
         </figcaption>
         <pre className="overflow-x-auto p-4 font-mono text-[13px] leading-7">
-          {yaml.map(([k, v]) => (
-            <div key={k}>
+          {yaml.map(([k, v], i) => (
+            <div key={k} className="reveal" style={line(i)}>
               <span className="text-cyan">{k}</span>
               <span className="text-ink-400">: </span>
               <span className="text-amber">{v}</span>
             </div>
           ))}
-          <div className="text-ink-500"># → FunctionDeclaration generated · 0 code changes</div>
+          <div className="reveal text-ink-500" style={line(4)}># → FunctionDeclaration generated · 0 code changes</div>
         </pre>
       </figure>
     </div>

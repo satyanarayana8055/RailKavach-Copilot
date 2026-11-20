@@ -1,6 +1,7 @@
 "use client";
 
 import { useInView } from "./hooks";
+import { dly, rv } from "./reveal";
 
 const SOURCES = [
   { y: 24, verb: "HEARD", name: "Railcomm", meta: "11,354 audio files", color: "#009fce" },
@@ -13,7 +14,7 @@ export function Convergence() {
   const { ref, inView } = useInView<HTMLElement>(0.3);
 
   return (
-    <section ref={ref} aria-labelledby="problem-h" className="relative isolate overflow-hidden bg-paper">
+    <section ref={ref} data-on={inView} aria-labelledby="problem-h" className="relative isolate overflow-hidden bg-paper">
       <div className="bg-grid-light mask-fade-b absolute inset-0 -z-10" aria-hidden />
       <div className="mx-auto grid max-w-[1280px] items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:py-24">
         <div>
@@ -31,11 +32,7 @@ export function Convergence() {
               </div>
               <div className="mt-2 flex h-3 gap-[2px] overflow-hidden rounded-full bg-ink-100">
                 {["#009fce", "#f48220", "#f59e0b"].map((c, i) => (
-                  <span
-                    key={c}
-                    className="h-full rounded-full opacity-50 transition-all duration-[1600ms] ease-brand"
-                    style={{ width: inView ? "33.33%" : "0%", background: c, transitionDelay: `${i * 0.2}s` }}
-                  />
+                  <span key={c} className="grow-bar h-full w-1/3 rounded-full opacity-50" style={{ background: c, ...dly(i * 0.2) }} />
                 ))}
               </div>
             </div>
@@ -60,8 +57,8 @@ export function Convergence() {
               </filter>
             </defs>
 
-            {SOURCES.map((s) => (
-              <g key={s.name}>
+            {SOURCES.map((s, i) => (
+              <g key={s.name} className="reveal" style={rv(i * 0.2, { rx: -28, ry: 0 })}>
                 <path
                   d={`M190 ${s.y + 31} C 270 ${s.y + 31}, 270 165, 340 165`}
                   fill="none"
@@ -99,11 +96,13 @@ export function Convergence() {
             </text>
 
             {/* Output */}
+            <g className="reveal" style={rv(1.1, { ry: 0 })}>
             <path d="M440 210 V 262" stroke="#0a0d12" strokeWidth="2" strokeDasharray="6 8" className="animate-flow" />
             <rect x="350" y="262" width="180" height="44" rx="22" fill="#fef0e0" stroke="#f48220" />
             <text x="440" y="289" textAnchor="middle" fontSize="13" fontFamily="var(--font-geist-sans)" fontWeight="600" fill="#c2410c">
               1 grounded timeline
             </text>
+            </g>
           </svg>
         </figure>
       </div>

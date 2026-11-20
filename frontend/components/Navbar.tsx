@@ -3,6 +3,7 @@
 import { ArrowRight, Check, ChevronDown, Languages, Lock, Unlock } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { ROLES } from "@/lib/data";
+import { ScrollProgress } from "./ScrollProgress";
 import type { UserRole } from "@/lib/types";
 
 interface WorkspaceControls {
@@ -32,6 +33,7 @@ export function Navbar({ controls, current = "home" }: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-50 h-[var(--nav-h)] border-b border-white/25 bg-brand-x shadow-nav">
+      <ScrollProgress />
       <div className="mx-auto flex h-full max-w-[1280px] items-center gap-3 px-4 sm:px-6">
         <div className="flex shrink-0 items-center gap-3">
           <a href="https://aispry.ai" target="_blank" rel="noopener noreferrer" aria-label="AiSPRY — opens aispry.ai in a new tab">

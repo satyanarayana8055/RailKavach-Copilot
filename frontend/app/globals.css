@@ -137,6 +137,47 @@
   }
 }
 
+/*
+ * Scroll-reveal system. Elements stay hidden until an ancestor (or themselves) gets data-on="true",
+ * then play a keyframe with per-element vars: --d delay, --rx/--ry offset, --rs start scale.
+ * Keyframes (not transitions) so the final frame always renders and fill-mode holds it.
+ */
+.reveal { opacity: 0; }
+[data-on="true"] .reveal,
+.reveal[data-on="true"] { animation: reveal-in 0.75s var(--ease) var(--d, 0s) both; }
+@keyframes reveal-in {
+  from { opacity: 0; transform: translate(var(--rx, 0px), var(--ry, 12px)) scale(var(--rs, 1)); }
+  to { opacity: 1; transform: none; }
+}
+.svg-origin { transform-box: fill-box; transform-origin: center; }
+
+.draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+[data-on="true"] .draw { animation: draw-in 0.8s var(--ease) var(--d, 0s) both; }
+@keyframes draw-in { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+.sweep { clip-path: inset(0 100% 0 0); }
+[data-on="true"] .sweep { animation: sweep-in 1.8s var(--ease) var(--d, 0s) both; }
+@keyframes sweep-in { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+.typewriter { max-width: 0; }
+[data-on="true"] .typewriter { animation: type-in 1.2s steps(44) var(--d, 0s) both; }
+@keyframes type-in { from { max-width: 0; } to { max-width: 46ch; } }
+
+.flash { opacity: 0; }
+[data-on="true"] .flash { animation: flash 0.45s ease-in-out var(--d, 0s) 3 both; }
+@keyframes flash { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+[data-on="true"] .alert-frame { animation: alert-frame 0.6s ease var(--d, 0s) both; }
+@keyframes alert-frame {
+  to { border-color: rgba(229, 72, 77, 0.55); box-shadow: 0 0 0 1px rgba(229, 72, 77, 0.25), 0 20px 60px -20px rgba(229, 72, 77, 0.45); }
+}
+[data-on="true"] .lit { animation: lit 0.5s ease var(--d, 0s) both; }
+@keyframes lit { to { border-color: rgba(0, 159, 206, 0.35); background-color: rgba(0, 159, 206, 0.05); } }
+
+.grow-bar { transform: scaleX(0); transform-origin: left; }
+[data-on="true"] .grow-bar { animation: grow-x 1.6s var(--ease) var(--d, 0s) both; }
+@keyframes grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -152,7 +193,9 @@
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
     transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
 }
