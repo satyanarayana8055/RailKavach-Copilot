@@ -10,8 +10,8 @@ DATA_DIR = Path(os.getenv("DATA_DIR", BASE_DIR / "data"))
 
 # Gemini API configuration
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "gemini-1.5-flash")
-PRO_MODEL = os.getenv("PRO_MODEL", "gemini-1.5-pro")
+DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "gemini-3.5-flash-lite")
+PRO_MODEL = os.getenv("PRO_MODEL", "gemini-3.8-flash")
 
 # Token & Cache Settings
 ENABLE_CACHE_FALLBACK = os.getenv("ENABLE_CACHE_FALLBACK", "true").lower() == "true"
