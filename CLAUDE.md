@@ -48,6 +48,8 @@ npm run lint
 * **No Secrets Committed**: Store `GEMINI_API_KEY` in `.env` (never commit `.env`).
 * **Deterministic Fallback**: All core demo scenarios must have verified entries in `data/cached_demo_responses.json`.
 * **Accessibility**: Next.js UI must target WCAG 2.2 AA (color contrast, keyboard navigation, clear ARIA labels).
+* **AiSPRY design system**: Tokens live in `frontend/tailwind.config.ts` (values from aispry.ai). Fonts: Fraunces (display), Geist (sans), JetBrains Mono (labels), Noto Sans Devanagari (Hindi). Orange `#f48220` is a fill; use `text-orange-ink` for orange text on light surfaces. Buttons 6px radius, cards 12px. Visual-first, minimal copy; every animation must degrade under `prefers-reduced-motion`.
+* **Product links**: WDD → nwrwdd.aispry.ai, Locate → nwrlcva.aispry.ai, Railcomm → nwradt.aispry.ai; logo → aispry.ai.
 
 ---
 
@@ -73,12 +75,11 @@ RailKavach-Copilot/
 │   ├── tests/                 # Unit & integration tests
 │   └── requirements.txt
 ├── frontend/                  # Next.js + TypeScript UI
-│   ├── src/
-│   │   ├── app/               # Next.js App Router pages
-│   │   ├── components/        # Reusable design system components
-│   │   └── lib/               # API clients & bilingual dictionary
+│   ├── app/                   # App Router: layout (fonts), page (state), globals.css
+│   ├── components/            # Navbar, Hero, ProductSuite, visuals, workspace/* panels
+│   ├── lib/                   # api.ts (NEXT_PUBLIC_API_URL), data.ts, types.ts, privacy.ts
 │   ├── package.json
-│   └── tailwind.config.ts
+│   └── tailwind.config.ts     # AiSPRY design tokens (single source of truth)
 └── docs/                      # Architectural & compliance documentation
     ├── ARCHITECTURE_AND_PLAN.md
     ├── EVALUATION_GUIDE.md

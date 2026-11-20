@@ -2,119 +2,157 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
+/* AiSPRY design system — tokens mirror tailwind.config.ts (sourced from aispry.ai). */
 :root {
   --brand-orange: #f48220;
+  --brand-orange-ink: #c2410c;
   --brand-amber: #f59e0b;
-  --brand-orange-rgb: 244 130 32;
-  --brand-amber-rgb: 245 158 11;
   --brand-blue: #127dc2;
   --brand-cyan: #009fce;
-  --page-bg: #f8fafc;
-  --card-bg: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --primary-gradient: linear-gradient(90deg, #f48220 0%, #c2945a 35%, #6c8c87 70%, #127dc2 100%);
-  --brand-gradient: linear-gradient(90deg, #f48220 0%, #127dc2 100%);
+  --navy: #03061a;
+  --paper: #f9f6f0;
+  --line: rgba(15, 19, 24, 0.09);
+  --line-dark: rgba(255, 255, 255, 0.08);
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --nav-h: 64px;
 }
 
-body {
-  color: #0f172a;
-  background: #f8fafc;
-  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-h) + 16px);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-paper font-sans text-ink-900 antialiased;
+    font-feature-settings: "ss01", "cv11";
+    line-height: 1.55;
+  }
+  ::selection {
+    background: var(--brand-orange);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--brand-blue);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--brand-amber);
+  }
+  [lang="hi"],
+  .hi {
+    font-family: var(--font-deva), var(--font-geist-sans), sans-serif;
+  }
 }
 
-.font-display {
-  font-family: "Fraunces", Georgia, serif;
+@layer components {
+  /* Typography — aispry editorial system */
+  .eyebrow {
+    @apply flex items-center gap-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-amber;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-6 bg-current;
+  }
+  .eyebrow-light {
+    @apply text-orange-ink;
+  }
+  .h-display {
+    @apply font-display font-semibold leading-[1.04] tracking-[-0.025em];
+  }
+  .h-display em {
+    @apply font-medium italic text-orange;
+  }
+  .h-display-light em {
+    @apply text-orange-ink;
+  }
+  .mono-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.12em];
+  }
+
+  /* Buttons — 6px radius per aispry */
+  .btn {
+    @apply inline-flex min-h-[40px] items-center justify-center gap-2 rounded-btn px-4 text-sm font-semibold transition duration-200 ease-brand disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-amber {
+    @apply btn bg-amber text-ink-950 hover:-translate-y-px hover:bg-orange hover:shadow-[0_8px_24px_rgb(245_158_11/32%)];
+  }
+  .btn-orange {
+    @apply btn bg-orange-ink text-white hover:-translate-y-px hover:bg-[#a5370a];
+  }
+  .btn-ink {
+    @apply btn bg-ink-900 text-white hover:-translate-y-px hover:bg-ink-800;
+  }
+  .btn-outline {
+    @apply btn border border-ink-900/80 bg-white text-ink-900 hover:bg-ink-900 hover:text-white;
+  }
+  .btn-ghost-dark {
+    @apply btn border border-white/15 bg-white/[0.04] text-white hover:border-white/30 hover:bg-white/[0.08];
+  }
+  .btn-pill-white {
+    @apply inline-flex min-h-[36px] shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-white px-3 sm:px-3.5 text-[13px] font-semibold text-ink-950 shadow-[0_6px_16px_rgba(15,23,42,.18)] transition duration-200 ease-brand hover:-translate-y-px hover:shadow-[0_10px_22px_rgba(0,0,0,.22)];
+  }
+
+  /* Surfaces */
+  .card {
+    @apply rounded-card border border-[var(--line)] bg-white shadow-card;
+  }
+  .card-hover {
+    @apply transition duration-300 ease-brand hover:-translate-y-0.5 hover:shadow-lift;
+  }
+  .panel-dark {
+    @apply rounded-panel border border-white/[0.08] bg-ink-900/80 backdrop-blur;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold;
+  }
+
+  /* Backgrounds */
+  .bg-grid-dark {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .bg-grid-light {
+    background-image: linear-gradient(to right, rgba(15, 19, 24, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 19, 24, 0.045) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  }
+  .text-gradient {
+    @apply bg-brand-spectrum bg-clip-text text-transparent;
+  }
+  .scanline {
+    @apply pointer-events-none absolute inset-x-0 top-0 h-1/4 animate-scan;
+    background: linear-gradient(to bottom, transparent, rgba(0, 159, 206, 0.28), transparent);
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
 }
 
-.gradient-text {
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.brand-gradient-text {
-  background: var(--brand-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Subtle Clean Background Grid for Light Mode */
-.bg-grid {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
-}
-
-/* Crisp Clean Card and Panel Styles for Light Mode */
-.glass-panel {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-}
-
-.glass-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
-}
-
-.glass-card:hover {
-  border-color: rgba(244, 130, 32, 0.45);
-  box-shadow: 0 10px 25px -5px rgba(244, 130, 32, 0.12), 0 8px 10px -6px rgba(244, 130, 32, 0.08);
-  transform: translateY(-1px);
-}
-
-.btn-primary-aispry {
-  background: #f48220;
-  color: #ffffff;
-  font-weight: 600;
-  border-radius: 9999px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 14px rgba(244, 130, 32, 0.28);
-}
-
-.btn-primary-aispry:hover {
-  background: #ea580c;
-  transform: translateY(-1.5px);
-  box-shadow: 0 8px 20px rgba(244, 130, 32, 0.4);
-}
-
-.btn-secondary-aispry {
-  background: #ffffff;
-  color: #1e293b;
-  font-weight: 500;
-  border-radius: 9999px;
-  border: 1px solid #cbd5e1;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-
-.btn-secondary-aispry:hover {
-  background: #f8fafc;
-  border-color: #127dc2;
-  color: #0f172a;
-  transform: translateY(-1.5px);
-}
-
-/* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: rgba(15, 19, 24, 0.18);
   border-radius: 9999px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
