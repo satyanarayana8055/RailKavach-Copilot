@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Architecture } from "@/components/Architecture";
 import { Convergence } from "@/components/Convergence";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
@@ -149,13 +148,15 @@ export default function Home() {
         Skip to copilot
       </a>
       <Navbar
-        role={roleCode}
-        onRole={switchRole}
-        masked={masked}
-        maskForced={role.forceMasking}
-        onToggleMask={() => setMaskToggle((m) => !m)}
-        lang={lang}
-        onToggleLang={() => setLang((l) => (l === "en" ? "hi" : "en"))}
+        controls={{
+          role: roleCode,
+          onRole: switchRole,
+          masked,
+          maskForced: role.forceMasking,
+          onToggleMask: () => setMaskToggle((m) => !m),
+          lang,
+          onToggleLang: () => setLang((l) => (l === "en" ? "hi" : "en")),
+        }}
       />
 
       <main>
@@ -169,8 +170,6 @@ export default function Home() {
         <Convergence />
 
         <ProductSuite onOpen={openTab} />
-
-        <Architecture />
 
         <section id="copilot" aria-labelledby="copilot-h" className="relative isolate">
           <div className="bg-grid-light mask-fade-b absolute inset-x-0 top-0 -z-10 h-[420px]" aria-hidden />

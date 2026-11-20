@@ -1,11 +1,11 @@
 "use client";
 
-import { Check, ChevronDown, Languages, Lock, Unlock } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, Languages, Lock, Unlock } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { ROLES } from "@/lib/data";
 import type { UserRole } from "@/lib/types";
 
-interface NavbarProps {
+interface WorkspaceControls {
   role: UserRole;
   onRole: (r: UserRole) => void;
   masked: boolean;
@@ -15,11 +15,64 @@ interface NavbarProps {
   onToggleLang: () => void;
 }
 
+/** Omit `controls` on pages without the workspace (e.g. /architecture): shows an "Open Copilot" CTA instead. */
+interface NavbarProps {
+  controls?: WorkspaceControls;
+  current?: "home" | "architecture";
+}
+
+const LINKS: Array<[string, string, NavbarProps["current"] | null]> = [
+  ["/#suite", "Platforms", null],
+  ["/architecture", "Architecture", "architecture"],
+  ["/#copilot", "Copilot", null],
+];
+
 /** AiSPRY header: brand gradient bar; all text sits on white/ink pills for AA contrast. */
-export function Navbar({ role, onRole, masked, maskForced, onToggleMask, lang, onToggleLang }: NavbarProps) {
+export function Navbar({ controls, current = "home" }: NavbarProps) {
+
+  return (
+    <header className="sticky top-0 z-50 h-[var(--nav-h)] border-b border-white/25 bg-brand-x shadow-nav">
+      <div className="mx-auto flex h-full max-w-[1280px] items-center gap-3 px-4 sm:px-6">
+        <div className="flex shrink-0 items-center gap-3">
+          <a href="https://aispry.ai" target="_blank" rel="noopener noreferrer" aria-label="AiSPRY — opens aispry.ai in a new tab">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/brand/aispry-logo.png" alt="AiSPRY" className="h-8 w-auto" width={60} height={32} />
+          </a>
+          <a
+            href="/"
+            className="hidden rounded-full bg-ink-950/80 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-ink-950 sm:inline"
+          >
+            RailKavach
+          </a>
+        </div>
+
+        <nav aria-label="Sections" className="ml-4 hidden items-center gap-1 rounded-full bg-ink-950/45 p-1 lg:flex">
+          {LINKS.map(([href, label, page]) => (
+            <a
+              key={href}
+              href={href}
+              aria-current={page === current ? "page" : undefined}
+              className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${page === current ? "bg-white text-ink-950" : "text-white hover:bg-white/15"}`}
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+
+        {controls ? <Controls {...controls} /> : (
+          <a href="/#copilot" className="btn-pill-white ml-auto">
+            Open Copilot <ArrowRight className="h-4 w-4 text-orange-ink" aria-hidden />
+          </a>
+        )}
+      </div>
+    </header>
+  );
+}
+
+function Controls({ role, onRole, masked, maskForced, onToggleMask, lang, onToggleLang }: WorkspaceControls) {
   const [open, setOpen] = useState(false);
   const wrap = useRef<HTMLDivElement>(null);
-  const current = ROLES[role];
+  const roleMeta = ROLES[role];
 
   useEffect(() => {
     if (!open) return;
@@ -34,33 +87,6 @@ export function Navbar({ role, onRole, masked, maskForced, onToggleMask, lang, o
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 h-[var(--nav-h)] border-b border-white/25 bg-brand-x shadow-nav">
-      <div className="mx-auto flex h-full max-w-[1280px] items-center gap-3 px-4 sm:px-6">
-        <div className="flex shrink-0 items-center gap-3">
-          <a href="https://aispry.ai" target="_blank" rel="noopener noreferrer" aria-label="AiSPRY — opens aispry.ai in a new tab">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/brand/aispry-logo.png" alt="AiSPRY" className="h-8 w-auto" width={60} height={32} />
-          </a>
-          <a
-            href="#top"
-            className="hidden rounded-full bg-ink-950/80 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-ink-950 sm:inline"
-          >
-            RailKavach
-          </a>
-        </div>
-
-        <nav aria-label="Sections" className="ml-4 hidden items-center gap-1 rounded-full bg-ink-950/45 p-1 lg:flex">
-          {[
-            ["#suite", "Platforms"],
-            ["#architecture", "Architecture"],
-            ["#copilot", "Copilot"],
-          ].map(([href, label]) => (
-            <a key={href} href={href} className="rounded-full px-3.5 py-1.5 text-[13px] font-semibold text-white transition hover:bg-white/15">
-              {label}
-            </a>
-          ))}
-        </nav>
-
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
           <button type="button" onClick={onToggleLang} className="btn-pill-white" aria-label={lang === "en" ? "Switch to Hindi" : "Switch to English"}>
             <Languages className="h-4 w-4 text-blue" aria-hidden />
@@ -89,9 +115,9 @@ export function Navbar({ role, onRole, masked, maskForced, onToggleMask, lang, o
               aria-expanded={open}
               className="btn-pill-white"
             >
-              <current.icon className="h-4 w-4 text-orange-ink" aria-hidden />
-              <span className="sm:hidden">{current.short}</span>
-              <span className="hidden sm:inline">{current.title}</span>
+              <roleMeta.icon className="h-4 w-4 text-orange-ink" aria-hidden />
+              <span className="sm:hidden">{roleMeta.short}</span>
+              <span className="hidden sm:inline">{roleMeta.title}</span>
               <ChevronDown className={`h-3.5 w-3.5 text-ink-500 transition ${open ? "rotate-180" : ""}`} aria-hidden />
             </button>
 
@@ -132,7 +158,5 @@ export function Navbar({ role, onRole, masked, maskForced, onToggleMask, lang, o
             )}
           </div>
         </div>
-      </div>
-    </header>
   );
 }

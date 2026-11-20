@@ -20,17 +20,18 @@ const BUILT = [
   "ROCP plug-ins",
 ];
 
-export function Architecture() {
+export function Architecture({ standalone = false }: { standalone?: boolean }) {
+  const Heading = standalone ? "h1" : "h2";
   const { ref, inView } = useInView<HTMLElement>(0.25);
   return (
-    <section id="architecture" ref={ref} aria-labelledby="arch-h" className="border-y border-[var(--line)] bg-white">
+    <section id="architecture" ref={ref} aria-labelledby="arch-h" className={`bg-white ${standalone ? "min-h-[calc(100vh-var(--nav-h))]" : "border-y border-[var(--line)]"}`}>
       <div className="mx-auto max-w-[1280px] px-4 py-16 sm:px-6 lg:py-24">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="eyebrow eyebrow-light">Architecture</p>
-            <h2 id="arch-h" className="h-display h-display-light mt-4 text-[36px] text-ink-950 sm:text-[52px]">
+            <Heading id="arch-h" className="h-display h-display-light mt-4 text-[36px] text-ink-950 sm:text-[52px]">
               Five stages. <em>Cloud or edge.</em>
-            </h2>
+            </Heading>
           </div>
           <ul className="flex flex-wrap gap-2" aria-label="Deployment modes">
             <li className="chip border-blue/30 bg-blue-soft px-3 py-1.5 text-blue-ink">Cloud · Gemini 1.5 Pro / Flash</li>
