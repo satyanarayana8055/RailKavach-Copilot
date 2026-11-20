@@ -51,7 +51,8 @@ export function Navbar({ role, onRole, masked, maskForced, onToggleMask, lang, o
 
         <nav aria-label="Sections" className="ml-4 hidden items-center gap-1 rounded-full bg-ink-950/45 p-1 lg:flex">
           {[
-            ["#suite", "Suite"],
+            ["#suite", "Platforms"],
+            ["#architecture", "Architecture"],
             ["#copilot", "Copilot"],
           ].map(([href, label]) => (
             <a key={href} href={href} className="rounded-full px-3.5 py-1.5 text-[13px] font-semibold text-white transition hover:bg-white/15">

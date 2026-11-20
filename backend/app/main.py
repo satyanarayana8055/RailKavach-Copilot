@@ -59,7 +59,7 @@ def chat_endpoint(req: ChatQueryRequest):
 @app.get("/api/scenarios")
 def get_preloaded_scenarios():
     """
-    Returns the 3 pre-configured demo scenarios for one-click jury evaluation.
+    Returns the 4 pre-configured demo scenarios for one-click jury evaluation.
     """
     return [
         {
@@ -82,6 +82,13 @@ def get_preloaded_scenarios():
             "section": "Suratgarh West Gate to Lalgarh Yard",
             "query": "Audit entry-versus-exit wagon damage for freight rake BOXN-542.",
             "description": "6-camera optical scan differential isolating newly sustained in-transit damage from pre-existing defects."
+        },
+        {
+            "id": "scenario_4",
+            "title": "Signal Callouts & Caution Order Audit",
+            "section": "Bikaner Division Night Shift (00:00–08:00)",
+            "query": "Show all signal-related miscommunications, emergency callouts, and caution order exchanges on the Bikaner division during the shift on 18 Nov 2026.",
+            "description": "Audits bilingual VHF exchanges against the G&SR 4.40 calling-out protocol with fail-open radio logging."
         }
     ]
 

@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { Architecture } from "@/components/Architecture";
+import { Convergence } from "@/components/Convergence";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Navbar } from "@/components/Navbar";
@@ -14,7 +16,7 @@ import { Tabs, TAB_META } from "@/components/workspace/Tabs";
 import { TimelinePanel } from "@/components/workspace/TimelinePanel";
 import { WddPanel } from "@/components/workspace/WddPanel";
 import { analyzeFile, postChat } from "@/lib/api";
-import { genericFallback, ROLES, SCENARIO_1_FALLBACK, SCENARIO_QUERIES, TIMELINE, WELCOME_RESPONSE } from "@/lib/data";
+import { genericFallback, ROLES, SCENARIO_1_FALLBACK, SCENARIO_4_FALLBACK, SCENARIO_QUERIES, TIMELINE, WELCOME_RESPONSE, type ScenarioId } from "@/lib/data";
 import { maskPII } from "@/lib/privacy";
 import type { ChatResponse, FileAnalysisResult, TabId, UserRole } from "@/lib/types";
 
@@ -68,13 +70,13 @@ export default function Home() {
     try {
       setResponse(await postChat(q, lang));
     } catch {
-      setResponse(/12414|suratgarh/i.test(q) ? SCENARIO_1_FALLBACK : genericFallback(q));
+      setResponse(/miscommunication|caution order|callout/i.test(q) ? SCENARIO_4_FALLBACK : /12414|suratgarh/i.test(q) ? SCENARIO_1_FALLBACK : genericFallback(q));
     } finally {
       setLoading(false);
     }
   };
 
-  const runScenario = async (n: 1 | 2 | 3) => {
+  const runScenario = async (n: ScenarioId) => {
     setRunning(n);
     await ask(SCENARIO_QUERIES[n]);
     setRunning(null);
@@ -164,7 +166,11 @@ export default function Home() {
           }}
         />
 
+        <Convergence />
+
         <ProductSuite onOpen={openTab} />
+
+        <Architecture />
 
         <section id="copilot" aria-labelledby="copilot-h" className="relative isolate">
           <div className="bg-grid-light mask-fade-b absolute inset-x-0 top-0 -z-10 h-[420px]" aria-hidden />

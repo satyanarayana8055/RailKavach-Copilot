@@ -1,14 +1,16 @@
-import { ArrowRight, Moon, Siren, Train, RefreshCw } from "lucide-react";
+import { ArrowRight, Moon, RadioTower, RefreshCw, Siren, Train } from "lucide-react";
+import type { ScenarioId } from "@/lib/data";
 
 const SCENARIOS = [
   { n: 1 as const, tag: "Near-SPAD", title: "Train 12414 · Suratgarh", icon: Siren, accent: "bg-orange", ink: "text-orange-ink", soft: "bg-orange-soft" },
   { n: 2 as const, tag: "Night fatigue", title: "02:00–05:00 micro-sleeps", icon: Moon, accent: "bg-amber", ink: "text-amber-ink", soft: "bg-amber-soft" },
   { n: 3 as const, tag: "WDD differential", title: "Rake BOXN-542 damage", icon: Train, accent: "bg-cyan", ink: "text-cyan-ink", soft: "bg-cyan-soft" },
+  { n: 4 as const, tag: "Signal callouts", title: "Caution order audit", icon: RadioTower, accent: "bg-blue", ink: "text-blue-ink", soft: "bg-blue-soft" },
 ];
 
-export function ScenarioDeck({ onRun, running }: { onRun: (n: 1 | 2 | 3) => void; running: number | null }) {
+export function ScenarioDeck({ onRun, running }: { onRun: (n: ScenarioId) => void; running: number | null }) {
   return (
-    <div className="grid gap-3 md:grid-cols-3">
+    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {SCENARIOS.map((s) => {
         const busy = running === s.n;
         return (

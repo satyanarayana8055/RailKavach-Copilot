@@ -15,7 +15,8 @@ def test_preloaded_scenarios():
     response = client.get("/api/scenarios")
     assert response.status_code == 200
     scenarios = response.json()
-    assert len(scenarios) == 3
+    assert len(scenarios) == 4
+    assert scenarios[3]["id"] == "scenario_4"
     assert scenarios[0]["id"] == "scenario_1"
 
 def test_chat_cached_spad_scenario():

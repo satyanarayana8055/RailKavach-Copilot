@@ -64,10 +64,13 @@ export const ROLES: Record<UserRole, RoleMetadata> = {
   },
 };
 
-export const SCENARIO_QUERIES: Record<1 | 2 | 3, string> = {
+export type ScenarioId = 1 | 2 | 3 | 4;
+
+export const SCENARIO_QUERIES: Record<ScenarioId, string> = {
   1: "Investigate safety events for Train 12414 near Suratgarh on 2026-11-18.",
   2: "Show driver alertness and fatigue trends between 02:00 and 05:00 AM on Bikaner Division.",
   3: "Audit entry-versus-exit wagon damage for freight rake BOXN-542.",
+  4: "Show all signal-related miscommunications, emergency callouts, and caution order exchanges on the Bikaner division during the shift on 18 Nov 2026.",
 };
 
 export const SUGGESTED_PROMPTS = [
@@ -109,6 +112,21 @@ export const SCENARIO_1_FALLBACK: ChatResponse = {
     "Issue Hindi lobby briefing",
     "Commend ALP Amit Singh",
   ],
+  latency_ms: 2,
+  token_usage: { total_tokens: 0 },
+  cached: true,
+};
+
+export const SCENARIO_4_FALLBACK: ChatResponse = {
+  answer:
+    "Shift audit of 58 bilingual radio transcripts (Bikaner Division, 18 Nov 2026, 00:00–08:00) found 4 critical exchanges. All callouts complied with the G&SR 4.40 calling-out protocol; Section 178 fail-open logging confirmed 100% radio uptime.",
+  citations: [
+    { timestamp: "03:11:05", source: "Railcomm VHF Ch 02", event_description: "Caution Order T/409 (30 km/h) on Loop Line to LP 12414.", reviewer_status: "CONFIRMED" },
+    { timestamp: "03:14:15", source: "Railcomm Intercom", event_description: "ALP: 'सामने होम सिग्नल लाल है! फोन रखिए!'", reviewer_status: "CONFIRMED" },
+    { timestamp: "04:32:10", source: "Railcomm VHF Ch 01", event_description: "14707 confirmed Distant Signal DOUBLE YELLOW at Lalgarh.", reviewer_status: "CONFIRMED" },
+    { timestamp: "05:18:40", source: "Railcomm VHF Ch 02", event_description: "Engineering restriction 20 km/h at KM 182/4.", reviewer_status: "CONFIRMED" },
+  ],
+  suggested_actions: ["Open timeline", "Export G&SR 4.40 callout report", "Audit fail-open radio log"],
   latency_ms: 2,
   token_usage: { total_tokens: 0 },
   cached: true,

@@ -134,20 +134,81 @@ function ProductRow({ p, flip, onOpen }: { p: Product; flip: boolean; onOpen: (t
   );
 }
 
+/** ROCP: any new railway product connects via a YAML manifest — no orchestrator code changes. */
+function PlugInBand() {
+  const yaml = [
+    ["product_id", '"wild_wheel_impact_detector"'],
+    ["display_name", '"Wheel Impact Load Detector (WILD)"'],
+    ["modality", '"SENSOR_TELEMETRY"'],
+    ["endpoint.url", '"local://data/wild_telemetry.json"'],
+  ];
+  return (
+    <div className="mb-16 grid items-center gap-8 rounded-panel border border-dashed border-white/15 bg-white/[0.02] p-6 sm:p-8 lg:mb-24 lg:grid-cols-[1fr_1.1fr]">
+      <div>
+        <div className="flex items-baseline gap-4">
+          <span className="font-mono text-5xl font-semibold text-transparent [-webkit-text-stroke:1px_rgba(245,158,11,.7)]">+</span>
+          <span className="mono-label text-ink-300">RailKavach Open Connector Protocol</span>
+        </div>
+        <h3 className="h-display mt-3 text-[28px] text-white sm:text-[34px]">
+          Plug in <em>any product.</em>
+        </h3>
+        <ol className="mt-6 flex flex-wrap items-center gap-2 font-mono text-[12px] text-ink-200">
+          {["Expose endpoint", "Drop YAML", "Auto-registered as Gemini tool"].map((s, i) => (
+            <li key={s} className="flex items-center gap-2">
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-amber font-semibold text-ink-950">{i + 1}</span>
+              {s}
+              {i < 2 && <span className="h-px w-5 bg-white/20" aria-hidden />}
+            </li>
+          ))}
+        </ol>
+        <ul className="mt-6 flex flex-wrap gap-2" aria-label="Next connectors">
+          {["WILD · connected", "OHE", "Kavach-TCAS", "Axle counters", "CMS"].map((t, i) => (
+            <li
+              key={t}
+              className={`rounded-full px-3 py-1 text-xs font-semibold ${i === 0 ? "bg-ok/15 text-ok" : "border border-white/10 text-ink-300"}`}
+            >
+              {t}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <figure className="overflow-hidden rounded-card border border-white/[0.08] bg-[#070a14]">
+        <figcaption className="flex items-center justify-between border-b border-white/[0.07] px-4 py-2.5 font-mono text-[11px] text-ink-300">
+          <span>connectors/wild.yaml</span>
+          <span className="flex items-center gap-1.5 text-ok">
+            <span className="h-1.5 w-1.5 animate-blink rounded-full bg-ok" aria-hidden /> registered
+          </span>
+        </figcaption>
+        <pre className="overflow-x-auto p-4 font-mono text-[13px] leading-7">
+          {yaml.map(([k, v]) => (
+            <div key={k}>
+              <span className="text-cyan">{k}</span>
+              <span className="text-ink-400">: </span>
+              <span className="text-amber">{v}</span>
+            </div>
+          ))}
+          <div className="text-ink-500"># → FunctionDeclaration generated · 0 code changes</div>
+        </pre>
+      </figure>
+    </div>
+  );
+}
+
 export function ProductSuite({ onOpen }: { onOpen: (t: TabId) => void }) {
   return (
     <section id="suite" aria-labelledby="suite-h" className="on-dark relative isolate overflow-hidden bg-ink-950 text-white">
       <div className="bg-grid-dark absolute inset-0 -z-10 opacity-60" aria-hidden />
       <div className="mx-auto max-w-[1280px] px-4 pt-16 sm:px-6 lg:pt-24">
-        <p className="eyebrow">The RailKavach suite</p>
+        <p className="eyebrow">Already in production · Indian Railways</p>
         <h2 id="suite-h" className="h-display mt-4 max-w-3xl text-[36px] sm:text-[52px]">
-          Three products. <em>One copilot.</em>
+          The foundation. <em>Three live platforms.</em>
         </h2>
         <div className="divide-y divide-white/[0.06]">
           {PRODUCTS.map((p, i) => (
             <ProductRow key={p.num} p={p} flip={i % 2 === 1} onOpen={onOpen} />
           ))}
         </div>
+        <PlugInBand />
       </div>
     </section>
   );
