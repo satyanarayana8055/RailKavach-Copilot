@@ -1,0 +1,22 @@
+# Uploaded by `gcloud run deploy --source .` — keep the build context small and secret-free.
+.git
+.gitignore
+.gcloudignore
+#!include:.gitignore
+
+# Never ship (also covered by .gitignore, repeated so a .gitignore edit can't leak them)
+.env
+.env.*
+!.env.example
+infra/
+data/drive_ingest/
+data/locate_cabin/
+data/wdd_images/
+data/audio_denoising/
+data/audit/
+data/demo_requests/
+**/node_modules/
+**/.next/
+frontend/out/
+backend/.venv/
+**/__pycache__/
