@@ -24,7 +24,7 @@ export function Convergence() {
           </h2>
 
           {/* Race: manual vs copilot */}
-          <div className="mt-10 space-y-5" role="img" aria-label="Manual investigation takes 3 to 5 days across 3 dashboards; RailKavach Copilot answers in 15 seconds">
+          <div className="mt-10 space-y-5" role="img" aria-label="Manual investigation takes 3 to 5 days across 3 dashboards; RailKavach Copilot answers in under 1 minute">
             <div>
               <div className="flex items-baseline justify-between">
                 <span className="text-sm font-semibold text-ink-700">Manual · 3 dashboards</span>
@@ -39,7 +39,7 @@ export function Convergence() {
             <div>
               <div className="flex items-baseline justify-between">
                 <span className="text-sm font-semibold text-ink-950">RailKavach Copilot</span>
-                <span className="font-mono text-lg font-semibold text-orange-ink">15 s</span>
+                <span className="font-mono text-lg font-semibold text-orange-ink">&lt; 1 min</span>
               </div>
               <div className="mt-2 h-3 rounded-full bg-ink-100">
                 <span className="block h-full w-[2.5%] min-w-[12px] rounded-full bg-orange shadow-glow" />

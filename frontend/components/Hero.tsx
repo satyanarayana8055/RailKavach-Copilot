@@ -11,13 +11,13 @@ export function Hero() {
 
       <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-4 pb-14 pt-14 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:pb-20 lg:pt-20">
         <div className="animate-fade-up">
-          <p className="eyebrow">RailKavach Copilot · by AiSPRY</p>
+          <p className="eyebrow eyebrow-plain">RailKavach Copilot · by AiSPRY</p>
           <h1 className="h-display mt-5 text-[40px] sm:text-[56px] lg:text-[64px]">
             3–5 days of
             <br />
-            investigation.
+            investigation
             <br />
-            <em>15 seconds.</em>
+            <em>under 1 minute</em>
           </h1>
           <p className="mt-5 max-w-md text-[17px] leading-relaxed text-ink-200">
             A cross-modal reasoning engine that fuses what was heard, seen and sensed on every train run — in Hindi or English, with zero new hardware.
@@ -42,7 +42,7 @@ export function Hero() {
           <Stat value={11354} label="Audio files · NWR" />
           <Stat value={3.68} decimals={2} suffix="M" label="Transcript lines" />
           <Stat value={1583} label="Loco pilots covered" />
-          <Stat value={15} suffix=" s" label="Cross-modal answer" />
+          <Stat value={1} prefix="< " suffix=" min" label="Cross-modal answer" />
         </div>
       </div>
     </section>

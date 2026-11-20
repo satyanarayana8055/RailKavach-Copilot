@@ -55,6 +55,9 @@
     content: "";
     @apply h-px w-6 bg-current;
   }
+  .eyebrow-plain::before {
+    content: none;
+  }
   .eyebrow-light {
     @apply text-orange-ink;
   }
