@@ -226,4 +226,22 @@ __marimo__/
 node_modules/
 .next/
 out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# OS & Runtime
 .DS_Store
+Thumbs.db
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+data/storage/
+backend/data/storage/
+backend/railkavach.db
+
+# Large raw audio archives (exceed GitHub 100MB limit)
+data/audio_denoising/
+*.zip

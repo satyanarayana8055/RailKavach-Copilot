@@ -1,0 +1,57 @@
+[
+  {
+    "event_id": "EVT-WILD-20261118-031412-042",
+    "source_product": "wild_axle_detector",
+    "modality": "SENSOR_TELEMETRY",
+    "timestamp": "2026-11-18T03:14:12.450Z",
+    "train_no": "12414",
+    "loco_id": "WAP-7 30452",
+    "vehicle_id": "BOXN-54210984712",
+    "vehicle_type": "WAGON",
+    "section": "Suratgarh-Bikaner",
+    "location_marker": "KM 142/18",
+    "event_type": "HIGH_WHEEL_IMPACT",
+    "severity": "CRITICAL",
+    "verification_status": "CONFIRMED",
+    "summary": "Axle 4 registered dynamic wheel impact of 248.5 kN, exceeding standard safety threshold (200.0 kN). Indicative of severe flat tyre / dragging brake gear.",
+    "metrics": {
+      "impact_kn": 248.5,
+      "threshold_kn": 200.0,
+      "static_load_tonnes": 21.4,
+      "impact_factor": 1.82,
+      "speed_kmph": 64.5
+    },
+    "evidence": {
+      "raw_data_uri": "minio://telemetry/wild/20261118/12414_axle4.json",
+      "preview_uri": "https://storage.railkavach.ai/previews/wild_12414_axle4.png",
+      "sha256_hash": "cc33dd44ee55ff6677889900aa11bb22cc33dd44ee55ff6677889900aa11bb22"
+    }
+  },
+  {
+    "event_id": "EVT-WILD-20261118-024830-019",
+    "source_product": "wild_axle_detector",
+    "modality": "SENSOR_TELEMETRY",
+    "timestamp": "2026-11-18T02:48:30.120Z",
+    "train_no": "BOXN-542",
+    "loco_id": "WAG-9 31200",
+    "vehicle_id": "BOXN-54210998124",
+    "vehicle_type": "WAGON",
+    "section": "Bikaner-Lalgarh",
+    "location_marker": "KM 174/02",
+    "event_type": "UNBALANCED_AXLE_LOAD",
+    "severity": "WARNING",
+    "verification_status": "CONFIRMED",
+    "summary": "Axle 2 left/right wheel load imbalance exceeded 22% during transit.",
+    "metrics": {
+      "impact_kn": 172.0,
+      "threshold_kn": 200.0,
+      "imbalance_ratio": 0.22,
+      "speed_kmph": 52.0
+    },
+    "evidence": {
+      "raw_data_uri": "minio://telemetry/wild/20261118/BOXN542_axle2.json",
+      "preview_uri": "https://storage.railkavach.ai/previews/wild_BOXN542_axle2.png",
+      "sha256_hash": "dd44ee55ff6677889900aa11bb22cc33dd44ee55ff6677889900aa11bb22cc33"
+    }
+  }
+]
