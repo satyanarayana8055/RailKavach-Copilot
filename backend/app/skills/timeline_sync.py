@@ -6,6 +6,20 @@ from .wdd_damage import load_wdd_inspections
 from ..observability import observe
 
 @observe(name="skill.build_incident_timeline", as_type="tool")
+
+def _alert_event(alert: dict, hindi: bool = False) -> str:
+    """Describe a Locate alert from the fields the record actually carries (duration/confidence are optional)."""
+    vtype = str(alert.get("violation_type", "")).replace("_", " ").title()
+    meta = []
+    if alert.get("duration_seconds") is not None:
+        meta.append(f"{alert['duration_seconds']} सेकंड" if hindi else f"{alert['duration_seconds']}s")
+    if alert.get("confidence") is not None:
+        meta.append(f"{int(float(alert['confidence']) * 100)}%" + ("" if hindi else " conf"))
+    head = ("केबिन कैमरा अलर्ट: " if hindi else "Locate CVVRS alert: ") + vtype + (f" ({', '.join(meta)})" if meta else "")
+    desc = "" if hindi else (alert.get("description") or "").strip().rstrip(".")
+    status = alert.get("verification_status")
+    return head + (f" — {desc}" if desc else "") + (f". Status: {status}" if status else "")
+
 def build_incident_timeline(params: TimelineSyncInput) -> List[Dict[str, Any]]:
     """
     Cross-modal temporal synchronizer: fuses Railcomm radio dialogues,
@@ -39,8 +53,8 @@ def build_incident_timeline(params: TimelineSyncInput) -> List[Dict[str, Any]]:
             "source": "LOCATE_CABIN_CAM",
             "channel": "CVVRS Edge",
             "speaker": alert.get("crew_id"),
-            "event": f"Locate CVVRS Alert: {alert.get('violation_type')} ({alert.get('duration_seconds')}s duration, {int(alert.get('confidence', 0)*100)}% conf). Status: {alert.get('verification_status')}",
-            "event_hi": f"केबिन कैमरा अलर्ट: {alert.get('violation_type')} ({alert.get('duration_seconds')} सेकंड, {alert.get('verification_status')})",
+            "event": _alert_event(alert),
+            "event_hi": _alert_event(alert, hindi=True),
             "clarity": alert.get("confidence", 0.95),
             "reviewer_status": alert.get("verification_status"),
             "reviewer_id": alert.get("reviewer_id", "DSO-BKN"),

@@ -1,0 +1,13 @@
+{
+  "name": "railkavach-demo",
+  "private": true,
+  "type": "module",
+  "description": "Playwright-recorded walkthrough of the RailKavach Copilot",
+  "scripts": {
+    "record": "node record-demo.mjs",
+    "record:live": "BASE_URL=https://railkavach-copilot-662073715491.asia-south1.run.app node record-demo.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.65.1"
+  }
+}

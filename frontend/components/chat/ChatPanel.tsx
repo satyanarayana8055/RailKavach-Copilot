@@ -39,16 +39,31 @@ interface Props {
 
 /* ---------- lightweight markdown: headings, bullets, **bold**, [HH:MM:SS] chips ---------- */
 
+const TS = /^\[\d{2}:\d{2}:\d{2}\]$/;
+
+function chip(t: string, key: string) {
+  return (
+    <span key={key} className="mx-0.5 inline-block rounded bg-ink-950 px-1 py-px align-[1px] font-mono text-[11px] font-semibold text-amber">
+      {t.slice(1, -1)}
+    </span>
+  );
+}
+
+/** Timestamps → chips; everything else plain. Backticks are dropped (model formatting noise). */
+function plain(text: string, key: string): ReactNode[] {
+  return text
+    .replace(/`/g, "")
+    .split(/(\[\d{2}:\d{2}:\d{2}\])/g)
+    .map((part, i) => (TS.test(part) ? chip(part, `${key}-${i}`) : <Fragment key={`${key}-${i}`}>{part}</Fragment>));
+}
+
+/** **bold** and *italic* (each may contain timestamp chips). */
 function inline(text: string, key: string): ReactNode[] {
-  return text.split(/(\*\*[^*]+\*\*|\[\d{2}:\d{2}:\d{2}\])/g).map((part, i) => {
-    if (/^\*\*[^*]+\*\*$/.test(part)) return <strong key={`${key}-${i}`} className="font-semibold text-ink-950">{part.slice(2, -2)}</strong>;
-    if (/^\[\d{2}:\d{2}:\d{2}\]$/.test(part))
-      return (
-        <span key={`${key}-${i}`} className="mx-0.5 inline-block rounded bg-ink-950 px-1 py-px align-[1px] font-mono text-[11px] font-semibold text-amber">
-          {part.slice(1, -1)}
-        </span>
-      );
-    return <Fragment key={`${key}-${i}`}>{part.replace(/`/g, "")}</Fragment>;
+  return text.split(/(\*\*[^*]+\*\*|\*[^*\s][^*]*\*)/g).map((part, i) => {
+    const k = `${key}-${i}`;
+    if (/^\*\*[^*]+\*\*$/.test(part)) return <strong key={k} className="font-semibold text-ink-950">{plain(part.slice(2, -2), k)}</strong>;
+    if (/^\*[^*]+\*$/.test(part)) return <em key={k} className="not-italic text-ink-600">{plain(part.slice(1, -1), k)}</em>;
+    return <Fragment key={k}>{plain(part, k)}</Fragment>;
   });
 }
 
@@ -286,7 +301,7 @@ export function ChatPanel(p: Props) {
         ) : (
           <ol className="space-y-5">
             {p.messages.map((m) => (
-              <li key={m.id} className={m.role === "user" ? "flex justify-end" : ""}>
+              <li key={m.id} data-msg={m.role} className={m.role === "user" ? "flex justify-end" : ""}>
                 {m.role === "user" ? (
                   <p className="max-w-[85%] whitespace-pre-wrap rounded-[14px] rounded-br-[4px] bg-ink-950 px-3.5 py-2 text-[14px] leading-relaxed text-white">{p.mask(m.text)}</p>
                 ) : (

@@ -157,6 +157,8 @@ const SEV_TONE: Record<string, string> = {
   INFO: "border-[var(--line)] bg-paper text-ink-600",
 };
 
+// Row questions name only the row's own source (alert id, loco, channel, time). Train numbers,
+// stations and rakes widen server-side routing to other sources and get refused for scoped roles.
 function ReviewQueue({ alerts, mask, onAsk }: { alerts: CabinAlert[]; mask: (t: string) => string; onAsk: (q: string) => void }) {
   const rows = useMemo(
     () =>
@@ -178,7 +180,7 @@ function ReviewQueue({ alerts, mask, onAsk }: { alerts: CabinAlert[]; mask: (t: 
             </span>
           </span>
           <span className={`chip shrink-0 ${SEV_TONE[a.severity] ?? SEV_TONE.INFO}`}>{pretty(a.severity)}</span>
-          <AskButton onClick={() => onAsk(`Explain cabin alert ${a.alert_id} (${pretty(a.violation_type)}) on ${a.train_no} at ${a.time_str} and whether it needs action.`)} />
+          <AskButton onClick={() => onAsk(`Explain cabin alert ${a.alert_id} (${pretty(a.violation_type)}) on loco ${mask(a.loco_id)} at ${a.time_str} and whether it needs action.`)} />
         </li>
       ))}
       {!rows.length && <li className="px-5 py-6 text-sm text-ink-500">Nothing pending review.</li>}
@@ -202,7 +204,7 @@ function RadioList({ rows, mask, lang, onAsk }: { rows: RadioRow[]; mask: (t: st
               {r.fail_open_bypassed && <span className="chip border-danger/30 bg-danger-soft text-danger-ink">Fail-open bypass</span>}
             </span>
           </span>
-          <AskButton onClick={() => onAsk(`Summarise the VHF exchange at ${r.time_str} on ${r.channel} (${r.station}) for train ${r.train_no} and flag any callout protocol issue.`)} />
+          <AskButton onClick={() => onAsk(`Summarise the radio exchange at ${r.time_str} on ${r.channel} and flag any callout protocol issue.`)} />
         </li>
       ))}
     </ul>
