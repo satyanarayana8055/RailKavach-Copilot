@@ -226,7 +226,8 @@ export function Dashboard({ role, data, mask, lang, onAsk, timeline, rake, views
   const inScope = SOURCES.filter(([s]) => has(s));
   const locked = SOURCES.filter(([s]) => !has(s)).map(([, l]) => l);
   const tabs = [{ id: "overview", label: "Overview" }, ...views.map(({ id, label }) => ({ id, label }))];
-  const n = (v: number) => (data.loading ? "—" : v.toLocaleString("en-IN"));
+  // "—" while loading or when a source failed to load: never render a misleading 0.
+  const n = (v: number, src?: unknown[]) => (data.loading || !src ? "—" : v.toLocaleString("en-IN"));
 
   return (
     <div className="min-w-0">
@@ -272,22 +273,22 @@ export function Dashboard({ role, data, mask, lang, onAsk, timeline, rake, views
           {/* KPIs by source — product order: Railcomm, Locate, WDD */}
           <div className={`grid gap-4 ${compact ? "" : inScope.length === 3 ? "lg:grid-cols-3" : inScope.length === 2 ? "md:grid-cols-2" : "md:max-w-xl"}`}>
             {has("RAILCOMM") && <SourceCard icon={Radio} title="Railcomm · radio" tint="bg-cyan-soft text-cyan-ink" wide={compact}>
-              <Kpi label="Exchanges" value={n(R.length)} sub="VHF + intercom" />
-              <Kpi label="Avg clarity" value={data.loading ? "—" : `${avgClarity}%`} sub="after denoise" tone="ok" />
-              <Kpi label="Safety callouts" value={n(R.filter(isCallout).length)} />
-              <Kpi label="Fail-open bypass" value={n(R.filter((r) => r.fail_open_bypassed).length)} tone={R.some((r) => r.fail_open_bypassed) ? "danger" : "ink"} />
+              <Kpi label="Exchanges" value={n(R.length, data.railcomm)} sub="VHF + intercom" />
+              <Kpi label="Avg clarity" value={data.loading || !data.railcomm ? "—" : `${avgClarity}%`} sub="after denoise" tone="ok" />
+              <Kpi label="Safety callouts" value={n(R.filter(isCallout).length, data.railcomm)} />
+              <Kpi label="Fail-open bypass" value={n(R.filter((r) => r.fail_open_bypassed).length, data.railcomm)} tone={R.some((r) => r.fail_open_bypassed) ? "danger" : "ink"} />
             </SourceCard>}
             {has("LOCATE") && <SourceCard icon={Camera} title="Locate · cabin video" tint="bg-orange-soft text-orange-ink" wide={compact}>
-              <Kpi label="Violations" value={n(violations.length)} sub={`of ${n(L.length)} alerts`} tone="danger" />
-              <Kpi label="Pending review" value={n(pending)} tone={pending ? "amber" : "ink"} />
-              <Kpi label="Confirmed" value={n(violations.filter((a) => a.verification_status === "CONFIRMED").length)} />
-              <Kpi label="Auto-suppressed" value={n(L.length - violations.length)} sub="routine duties" tone="ok" />
+              <Kpi label="Violations" value={n(violations.length, data.locate)} sub={`of ${n(L.length, data.locate)} alerts`} tone="danger" />
+              <Kpi label="Pending review" value={n(pending, data.locate)} tone={pending ? "amber" : "ink"} />
+              <Kpi label="Confirmed" value={n(violations.filter((a) => a.verification_status === "CONFIRMED").length, data.locate)} />
+              <Kpi label="Auto-suppressed" value={n(L.length - violations.length, data.locate)} sub="routine duties" tone="ok" />
             </SourceCard>}
             {has("WDD") && <SourceCard icon={Train} title="WDD · wagons" tint="bg-amber-soft text-amber-ink" wide={compact}>
-              <Kpi label="Wagons scanned" value={n(W.length)} sub="rake BOXN-542" />
-              <Kpi label="Transit damage" value={n(transit)} tone={transit ? "danger" : "ink"} />
-              <Kpi label="High / critical" value={n(criticalWagons)} tone={criticalWagons ? "danger" : "ink"} />
-              <Kpi label="Clear" value={n(W.filter((w) => w.exit_damage_status === "CLEAR").length)} tone="ok" />
+              <Kpi label="Wagons scanned" value={n(W.length, data.wdd)} sub="rake BOXN-542" />
+              <Kpi label="Transit damage" value={n(transit, data.wdd)} tone={transit ? "danger" : "ink"} />
+              <Kpi label="High / critical" value={n(criticalWagons, data.wdd)} tone={criticalWagons ? "danger" : "ink"} />
+              <Kpi label="Clear" value={n(W.filter((w) => w.exit_damage_status === "CLEAR").length, data.wdd)} tone="ok" />
             </SourceCard>}
           </div>
           {locked.length > 0 && (
@@ -310,7 +311,7 @@ export function Dashboard({ role, data, mask, lang, onAsk, timeline, rake, views
               >
                 <NightChart alerts={L} />
               </Panel>
-              <Panel title="Needs review" meta={`${n(pending)} pending`}>
+              <Panel title="Needs review" meta={`${n(pending, data.locate)} pending`}>
                 <ReviewQueue alerts={L} mask={mask} onAsk={onAsk} />
               </Panel>
             </div>
@@ -339,7 +340,7 @@ export function Dashboard({ role, data, mask, lang, onAsk, timeline, rake, views
           {rake && (
             <Panel
               title="Rake BOXN-542 · entry vs exit"
-              meta={`${n(transit)} wagons with new damage`}
+              meta={`${n(transit, data.wdd)} wagons with new damage`}
               action={<AskButton label="Audit rake" onClick={() => onAsk("Audit entry-versus-exit wagon damage for freight rake BOXN-542.")} />}
             >
               <div className="p-4 sm:p-5">{rake}</div>

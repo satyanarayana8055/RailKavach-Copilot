@@ -4,7 +4,11 @@ import type { ChatResponse, FileAnalysisResult, Purpose, UserRole } from "./type
  * Browser-reachable backend origin. Override with NEXT_PUBLIC_API_URL
  * (must be reachable from the user's browser, not a Docker-internal hostname).
  */
-export const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").replace(/\/$/, "");
+/**
+ * Production (static export served by FastAPI on Cloud Run) calls the same origin.
+ * Dev (next dev on :3000) calls the local backend on :8000. NEXT_PUBLIC_API_URL overrides both.
+ */
+export const API_BASE = (process.env.NEXT_PUBLIC_API_URL ?? (process.env.NODE_ENV === "production" ? "" : "http://localhost:8000")).replace(/\/$/, "");
 
 /** Who is asking and why. The server enforces scope and DPDP masking from these. */
 export interface Session {
