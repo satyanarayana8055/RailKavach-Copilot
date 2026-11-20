@@ -2,7 +2,7 @@ import { ArrowRight, Play } from "lucide-react";
 import { IncidentVisual } from "./IncidentVisual";
 import { Stat } from "./Stat";
 
-export function Hero({ onRun }: { onRun: () => void }) {
+export function Hero() {
   return (
     <section id="top" className="on-dark relative isolate overflow-hidden bg-navy text-white">
       <div className="bg-grid-dark mask-fade-b absolute inset-0 -z-10" aria-hidden />
@@ -23,11 +23,11 @@ export function Hero({ onRun }: { onRun: () => void }) {
             A cross-modal reasoning engine that fuses what was heard, seen and sensed on every train run — in Hindi or English, with zero new hardware.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <button type="button" onClick={onRun} className="btn-amber h-12 px-6">
-              <Play className="h-4 w-4" aria-hidden /> Replay 12414 incident
-            </button>
-            <a href="#suite" className="btn-ghost-dark h-12 px-6">
+            <a href="#suite" className="btn-amber h-12 px-6">
               Explore the suite <ArrowRight className="h-4 w-4" aria-hidden />
+            </a>
+            <a href="#demo" className="btn-ghost-dark h-12 px-6">
+              <Play className="h-4 w-4" aria-hidden /> Request a demo
             </a>
           </div>
         </div>

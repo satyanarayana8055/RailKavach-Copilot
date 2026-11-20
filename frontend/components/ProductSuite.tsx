@@ -2,7 +2,6 @@
 
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
-import type { TabId } from "@/lib/types";
 import { useInView, useScrollVar } from "./hooks";
 import { rv } from "./reveal";
 import { LocateVisual, RailcommVisual, WddVisual } from "./ProductVisuals";
@@ -16,8 +15,6 @@ interface Product {
   tags: string[];
   stats: Array<{ value: number; decimals?: number; prefix?: string; suffix?: string; label: string }>;
   visual: (active: boolean) => ReactNode;
-  tab: TabId;
-  cta: string;
   /** Live AiSPRY production platform for this product */
   url: string;
 }
@@ -41,9 +38,7 @@ const PRODUCTS: Product[] = [
       { value: 2, prefix: "5–8→", suffix: "h", label: "Inspection / train" },
     ],
     visual: (a) => <WddVisual active={a} />,
-    tab: "wdd",
     url: "https://nwrwdd.aispry.ai",
-    cta: "Open gantry differential",
   },
   {
     num: "02",
@@ -62,9 +57,7 @@ const PRODUCTS: Product[] = [
       { value: 24, suffix: "×7", label: "Monitoring" },
     ],
     visual: (a) => <LocateVisual active={a} />,
-    tab: "timeline",
     url: "https://nwrlcva.aispry.ai",
-    cta: "Open incident timeline",
   },
   {
     num: "03",
@@ -83,13 +76,11 @@ const PRODUCTS: Product[] = [
       { value: 9, suffix: "+", label: "Noise classes" },
     ],
     visual: (a) => <RailcommVisual active={a} />,
-    tab: "copilot",
-    cta: "Ask the voice copilot",
     url: "https://nwradt.aispry.ai",
   },
 ];
 
-function ProductRow({ p, flip, onOpen }: { p: Product; flip: boolean; onOpen: (t: TabId) => void }) {
+function ProductRow({ p, flip }: { p: Product; flip: boolean }) {
   const { ref, inView } = useInView<HTMLDivElement>(0.3);
   const scrollRef = useScrollVar<HTMLElement>();
   const visualLeft = !flip;
@@ -141,9 +132,9 @@ function ProductRow({ p, flip, onOpen }: { p: Product; flip: boolean; onOpen: (t
             Launch {p.name} <ArrowUpRight className="h-4 w-4" aria-hidden />
             <span className="sr-only">(opens {new URL(p.url).host} in a new tab)</span>
           </a>
-          <button type="button" onClick={() => onOpen(p.tab)} className="btn-ghost-dark h-11 px-5">
-            {p.cta} <ArrowRight className="h-4 w-4" aria-hidden />
-          </button>
+          <a href="#demo" className="btn-ghost-dark h-11 px-5">
+            Request a demo <ArrowRight className="h-4 w-4" aria-hidden />
+          </a>
         </div>
       </div>
       </div>
@@ -213,7 +204,7 @@ function PlugInBand() {
   );
 }
 
-export function ProductSuite({ onOpen }: { onOpen: (t: TabId) => void }) {
+export function ProductSuite() {
   return (
     <section id="suite" aria-labelledby="suite-h" className="on-dark relative isolate overflow-hidden bg-ink-950 text-white">
       <div className="bg-grid-dark absolute inset-0 -z-10 opacity-60" aria-hidden />
@@ -224,7 +215,7 @@ export function ProductSuite({ onOpen }: { onOpen: (t: TabId) => void }) {
         </h2>
         <div className="divide-y divide-white/[0.06]">
           {PRODUCTS.map((p, i) => (
-            <ProductRow key={p.num} p={p} flip={i % 2 === 1} onOpen={onOpen} />
+            <ProductRow key={p.num} p={p} flip={i % 2 === 1} />
           ))}
         </div>
         <PlugInBand />

@@ -1,11 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Convergence } from "@/components/Convergence";
 import { Footer } from "@/components/Footer";
-import { Hero } from "@/components/Hero";
 import { Navbar } from "@/components/Navbar";
-import { ProductSuite } from "@/components/ProductSuite";
+import { RoleGate } from "./RoleGate";
 import { Toast, useToast } from "@/components/Toast";
 import { ArtifactsPanel } from "@/components/workspace/ArtifactsPanel";
 import { CopilotPanel } from "@/components/workspace/CopilotPanel";
@@ -19,10 +17,8 @@ import { genericFallback, ROLES, SCENARIO_1_FALLBACK, SCENARIO_4_FALLBACK, SCENA
 import { maskPII } from "@/lib/privacy";
 import type { ChatResponse, FileAnalysisResult, TabId, UserRole } from "@/lib/types";
 
-const scrollToCopilot = () => document.getElementById("copilot")?.scrollIntoView({ behavior: "smooth" });
-
-export default function Home() {
-  const [roleCode, setRoleCode] = useState<UserRole>("ROLE_SR_DSO");
+export function Workspace() {
+  const [roleCode, setRoleCode] = useState<UserRole | null>(null);
   const [lang, setLang] = useState<"en" | "hi">("en");
   const [maskToggle, setMaskToggle] = useState(false);
   const [tab, setTab] = useState<TabId>("copilot");
@@ -36,15 +32,25 @@ export default function Home() {
   const [fileResult, setFileResult] = useState<FileAnalysisResult | null>(null);
   const toast = useToast();
 
-  const role = ROLES[roleCode];
+  const role = ROLES[roleCode ?? "ROLE_SR_DSO"];
 
-  // Deep link: /?tab=timeline opens a workspace tab directly (demo-friendly).
+  // Deep links: /copilot?tab=timeline or ?scenario=1 (applied once a role is chosen).
+  const [pending, setPending] = useState<{ tab?: TabId; scenario?: ScenarioId }>({});
   useEffect(() => {
-    const t = new URLSearchParams(window.location.search).get("tab") as TabId | null;
-    if (t && ROLES.ROLE_SR_DSO.allowedTabs.includes(t)) setTab(t);
+    const q = new URLSearchParams(window.location.search);
+    const n = Number(q.get("scenario"));
+    setPending({ tab: (q.get("tab") as TabId) || undefined, scenario: n >= 1 && n <= 4 ? (n as ScenarioId) : undefined });
   }, []);
   const masked = maskToggle || role.forceMasking;
   const mask = useCallback((t: string) => maskPII(t, masked), [masked]);
+
+  const enter = (code: UserRole) => {
+    const r = ROLES[code];
+    setRoleCode(code);
+    setTab(pending.tab && r.allowedTabs.includes(pending.tab) ? pending.tab : r.allowedTabs[0]);
+    if (pending.scenario && r.allowedTabs.includes("copilot")) runScenario(pending.scenario);
+    setPending({});
+  };
 
   const switchRole = (code: UserRole) => {
     const next = ROLES[code];
@@ -59,7 +65,6 @@ export default function Home() {
       return;
     }
     setTab(t);
-    scrollToCopilot();
   };
 
   const ask = async (q: string) => {
@@ -142,12 +147,23 @@ export default function Home() {
     }
   };
 
+  if (!roleCode) {
+    return (
+      <>
+        <Navbar current="copilot" />
+        <RoleGate onEnter={enter} />
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <a href="#copilot" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[90] focus:rounded-btn focus:bg-white focus:px-4 focus:py-2 focus:font-semibold">
         Skip to copilot
       </a>
       <Navbar
+        current="copilot"
         controls={{
           role: roleCode,
           onRole: switchRole,
@@ -160,26 +176,15 @@ export default function Home() {
       />
 
       <main>
-        <Hero
-          onRun={() => {
-            scrollToCopilot();
-            runScenario(1);
-          }}
-        />
-
-        <Convergence />
-
-        <ProductSuite onOpen={openTab} />
-
         <section id="copilot" aria-labelledby="copilot-h" className="relative isolate">
           <div className="bg-grid-light mask-fade-b absolute inset-x-0 top-0 -z-10 h-[420px]" aria-hidden />
-          <div className="mx-auto max-w-[1280px] px-4 py-16 sm:px-6 lg:py-24">
+          <div className="mx-auto max-w-[1280px] px-4 py-12 sm:px-6 lg:py-16">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <p className="eyebrow eyebrow-light">RailKavach Copilot</p>
-                <h2 id="copilot-h" className="h-display h-display-light mt-4 text-[36px] text-ink-950 sm:text-[52px]">
+                <p className="eyebrow eyebrow-light">RailKavach Copilot · Authorised workspace</p>
+                <h1 id="copilot-h" className="h-display h-display-light mt-4 text-[36px] text-ink-950 sm:text-[52px]">
                   Ask once. <em>See everything.</em>
-                </h2>
+                </h1>
               </div>
               <div className="flex items-center gap-3 rounded-card border border-[var(--line)] bg-white px-4 py-3 shadow-card">
                 <span className="grid h-9 w-9 place-items-center rounded-btn bg-orange-soft text-orange-ink">

@@ -16,16 +16,16 @@ interface WorkspaceControls {
   onToggleLang: () => void;
 }
 
-/** Omit `controls` on pages without the workspace (e.g. /architecture): shows an "Open Copilot" CTA instead. */
+/** Omit `controls` on pages without the workspace: shows a "Request a demo" CTA instead. */
 interface NavbarProps {
   controls?: WorkspaceControls;
-  current?: "home" | "architecture";
+  current?: "home" | "architecture" | "copilot";
 }
 
 const LINKS: Array<[string, string, NavbarProps["current"] | null]> = [
   ["/#suite", "Platforms", null],
   ["/architecture", "Architecture", "architecture"],
-  ["/#copilot", "Copilot", null],
+  ["/copilot", "Copilot", "copilot"],
 ];
 
 /** AiSPRY header: brand gradient bar; all text sits on white/ink pills for AA contrast. */
@@ -62,8 +62,8 @@ export function Navbar({ controls, current = "home" }: NavbarProps) {
         </nav>
 
         {controls ? <Controls {...controls} /> : (
-          <a href="/#copilot" className="btn-pill-white ml-auto">
-            Open Copilot <ArrowRight className="h-4 w-4 text-orange-ink" aria-hidden />
+          <a href="/#demo" className="btn-pill-white ml-auto">
+            Request a demo <ArrowRight className="h-4 w-4 text-orange-ink" aria-hidden />
           </a>
         )}
       </div>
