@@ -246,6 +246,9 @@ backend/railkavach.db
 # Large raw audio archives (exceed GitHub 100MB limit)
 data/audio_denoising/
 *.zip
+data/drive_ingest/
+data/locate_cabin/
+frontend/public/evidence_cabin
 
 # Raw Drive/ZIP ingest downloads (large, may contain operational data)
 data/drive_ingest/

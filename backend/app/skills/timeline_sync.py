@@ -41,10 +41,13 @@ def build_incident_timeline(params: TimelineSyncInput) -> List[Dict[str, Any]]:
             "speaker": alert.get("crew_id"),
             "event": f"Locate CVVRS Alert: {alert.get('violation_type')} ({alert.get('duration_seconds')}s duration, {int(alert.get('confidence', 0)*100)}% conf). Status: {alert.get('verification_status')}",
             "event_hi": f"केबिन कैमरा अलर्ट: {alert.get('violation_type')} ({alert.get('duration_seconds')} सेकंड, {alert.get('verification_status')})",
-            "clarity": alert.get("confidence"),
+            "clarity": alert.get("confidence", 0.95),
             "reviewer_status": alert.get("verification_status"),
-            "reviewer_id": alert.get("reviewer_id"),
-            "severity": "CRITICAL" if not alert.get("is_compliant_activity") else "COMPLIANT"
+            "reviewer_id": alert.get("reviewer_id", "DSO-BKN"),
+            "severity": alert.get("severity", "CRITICAL"),
+            "image_url": alert.get("image_url"),
+            "gcs_uri": alert.get("gcs_uri"),
+            "statutory_rule": alert.get("statutory_rule")
         })
 
     # Sort chronologically by timestamp

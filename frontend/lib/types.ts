@@ -32,6 +32,9 @@ export interface TimelineEvent {
   fail_open?: boolean;
   reviewer_status?: string;
   severity: "INFO" | "CRITICAL";
+  image_url?: string;
+  gcs_uri?: string;
+  statutory_rule?: string;
 }
 
 export interface FileAnalysisResult {
