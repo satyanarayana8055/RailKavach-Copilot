@@ -229,3 +229,15 @@ def get_role_profile(role_code: UserRole):
     if role_code not in ROLE_REGISTRY:
         raise HTTPException(status_code=404, detail="Role not found")
     return ROLE_REGISTRY[role_code]
+
+
+# -------------------------------------------------------------
+# Static Single-Container Production Mount (Next.js Export)
+# -------------------------------------------------------------
+import os
+from fastapi.staticfiles import StaticFiles
+
+STATIC_DIR = os.getenv("STATIC_DIR", os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "out"))
+if os.path.exists(STATIC_DIR):
+    app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static-spa")
+
