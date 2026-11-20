@@ -185,7 +185,18 @@ class CopilotEngine:
                 timeline = build_incident_timeline(TimelineSyncInput(train_no="12414"))
                 timeline_summary = "\n".join([f"[{t.get('time_str')}] {t.get('source')}: {t.get('event')} (Status: {t.get('reviewer_status', 'N/A')})" for t in timeline[:12]])
 
-                user_prompt = f"Operational Timeline Context:\n{timeline_summary}\n\nOfficer Inquiry: {req.query}"
+                # Check if query pertains to Wayside Wagon Damage Detection (WDD)
+                is_wdd_query = any(k in q_lower for k in ["wagon", "wdd", "damage", "boxn", "door", "dent", "rake", "gantry", "sick", "shunting", "डिब्बा", "वैगन"])
+                wdd_summary = ""
+                if is_wdd_query:
+                    wdd_records = get_wdd_wagon_damages(WddDamagesInput())
+                    damaged_wagons = [w for w in wdd_records if w.get("exit_damage_status") == "DAMAGED"][:6]
+                    wdd_summary = "\nWayside Wagon Damage Detection (WDD 6-Gantry Differential Context):\n" + "\n".join([
+                        f"- Wagon #{w.get('position_in_rake')} ({w.get('wagon_no')}): Entry={w.get('entry_damage_status')}, Exit={w.get('exit_damage_status')}, Transit Delta={w.get('delta_transit_damage')}, Defects={', '.join([d.get('class', '') + ' (' + d.get('severity', '') + ')' for d in w.get('exit_defects', [])])}. Liability: {w.get('liability_attribution')}"
+                        for w in damaged_wagons
+                    ])
+
+                user_prompt = f"Operational Timeline Context:\n{timeline_summary}\n{wdd_summary}\n\nOfficer Inquiry: {req.query}"
 
                 _tag_route("gemini", model=DEFAULT_MODEL)
                 with get_client().start_as_current_observation(

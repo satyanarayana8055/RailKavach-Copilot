@@ -5,6 +5,9 @@
 #   ./scripts/langfuse_local.sh down   # stop (data kept in Docker volumes)
 #   ./scripts/langfuse_local.sh reset  # stop and delete all local trace data
 #   ./scripts/langfuse_local.sh logs
+#   ./scripts/langfuse_local.sh link-app # also send the RailKavach backend's traces here
+# By default this instance holds only Antigravity CLI (agy) traces
+# (see scripts/install_antigravity_langfuse.sh); the backend is not linked.
 # UI: http://localhost:3100. Login and keys are in infra/langfuse/.env (gitignored).
 # Local only: Cloud Run cannot reach this. Deploys need a public Langfuse URL.
 # =============================================================================
@@ -90,15 +93,15 @@ case "${1:-up}" in
     init_env
     "${COMPOSE[@]}" up -d
     wait_healthy
-    link_app_env
     echo ""
     echo "🎛  Langfuse UI: http://localhost:$PORT"
     echo "   Login:  $(grep '^LANGFUSE_INIT_USER_EMAIL=' "$LF_ENV" | cut -d= -f2-)"
     echo "   Password: in infra/langfuse/.env (LANGFUSE_INIT_USER_PASSWORD)"
-    echo "   Restart the backend to pick up the keys."
+    echo "   Traces: Antigravity CLI (agy) only. Run '$0 link-app' to add backend traces."
     ;;
+  link-app) link_app_env; echo "   Restart the backend to pick up the keys." ;;
   down)  "${COMPOSE[@]}" down ;;
   reset) "${COMPOSE[@]}" down -v && rm -f "$LF_ENV" && echo "🧹 Local Langfuse data and secrets removed" ;;
   logs)  "${COMPOSE[@]}" logs -f --tail=100 ;;
-  *) echo "Usage: $0 {up|down|reset|logs}"; exit 1 ;;
+  *) echo "Usage: $0 {up|down|reset|logs|link-app}"; exit 1 ;;
 esac
