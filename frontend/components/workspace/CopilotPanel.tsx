@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Camera, CheckCircle2, Mic, MicOff, Radio, RefreshCw, Send, Sparkles, Train, Volume2, VolumeX, Zap } from "lucide-react";
 import { useEffect, useState, type FormEvent } from "react";
-import { MarkdownView } from "@/components/MarkdownView";
+import { ExecutiveReportView } from "@/components/ExecutiveReportView";
 import { SUGGESTED_PROMPTS } from "@/lib/data";
 import { toSeconds } from "@/lib/privacy";
 import type { ChatResponse, RoleMetadata } from "@/lib/types";
@@ -178,7 +178,7 @@ export function CopilotPanel(p: Props) {
           </header>
 
           <div className="mt-4">
-            <MarkdownView content={p.mask(p.response.answer)} className={p.loading ? "opacity-40" : ""} />
+            <ExecutiveReportView content={p.mask(p.response.answer)} loading={p.loading} />
           </div>
 
           {p.response.citations.length > 0 && (
