@@ -43,6 +43,19 @@ def test_chat_fatigue_scenario():
     assert data["cached"] is True
     assert "micro-sleep" in data["answer"].lower()
 
+def test_chat_signal_miscommunication_scenario():
+    response = client.post("/api/chat", json={
+        "query": "Show all signal-related miscommunications, emergency callouts, and caution order exchanges on the Bikaner division during the shift on 18 Nov 2026.",
+        "language": "en"
+    })
+    assert response.status_code == 200
+    data = response.json()
+    assert data["cached"] is True
+    assert "caution order" in data["answer"].lower()
+    assert len(data["citations"]) >= 4
+    timestamps = [c["timestamp"] for c in data["citations"]]
+    assert "03:11:05" in timestamps
+
 def test_timeline_endpoint():
     response = client.post("/api/timeline", json={
         "train_no": "12414",

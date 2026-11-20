@@ -102,6 +102,32 @@ class CopilotEngine:
                     cached=True
                 )
 
+            # Scenario 4: Signal Miscommunications & Caution Orders on Bikaner Division
+            if "miscommunication" in q_lower or "caution order" in q_lower or "exchange" in q_lower:
+                data = self.cache.get("scenario_signal_miscommunications", {})
+                citations = [
+                    Citation(
+                        timestamp=c.get("time"),
+                        source=c.get("source"),
+                        event_description=c.get("event"),
+                        reviewer_status="CONFIRMED"
+                    )
+                    for c in data.get("citations", [])
+                ]
+                latency = int((time.time() - start_t) * 1000)
+                return ChatQueryResponse(
+                    answer=data.get("summary", ""),
+                    citations=citations,
+                    suggested_actions=[
+                        "Review VHF radio log for Suratgarh Junction (03:10–03:15)",
+                        "Export G&SR 4.40 Signal Callout Verification Report",
+                        "Audit Section 178 Fail-Open continuous radio logging"
+                    ],
+                    latency_ms=latency,
+                    token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
+                    cached=True
+                )
+
             # Scenario 3: Freight Rake / Wagon Damage / BOXN-542
             if "wagon" in q_lower or "damage" in q_lower or "boxn" in q_lower or "gantry" in q_lower:
                 data = self.cache.get("scenario_3_wagon_damage_audit", {})

@@ -106,5 +106,33 @@
       }
     ],
     "inspection_time_savings": "WDD automated audit completed in 8 minutes versus 5 hours 30 minutes manual examination."
+  },
+  "scenario_signal_miscommunications": {
+    "query": "Show all signal-related miscommunications, emergency callouts, and caution order exchanges on the Bikaner division during the shift on 18 Nov 2026.",
+    "summary": "Shift Audit of 58 bilingual radio transcripts across Bikaner Division (18-Nov-2026, 00:00–08:00 hrs) identified 4 critical operational exchanges:\n\n1. [03:11:05] SM Suratgarh issued a 30 kmph Caution Order on Loop Line approaching Suratgarh Jn to LP 12414.\n2. [03:14:15] Emergency verbal callout by ALP Amit Singh ('सामने होम सिग्नल लाल है! फोन रखिए!') following driver phone distraction.\n3. [04:32:10] Train 14707 exchanged signal confirmation callouts for Distant Signal (DOUBLE YELLOW) approaching Lalgarh Jn.\n4. [05:18:40] SM Bikaner issued an urgent engineering speed restriction (20 kmph) at KM 182/4 due to track maintenance.\n\nAll callouts complied with G&SR 4.40 calling-out protocol. Section 178 Fail-Open parallel logging confirmed 100% voice radio uptime with zero transmission drops.",
+    "citations": [
+      {
+        "time": "03:11:05",
+        "source": "Railcomm VHF Ch 02",
+        "event": "SM Suratgarh issued Caution Order T/409 (30 kmph) on Loop Line to LP 12414."
+      },
+      {
+        "time": "03:14:15",
+        "source": "Railcomm Cabin Intercom",
+        "event": "ALP shouted emergency callout: 'सामने होम सिग्नल लाल है! फोन रखिए! ब्रेक लगाइए!'"
+      },
+      {
+        "time": "04:32:10",
+        "source": "Railcomm VHF Ch 01",
+        "event": "LP 14707 & ALP confirmed Distant Signal DOUBLE YELLOW approaching Lalgarh."
+      },
+      {
+        "time": "05:18:40",
+        "source": "Railcomm VHF Ch 02",
+        "event": "SM Bikaner broadcasted urgent Caution Order for track gang at KM 182/4 (20 kmph)."
+      }
+    ],
+    "fail_open_status": "NORMAL (0 radio dropped frames, Section 178 compliant)",
+    "statutory_rules": ["G&SR 4.40 Calling Out", "G&SR 4.09 Caution Orders", "Section 178 Railways Act 1989"]
   }
 }

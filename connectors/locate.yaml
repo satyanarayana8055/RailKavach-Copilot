@@ -1,0 +1,36 @@
+product_id: "locate_cabin_video"
+display_name: "Locate Cabin Video Analytics"
+version: "2.1.0"
+category: "ONBOARD_DRIVER_VIDEO"
+modality: "VIDEO"
+endpoint:
+  url: "local://data/locate_alerts.json"
+  auth_type: "none"
+  timeout_seconds: 5
+query_capabilities:
+  can_filter_by_loco: true
+  can_filter_by_violation_type: true
+  can_filter_by_verification_status: true
+gemini_tool_definition:
+  name: "get_locate_cabin_violations"
+  description: "Queries Locate CVVRS cabin camera detections for 5 safety violations (MOBILE_PHONE, SLEEPING, EATING_DRINKING, HAND_SIGNAL_NOT_RETURNED, UNAUTHORIZED_PERSON) and 3 compliant acts (WALKIE_TALKIE, READING_WRITING, CONTROLLING)."
+  parameters:
+    type: "object"
+    properties:
+      loco_id:
+        type: "string"
+        description: "Locomotive ID (e.g., 'WAP-7 30452')"
+      violation_type:
+        type: "string"
+        enum: ["MOBILE_PHONE", "SLEEPING", "EATING_DRINKING", "HAND_SIGNAL_NOT_RETURNED", "UNAUTHORIZED_PERSON", "ALL"]
+      verification_status:
+        type: "string"
+        enum: ["ALL", "CONFIRMED_ONLY", "PENDING_ONLY"]
+      time_window:
+        type: "string"
+    required: ["loco_id"]
+ui_rendering:
+  badge_color: "#D32F2F"
+  icon: "video"
+  primary_metric: "duration_seconds"
+  metric_unit: "sec"

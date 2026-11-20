@@ -1,0 +1,35 @@
+product_id: "wdd_wagon_damage_detection"
+display_name: "Wagon Damage Detection (WDD)"
+version: "1.4.0"
+category: "WAYSIDE_ROLLING_STOCK_CV"
+modality: "IMAGE"
+endpoint:
+  url: "local://data/wdd_inspections.json"
+  auth_type: "none"
+  timeout_seconds: 5
+query_capabilities:
+  can_filter_by_train: true
+  can_filter_by_wagon: true
+  can_filter_by_damage_class: true
+  can_filter_by_comparison_mode: true
+gemini_tool_definition:
+  name: "get_wdd_wagon_damages"
+  description: "Queries WDD 6-camera wayside gantry records for freight wagon damages across 8 classes and computes entry-vs-exit transit condition differentials."
+  parameters:
+    type: "object"
+    properties:
+      train_no:
+        type: "string"
+      wagon_no:
+        type: "string"
+      damage_class:
+        type: "string"
+        enum: ["BODY_PANEL", "DOOR_DEFECT", "BOGIE_CRACK", "COUPLER_DAMAGE", "BRAKE_BEAM_DEFECT", "SPRING_BROKEN", "ALL"]
+      comparison_mode:
+        type: "string"
+        enum: ["ALL", "NEW_DAMAGE_AT_EXIT_ONLY"]
+ui_rendering:
+  badge_color: "#388E3C"
+  icon: "camera"
+  primary_metric: "confidence_score"
+  metric_unit: "conf"
