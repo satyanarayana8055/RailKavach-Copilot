@@ -255,3 +255,7 @@ frontend/public/evidence_wdd
 # Raw Drive/ZIP ingest downloads (large, may contain operational data)
 data/drive_ingest/
 *.crdownload
+
+# Runtime records with personal data — never commit
+data/audit/
+data/demo_requests/

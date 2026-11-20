@@ -2,7 +2,8 @@ import pytest
 from fastapi.testclient import TestClient
 from app.main import app
 
-client = TestClient(app)
+# Existing API contract tests run as the Sr. DSO (full scope). Governance rules: tests/test_governance.py
+client = TestClient(app, headers={"X-RailKavach-Role": "ROLE_SR_DSO"})
 
 def test_health_check():
     response = client.get("/api/health")

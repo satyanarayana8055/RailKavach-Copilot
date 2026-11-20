@@ -12,15 +12,16 @@ import { ScenarioDeck } from "@/components/workspace/ScenarioDeck";
 import { Tabs, TAB_META } from "@/components/workspace/Tabs";
 import { TimelinePanel } from "@/components/workspace/TimelinePanel";
 import { WddPanel } from "@/components/workspace/WddPanel";
-import { analyzeFile, postChat } from "@/lib/api";
+import { analyzeFile, ApiError, postChat, type Session } from "@/lib/api";
 import { genericFallback, ROLES, SCENARIO_1_FALLBACK, SCENARIO_4_FALLBACK, SCENARIO_QUERIES, TIMELINE, WELCOME_RESPONSE, type ScenarioId } from "@/lib/data";
-import { maskPII } from "@/lib/privacy";
+import { governOffline, maskPII } from "@/lib/privacy";
 import type { ChatResponse, FileAnalysisResult, TabId, UserRole } from "@/lib/types";
 
 export function Workspace() {
   const [roleCode, setRoleCode] = useState<UserRole | null>(null);
   const [lang, setLang] = useState<"en" | "hi">("en");
-  const [maskToggle, setMaskToggle] = useState(false);
+  // DPDP: identities masked by default; unmasking = declaring an inquiry purpose (audited server-side).
+  const [maskToggle, setMaskToggle] = useState(true);
   const [tab, setTab] = useState<TabId>("copilot");
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,13 +43,19 @@ export function Workspace() {
     setPending({ tab: (q.get("tab") as TabId) || undefined, scenario: n >= 1 && n <= 4 ? (n as ScenarioId) : undefined });
   }, []);
   const masked = maskToggle || role.forceMasking;
+  /** Built per request from an explicit role, so a just-chosen role is never sent stale. */
+  const sessionFor = (code: UserRole): Session => {
+    const r = ROLES[code];
+    const isMasked = maskToggle || r.forceMasking;
+    return { role: code, purpose: isMasked ? "ROUTINE_MONITORING" : code === "ROLE_CRS" ? "STATUTORY_INQUIRY" : "SAFETY_INQUIRY" };
+  };
   const mask = useCallback((t: string) => maskPII(t, masked), [masked]);
 
   const enter = (code: UserRole) => {
     const r = ROLES[code];
     setRoleCode(code);
     setTab(pending.tab && r.allowedTabs.includes(pending.tab) ? pending.tab : r.allowedTabs[0]);
-    if (pending.scenario && r.allowedTabs.includes("copilot")) runScenario(pending.scenario);
+    if (pending.scenario && r.allowedTabs.includes("copilot")) runScenario(pending.scenario, code);
     setPending({});
   };
 
@@ -67,22 +74,29 @@ export function Workspace() {
     setTab(t);
   };
 
-  const ask = async (q: string) => {
+  const ask = async (q: string, asRole: UserRole = role.code) => {
+    const who = ROLES[asRole];
     setQuery(q);
     setLoading(true);
-    if (role.allowedTabs.includes("copilot")) setTab("copilot");
+    if (who.allowedTabs.includes("copilot")) setTab("copilot");
     try {
-      setResponse(await postChat(q, lang));
-    } catch {
-      setResponse(/miscommunication|caution order|callout/i.test(q) ? SCENARIO_4_FALLBACK : /12414|suratgarh/i.test(q) ? SCENARIO_1_FALLBACK : genericFallback(q));
+      setResponse(await postChat(q, lang, sessionFor(asRole)));
+    } catch (e) {
+      if (e instanceof ApiError) {
+        // The server refused: show the refusal. Never substitute cached data for a denial.
+        setResponse({ answer: e.message, citations: [], suggested_actions: [], latency_ms: 0, token_usage: { total_tokens: 0 }, cached: false });
+      } else {
+        // Backend unreachable: offline demo, same scope rules, always masked.
+        setResponse(governOffline(q, who, () => (/miscommunication|caution order|callout/i.test(q) ? SCENARIO_4_FALLBACK : /12414|suratgarh/i.test(q) ? SCENARIO_1_FALLBACK : genericFallback(q))));
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  const runScenario = async (n: ScenarioId) => {
+  const runScenario = async (n: ScenarioId, asRole?: UserRole) => {
     setRunning(n);
-    await ask(SCENARIO_QUERIES[n]);
+    await ask(SCENARIO_QUERIES[n], asRole);
     setRunning(null);
   };
 
@@ -97,8 +111,13 @@ export function Workspace() {
   const onAnalyze = async (type: string, name: string) => {
     setAnalyzing(name);
     try {
-      setFileResult(await analyzeFile(name, type));
-    } catch {
+      setFileResult(await analyzeFile(name, type, sessionFor(role.code)));
+    } catch (e) {
+      if (e instanceof ApiError) {
+        setFileResult(null);
+        toast.show(e.message);
+        return;
+      }
       setFileResult({
         filename: name,
         category: type === "wav" ? "CAB_RADIO_AUDIO" : type === "mp4" ? "IN_CAB_CVVRS_VIDEO" : "WDD_GANTRY_SCAN",
@@ -169,7 +188,10 @@ export function Workspace() {
           onRole: switchRole,
           masked,
           maskForced: role.forceMasking,
-          onToggleMask: () => setMaskToggle((m) => !m),
+          onToggleMask: () => {
+            setMaskToggle((m) => !m);
+            toast.show(maskToggle ? "Inquiry purpose declared — identity access is audited" : "Identities masked (routine monitoring)");
+          },
           lang,
           onToggleLang: () => setLang((l) => (l === "en" ? "hi" : "en")),
         }}

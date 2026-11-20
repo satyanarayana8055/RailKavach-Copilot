@@ -8,3 +8,11 @@ def setup_test_env(monkeypatch):
     import app.engine
     monkeypatch.setattr(app.config, "ENABLE_CACHE_FALLBACK", True)
     monkeypatch.setattr(app.engine, "ENABLE_CACHE_FALLBACK", True)
+
+
+@pytest.fixture(autouse=True)
+def isolated_audit_log(tmp_path, monkeypatch):
+    """Each test writes to its own audit log, never the real one."""
+    import app.governance
+    monkeypatch.setattr(app.governance.audit, "path", tmp_path / "audit.jsonl")
+    return app.governance.audit

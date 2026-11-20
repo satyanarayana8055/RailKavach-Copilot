@@ -31,8 +31,18 @@ if LANGFUSE_REQUIRED and not ENABLED:
         "Refusing to start without tracing."
     )
 
+def _dpdp_mask(data: Any, **_: Any) -> Any:
+    """Traces never need crew identities: pseudonymise every input/output before it leaves the process."""
+    from .governance import masker  # lazy: governance imports config only, no cycle
+    try:
+        return masker.mask(data)
+    except Exception:
+        return "[masking failed — payload dropped]"
+
+
 # Initialise the singleton that get_client() / @observe use.
 _client = Langfuse(
+    mask=_dpdp_mask,
     public_key=LANGFUSE_PUBLIC_KEY or None,
     secret_key=LANGFUSE_SECRET_KEY or None,
     base_url=LANGFUSE_BASE_URL,

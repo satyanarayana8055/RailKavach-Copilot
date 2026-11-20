@@ -18,6 +18,23 @@ export interface ChatResponse {
     english_statutory?: string;
     hindi_briefing?: string;
   };
+  /** Server-side RBAC/DPDP outcome (absent in offline mode). */
+  access?: AccessInfo;
+}
+
+export type DataSource = "RAILCOMM" | "LOCATE" | "WDD" | "WILD" | "TELEMETRY";
+export type Purpose = "ROUTINE_MONITORING" | "CREW_BRIEFING" | "SAFETY_INQUIRY" | "STATUTORY_INQUIRY";
+
+export interface AccessInfo {
+  role: string;
+  purpose: Purpose;
+  decision: "ALLOWED" | "PARTIAL" | "DENIED";
+  sources_in_scope: DataSource[];
+  sources_withheld: DataSource[];
+  pii_masked: boolean;
+  reason?: string | null;
+  audit_seq?: number | null;
+  audit_hash?: string | null;
 }
 
 export type EventSource = "RAILCOMM_AUDIO" | "LOCATE_CABIN_CAM" | "LOCO_TELEMETRY";
@@ -72,6 +89,8 @@ export interface RoleMetadata {
   division: string;
   icon: LucideIcon;
   allowedTabs: TabId[];
+  /** Mirrors backend RoleProfile.data_scopes — the server is the authority; this drives UI + offline mode. */
+  dataScopes: DataSource[];
   forceMasking: boolean;
   canSignCRS: boolean;
   canIssueWorkOrder: boolean;

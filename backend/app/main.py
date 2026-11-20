@@ -1,10 +1,10 @@
 import time
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 from .config import DEFAULT_MODEL
-from .schemas.chat import ChatQueryRequest, ChatQueryResponse
+from .schemas.chat import AccessInfo, ChatQueryRequest, ChatQueryResponse
 from .schemas.skills import (
     TimelineSyncInput, ReportGenInput, PatternAnomalyInput,
     WddDamagesInput, RailcommSearchInput, LocateViolationsInput
@@ -18,6 +18,10 @@ from .skills.locate_violations import get_locate_cabin_violations
 from .engine import engine
 from .services.cloud_services import gcs_vault, alloydb_manager
 from . import observability
+from .governance import (
+    LOCATE, RAILCOMM, TELEMETRY, WDD, Principal, audit, deny_reason, get_principal, protect, require,
+    required_sources, source_of,
+)
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -65,13 +69,49 @@ def health_check():
     }
 
 @app.post("/api/chat", response_model=ChatQueryResponse)
-def chat_endpoint(req: ChatQueryRequest, background: BackgroundTasks):
+def chat_endpoint(req: ChatQueryRequest, background: BackgroundTasks, principal: Principal = Depends(get_principal)):
     """
-    Main conversational copilot query endpoint.
-    Supports text or voice-transcribed inputs with zero-latency caching and timestamp-grounded reasoning.
+    Main conversational copilot query endpoint, governed server-side:
+    role scope is checked before reasoning, out-of-scope evidence is stripped, personal data is
+    pseudonymised unless the role + declared purpose allow identities, and every decision is audited.
     """
     background.add_task(observability.flush)
-    return engine.process_query(req)
+    scope = principal.scope
+    needed = required_sources(req.query)
+    missing = needed - scope
+
+    def access(decision: str, withheld: set, entry: dict, reason=None) -> AccessInfo:
+        return AccessInfo(
+            role=principal.role.role.value, purpose=principal.purpose, decision=decision,
+            sources_in_scope=sorted(scope), sources_withheld=sorted(withheld),
+            pii_masked=not principal.unmasked, reason=reason, audit_seq=entry["seq"], audit_hash=entry["hash"],
+        )
+
+    if missing:
+        reason = deny_reason(principal, missing)
+        entry = audit.record(principal, endpoint="/api/chat", decision="DENIED", required=needed, withheld=missing, query=req.query)
+        return ChatQueryResponse(
+            answer=f"Access restricted. {reason}",
+            token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
+            suggested_actions=[f"Ask about {', '.join(sorted(scope)).lower()} data", "Request access via the Sr. DSO"],
+            access=access("DENIED", missing, entry, reason),
+        )
+
+    resp = engine.process_query(req, scope=scope)
+    kept, withheld = [], set()
+    for c in resp.citations:
+        src = source_of(c.source)
+        if src is None or src in scope:
+            kept.append(c)
+        else:
+            withheld.add(src)
+    resp.citations = kept
+    decision = "PARTIAL" if withheld else "ALLOWED"
+    entry = audit.record(principal, endpoint="/api/chat", decision=decision, required=needed, withheld=withheld,
+                         query=req.query, citations=len(kept))
+    out = ChatQueryResponse(**protect(principal, resp.model_dump()))
+    out.access = access(decision, withheld, entry, "Some evidence is outside your role's scope." if withheld else None)
+    return out
 
 @app.get("/api/scenarios")
 def get_preloaded_scenarios():
@@ -113,7 +153,8 @@ def get_preloaded_scenarios():
 async def analyze_railway_file(
     filename: Optional[str] = Form(None),
     file_type: Optional[str] = Form(None),
-    file: Optional[UploadFile] = File(None)
+    file: Optional[UploadFile] = File(None),
+    principal: Principal = Depends(get_principal),
 ):
     """
     Universal Railway File Analyzer.
@@ -122,6 +163,17 @@ async def analyze_railway_file(
     """
     fname = filename or (file.filename if file else "unknown_file")
     ftype = file_type or (fname.split(".")[-1].lower() if "." in fname else "document")
+    if "files" not in principal.role.allowed_tabs:
+        audit.record(principal, endpoint="/api/files/analyze", decision="DENIED", required=set(), withheld=set(), query=fname)
+        raise HTTPException(status_code=403, detail=f"{principal.role.title} cannot use the file inspector.")
+    kind = {"wav": RAILCOMM, "mp3": RAILCOMM, "audio": RAILCOMM, "mp4": LOCATE, "mkv": LOCATE, "video": LOCATE,
+            "jpg": WDD, "jpeg": WDD, "png": WDD, "image": WDD}.get(ftype, TELEMETRY if ftype not in ("pdf", "txt", "doc") else RAILCOMM)
+    require(principal, {kind}, "/api/files/analyze")
+    audit.record(principal, endpoint="/api/files/analyze", decision="ALLOWED", required={kind}, withheld=set(), query=fname)
+    return protect(principal, _analyze(fname, ftype))
+
+
+def _analyze(fname: str, ftype: str) -> dict:
 
     # Audio file analysis
     if ftype in ["wav", "mp3", "audio"]:
@@ -191,72 +243,101 @@ async def analyze_railway_file(
         }
 
 @app.post("/api/timeline")
-def timeline_endpoint(params: TimelineSyncInput):
+def timeline_endpoint(params: TimelineSyncInput, principal: Principal = Depends(get_principal)):
     """
     Skill 4: build_incident_timeline
     """
-    return build_incident_timeline(params)
+    require(principal, {RAILCOMM, LOCATE, TELEMETRY}, "/api/timeline")
+    result = build_incident_timeline(params)
+    audit.record(principal, endpoint="/api/timeline", decision="ALLOWED", required={RAILCOMM, LOCATE, TELEMETRY}, withheld=set(), query=None)
+    return protect(principal, result)
 
 @app.post("/api/report")
-def report_endpoint(params: ReportGenInput):
+def report_endpoint(params: ReportGenInput, principal: Principal = Depends(get_principal)):
     """
     Skill 5: generate_safety_artifacts
     """
-    return generate_safety_artifacts(params)
+    require(principal, {RAILCOMM, LOCATE}, "/api/report")
+    result = generate_safety_artifacts(params)
+    audit.record(principal, endpoint="/api/report", decision="ALLOWED", required={RAILCOMM, LOCATE}, withheld=set(), query=None)
+    return protect(principal, result)
 
 @app.post("/api/analytics/fatigue")
-def fatigue_analytics_endpoint(params: PatternAnomalyInput):
+def fatigue_analytics_endpoint(params: PatternAnomalyInput, principal: Principal = Depends(get_principal)):
     """
     Skill 6: analyze_safety_patterns
     """
-    return analyze_safety_patterns(params)
+    require(principal, {LOCATE}, "/api/analytics/fatigue")
+    result = analyze_safety_patterns(params)
+    audit.record(principal, endpoint="/api/analytics/fatigue", decision="ALLOWED", required={LOCATE}, withheld=set(), query=None)
+    return protect(principal, result)
 
 @app.post("/api/skills/wdd")
-def wdd_query_endpoint(params: WddDamagesInput):
+def wdd_query_endpoint(params: WddDamagesInput, principal: Principal = Depends(get_principal)):
     """
     Skill 3: get_wdd_wagon_damages
     """
-    return get_wdd_wagon_damages(params)
+    require(principal, {WDD}, "/api/skills/wdd")
+    result = get_wdd_wagon_damages(params)
+    audit.record(principal, endpoint="/api/skills/wdd", decision="ALLOWED", required={WDD}, withheld=set(), query=None)
+    return protect(principal, result)
 
 @app.post("/api/skills/railcomm")
-def railcomm_query_endpoint(params: RailcommSearchInput):
+def railcomm_query_endpoint(params: RailcommSearchInput, principal: Principal = Depends(get_principal)):
     """
     Skill 1: search_railcomm_transcripts
     """
-    return search_railcomm_transcripts(params)
+    require(principal, {RAILCOMM}, "/api/skills/railcomm")
+    result = search_railcomm_transcripts(params)
+    audit.record(principal, endpoint="/api/skills/railcomm", decision="ALLOWED", required={RAILCOMM}, withheld=set(), query=None)
+    return protect(principal, result)
 
 @app.post("/api/skills/locate")
-def locate_query_endpoint(params: LocateViolationsInput):
+def locate_query_endpoint(params: LocateViolationsInput, principal: Principal = Depends(get_principal)):
     """
     Skill 2: get_locate_cabin_violations
     """
-    return get_locate_cabin_violations(params)
+    require(principal, {LOCATE}, "/api/skills/locate")
+    result = get_locate_cabin_violations(params)
+    audit.record(principal, endpoint="/api/skills/locate", decision="ALLOWED", required={LOCATE}, withheld=set(), query=None)
+    return protect(principal, result)
 
 
 # -------------------------------------------------------------
 # AlloyDB & Cloud Storage Operational Endpoints
 # -------------------------------------------------------------
 @app.get("/api/incidents")
-def get_incidents_list(limit: int = 50):
+def get_incidents_list(limit: int = 50, principal: Principal = Depends(get_principal)):
     """
     Retrieves confirmed and pending incidents from AlloyDB (or local WAL fallback).
     """
-    return alloydb_manager.list_incidents(limit=limit)
+    require(principal, {RAILCOMM, LOCATE}, "/api/incidents")
+    result = alloydb_manager.list_incidents(limit=limit)
+    audit.record(principal, endpoint="/api/incidents", decision="ALLOWED", required={RAILCOMM, LOCATE}, withheld=set(), query=None)
+    return protect(principal, result)
 
 @app.post("/api/incidents")
-def create_incident_record(incident: dict):
+def create_incident_record(incident: dict, principal: Principal = Depends(get_principal)):
     """
     Records an incident and generates cryptographic SHA-256 evidence certificate.
+    Only roles that verify alerts may write incidents.
     """
+    if not principal.role.can_verify_alerts:
+        audit.record(principal, endpoint="POST /api/incidents", decision="DENIED", required=set(), withheld=set(), query=None)
+        raise HTTPException(status_code=403, detail=f"{principal.role.title} cannot record incidents.")
+    audit.record(principal, endpoint="POST /api/incidents", decision="ALLOWED", required=set(), withheld=set(), query=None)
     success = alloydb_manager.record_incident(incident)
     return {"success": success, "incident_id": incident.get("incident_id")}
 
 @app.get("/api/evidence")
-def get_evidence_vault_objects(prefix: str = ""):
+def get_evidence_vault_objects(prefix: str = "", principal: Principal = Depends(get_principal)):
     """
     Lists evidence objects securely archived in Google Cloud Storage.
     """
-    return gcs_vault.list_evidence_objects(prefix=prefix)
+    require(principal, {RAILCOMM, LOCATE}, "/api/evidence")
+    result = gcs_vault.list_evidence_objects(prefix=prefix)
+    audit.record(principal, endpoint="/api/evidence", decision="ALLOWED", required={RAILCOMM, LOCATE}, withheld=set(), query=None)
+    return protect(principal, result)
 
 
 
@@ -283,7 +364,66 @@ def get_role_profile(role_code: UserRole):
 
 
 # -------------------------------------------------------------
+# Accountability: hash-chained access audit log (Sr. DSO / CRS)
+# -------------------------------------------------------------
+@app.get("/api/audit")
+def get_audit_log(limit: int = 50, principal: Principal = Depends(get_principal)):
+    """Who asked what, under which purpose, and what they were shown. Tamper-evident (hash chain)."""
+    if not principal.role.can_view_audit_log:
+        raise HTTPException(status_code=403, detail=f"{principal.role.title} cannot view the audit log.")
+    return {"chain": audit.verify(), "entries": audit.entries(limit=min(max(limit, 1), 500))}
+
+
+
+# -------------------------------------------------------------
+# Public: demo requests (DPDP: explicit consent, minimal fields, stored server-side only)
+# -------------------------------------------------------------
+import json as _json
+import os
+import re as _re
+import uuid as _uuid
+from datetime import datetime as _dt, timezone as _tz
+from pathlib import Path as _Path
+from pydantic import BaseModel as _BaseModel, Field as _Field
+
+from .config import DATA_DIR as _DATA_DIR
+
+CONSENT_TEXT_V1 = "I consent to AiSPRY using these details only to arrange this demo. They are not shared and are deleted on request."
+_DEMO_LOG = _Path(os.getenv("DEMO_REQUESTS_PATH", str(_DATA_DIR / "demo_requests" / "requests.jsonl")))
+
+
+class DemoRequestIn(_BaseModel):
+    name: str = _Field(min_length=1, max_length=120)
+    organisation: str = _Field(min_length=1, max_length=160)
+    email: str = _Field(min_length=3, max_length=200)
+    interests: list[str] = _Field(default_factory=list, max_length=4)
+    consent: bool
+
+
+@app.post("/api/demo-requests")
+def create_demo_request(req: DemoRequestIn):
+    """Stores a demo request with its consent record. TODO: forward to the sales inbox/CRM."""
+    if not req.consent:
+        raise HTTPException(status_code=400, detail="Consent is required to contact you")
+    if not _re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", req.email.strip()):
+        raise HTTPException(status_code=400, detail="Please enter a valid email")
+    reference = f"RK-{_uuid.uuid4().hex[:8].upper()}"
+    record = {
+        "reference": reference,
+        "received_at": _dt.now(_tz.utc).isoformat(timespec="seconds"),
+        "name": req.name.strip(), "organisation": req.organisation.strip(), "email": req.email.strip(),
+        "interests": [i[:60] for i in req.interests],
+        "consent": {"given": True, "text": CONSENT_TEXT_V1, "version": "v1", "purpose": "ARRANGE_DEMO"},
+    }
+    _DEMO_LOG.parent.mkdir(parents=True, exist_ok=True)
+    with _DEMO_LOG.open("a", encoding="utf-8") as f:
+        f.write(_json.dumps(record, ensure_ascii=False) + "\n")
+    return {"reference": reference}
+
+
+# -------------------------------------------------------------
 # Static Single-Container Production Mount (Next.js Export)
+# Must stay LAST: a mount at "/" shadows any route registered after it.
 # -------------------------------------------------------------
 import os
 from fastapi.staticfiles import StaticFiles
@@ -291,4 +431,5 @@ from fastapi.staticfiles import StaticFiles
 STATIC_DIR = os.getenv("STATIC_DIR", os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "out"))
 if os.path.exists(STATIC_DIR):
     app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static-spa")
+
 

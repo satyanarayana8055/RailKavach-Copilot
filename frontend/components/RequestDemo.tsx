@@ -2,6 +2,7 @@
 
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 import { useState } from "react";
+import { postDemoRequest } from "@/lib/api";
 
 const INTERESTS = ["Railcomm Analytics", "Locate", "Wagon Damage Detection", "RailKavach Copilot"] as const;
 
@@ -18,20 +19,14 @@ export function RequestDemo() {
     const f = new FormData(e.currentTarget);
     setState({ kind: "sending" });
     try {
-      const res = await fetch("/api/demo-request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: f.get("name"),
-          organisation: f.get("organisation"),
-          email: f.get("email"),
-          interests: f.getAll("interests"),
-          consent: f.get("consent") === "on",
-        }),
+      const { reference } = await postDemoRequest({
+        name: String(f.get("name") ?? ""),
+        organisation: String(f.get("organisation") ?? ""),
+        email: String(f.get("email") ?? ""),
+        interests: f.getAll("interests").map(String),
+        consent: f.get("consent") === "on",
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Something went wrong");
-      setState({ kind: "done", ref: data.reference });
+      setState({ kind: "done", ref: reference });
     } catch (err) {
       setState({ kind: "error", msg: err instanceof Error ? err.message : "Something went wrong" });
     }

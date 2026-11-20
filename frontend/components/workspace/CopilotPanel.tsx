@@ -1,12 +1,13 @@
 "use client";
 
-import { ArrowUpRight, Camera, CheckCircle2, Mic, MicOff, Radio, RefreshCw, Send, Sparkles, Train, Volume2, VolumeX, Zap } from "lucide-react";
+import { ArrowUpRight, Camera, Lock, ShieldAlert, CheckCircle2, Mic, MicOff, Radio, RefreshCw, Send, Sparkles, Train, Volume2, VolumeX, Zap } from "lucide-react";
 import { useEffect, useState, type FormEvent } from "react";
 import { ExecutiveReportView } from "@/components/ExecutiveReportView";
 import { SUGGESTED_PROMPTS } from "@/lib/data";
 import { toSeconds } from "@/lib/privacy";
 import type { ChatResponse, RoleMetadata } from "@/lib/types";
 import { Waveform } from "../Waveform";
+import { AccessStrip } from "./AccessStrip";
 
 interface Props {
   query: string;
@@ -163,7 +164,7 @@ export function CopilotPanel(p: Props) {
               Gemini · Agent Skills
             </span>
             <div className="flex items-center gap-2">
-              <span className="chip border-ok/25 bg-ok-soft font-mono text-ok-ink">{p.response.cached ? "Cache · 0 tok" : `${p.response.token_usage.total_tokens} tok`}</span>
+              <span className="chip border-ok/25 bg-ok-soft font-mono text-ok-ink">{p.response.cached ? "Cache · 0 tok" : `${p.response.token_usage?.total_tokens ?? 0} tok`}</span>
               <span className="chip border-[var(--line)] bg-paper font-mono text-ink-700">{p.response.latency_ms} ms</span>
               <button
                 type="button"
@@ -177,8 +178,17 @@ export function CopilotPanel(p: Props) {
             </div>
           </header>
 
+          <AccessStrip access={p.response.access} />
+
           <div className="mt-4">
-            <ExecutiveReportView content={p.mask(p.response.answer)} loading={p.loading} />
+            {p.response.access?.decision === "DENIED" ? (
+              <div role="alert" className="flex items-start gap-3 rounded-card border border-danger/25 bg-danger-soft p-4">
+                <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-danger-ink" aria-hidden />
+                <p className="text-[15px] leading-relaxed text-ink-900">{p.response.access.reason ?? p.response.answer}</p>
+              </div>
+            ) : (
+              <ExecutiveReportView content={p.mask(p.response.answer)} loading={p.loading} />
+            )}
           </div>
 
           {p.response.citations.length > 0 && (
@@ -206,20 +216,29 @@ export function CopilotPanel(p: Props) {
           <p className="mono-label text-ink-500">Grounded in</p>
           <ul className="mt-3 space-y-2.5">
             {[
-              { icon: Radio, name: "Railcomm", tone: "text-cyan-ink bg-cyan-soft" },
-              { icon: Camera, name: "Locate", tone: "text-orange-ink bg-orange-soft" },
-              { icon: Train, name: "WDD", tone: "text-amber-ink bg-amber-soft" },
-            ].map((s) => (
-              <li key={s.name} className="flex items-center gap-3">
-                <span className={`grid h-8 w-8 place-items-center rounded-btn ${s.tone}`}>
-                  <s.icon className="h-4 w-4" aria-hidden />
-                </span>
-                <span className="flex-1 text-sm font-semibold text-ink-900">{s.name}</span>
-                <span className="flex items-center gap-1.5 font-mono text-[11px] text-ok-ink">
-                  <span className="h-1.5 w-1.5 animate-blink rounded-full bg-ok" aria-hidden /> live
-                </span>
-              </li>
-            ))}
+              { icon: Radio, name: "Railcomm", src: "RAILCOMM" as const, tone: "text-cyan-ink bg-cyan-soft" },
+              { icon: Camera, name: "Locate", src: "LOCATE" as const, tone: "text-orange-ink bg-orange-soft" },
+              { icon: Train, name: "WDD", src: "WDD" as const, tone: "text-amber-ink bg-amber-soft" },
+            ].map((s) => {
+              const inScope = p.role.dataScopes.includes(s.src);
+              return (
+                <li key={s.name} className={`flex items-center gap-3 ${inScope ? "" : "opacity-60"}`}>
+                  <span className={`grid h-8 w-8 place-items-center rounded-btn ${inScope ? s.tone : "bg-ink-100 text-ink-500"}`}>
+                    <s.icon className="h-4 w-4" aria-hidden />
+                  </span>
+                  <span className={`flex-1 text-sm font-semibold ${inScope ? "text-ink-900" : "text-ink-500 line-through decoration-1"}`}>{s.name}</span>
+                  {inScope ? (
+                    <span className="flex items-center gap-1.5 font-mono text-[11px] text-ok-ink">
+                      <span className="h-1.5 w-1.5 animate-blink rounded-full bg-ok" aria-hidden /> live
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1 font-mono text-[11px] text-ink-500">
+                      <Lock className="h-3 w-3" aria-hidden /> no access
+                    </span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
 

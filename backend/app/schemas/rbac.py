@@ -15,6 +15,8 @@ class RoleProfile(BaseModel):
     designation: str
     division: str
     allowed_tabs: List[str]
+    data_scopes: List[str]          # RAILCOMM | LOCATE | WDD | WILD | TELEMETRY — enforced server-side
+    can_view_audit_log: bool = False
     can_verify_alerts: bool
     can_view_unmasked_pii: bool
     can_sign_crs_report: bool
@@ -28,6 +30,8 @@ ROLE_REGISTRY = {
         designation="Sr. Divisional Safety Officer, Bikaner Division",
         division="Bikaner (NWR)",
         allowed_tabs=["copilot", "files", "timeline", "wdd", "artifacts"],
+        data_scopes=["RAILCOMM", "LOCATE", "WDD", "WILD", "TELEMETRY"],
+        can_view_audit_log=True,
         can_verify_alerts=True,
         can_view_unmasked_pii=True,
         can_sign_crs_report=True,
@@ -40,6 +44,7 @@ ROLE_REGISTRY = {
         designation="Sr. Divisional Electrical Engineer (TRO), Bikaner",
         division="Bikaner (NWR)",
         allowed_tabs=["copilot", "files", "timeline", "artifacts"],
+        data_scopes=["RAILCOMM", "LOCATE", "TELEMETRY"],
         can_verify_alerts=True,
         can_view_unmasked_pii=True,
         can_sign_crs_report=False,
@@ -52,6 +57,7 @@ ROLE_REGISTRY = {
         designation="Sr. Divisional Mechanical Engineer (C&W), Lalgarh Yard",
         division="Bikaner (NWR)",
         allowed_tabs=["wdd", "files", "copilot"],
+        data_scopes=["WDD", "WILD"],
         can_verify_alerts=False,
         can_view_unmasked_pii=False,
         can_sign_crs_report=False,
@@ -64,6 +70,7 @@ ROLE_REGISTRY = {
         designation="Crew Controller, Suratgarh Junction Lobby",
         division="Suratgarh Lobby",
         allowed_tabs=["artifacts", "copilot"],
+        data_scopes=["RAILCOMM", "LOCATE"],
         can_verify_alerts=False,
         can_view_unmasked_pii=False,
         can_sign_crs_report=False,
@@ -76,6 +83,8 @@ ROLE_REGISTRY = {
         designation="Commissioner of Railway Safety, Northern Circle",
         division="All Zones (Statutory Independent)",
         allowed_tabs=["copilot", "files", "timeline", "wdd", "artifacts"],
+        data_scopes=["RAILCOMM", "LOCATE", "WDD", "WILD", "TELEMETRY"],
+        can_view_audit_log=True,
         can_verify_alerts=True,
         can_view_unmasked_pii=True,
         can_sign_crs_report=True,

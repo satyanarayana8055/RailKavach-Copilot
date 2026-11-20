@@ -53,9 +53,13 @@ class CopilotEngine:
                 self.client = None
 
     @observe(name="copilot.chat", as_type="agent")
-    def process_query(self, req: ChatQueryRequest) -> ChatQueryResponse:
+    def process_query(self, req: ChatQueryRequest, scope: Optional[set] = None) -> ChatQueryResponse:
+        """`scope` = data sources the caller may see (RBAC). Live/local context is limited to it;
+        governance.py has already refused queries that need sources outside it."""
         start_t = time.time()
         q_lower = req.query.lower()
+        scope = set(scope) if scope is not None else {"RAILCOMM", "LOCATE", "WDD", "WILD", "TELEMETRY"}
+        sees_timeline = bool(scope & {"RAILCOMM", "LOCATE", "TELEMETRY"})
 
         # ---------------------------------------------------------
         # 1. Zero-Token Deterministic Fallback Cache Check (Jury Fast Demos)
@@ -182,13 +186,13 @@ class CopilotEngine:
                 )
 
                 # Fetch timeline context within bounded window
-                timeline = build_incident_timeline(TimelineSyncInput(train_no="12414"))
-                timeline_summary = "\n".join([f"[{t.get('time_str')}] {t.get('source')}: {t.get('event')} (Status: {t.get('reviewer_status', 'N/A')})" for t in timeline[:12]])
+                timeline = build_incident_timeline(TimelineSyncInput(train_no="12414")) if sees_timeline else []
+                timeline_summary = "\n".join([f"[{t.get('time_str')}] {t.get('source')}: {t.get('event')} (Status: {t.get('reviewer_status', 'N/A')})" for t in timeline[:12]]) or "(no crew/cabin/radio data in this officer's scope)"
 
                 # Check if query pertains to Wayside Wagon Damage Detection (WDD)
                 is_wdd_query = any(k in q_lower for k in ["wagon", "wdd", "damage", "boxn", "door", "dent", "rake", "gantry", "sick", "shunting", "डिब्बा", "वैगन"])
                 wdd_summary = ""
-                if is_wdd_query:
+                if (is_wdd_query or not sees_timeline) and "WDD" in scope:
                     wdd_records = get_wdd_wagon_damages(WddDamagesInput())
                     damaged_wagons = [w for w in wdd_records if w.get("exit_damage_status") == "DAMAGED"][:6]
                     wdd_summary = "\nWayside Wagon Damage Detection (WDD 6-Gantry Differential Context):\n" + "\n".join([
@@ -262,7 +266,7 @@ class CopilotEngine:
         # 3. Deterministic Local Skill Execution (Fallback)
         # ---------------------------------------------------------
         _tag_route("local_skills")
-        timeline = build_incident_timeline(TimelineSyncInput(train_no="12414"))
+        timeline = build_incident_timeline(TimelineSyncInput(train_no="12414")) if sees_timeline else []
         citations = [
             Citation(
                 timestamp=t.get("time_str", "00:00:00"),
