@@ -19,13 +19,13 @@ All core documentation, specifications, and planning guides have been organized 
 | **[PLUGGABLE_CONNECTORS_AND_EXTENSIBILITY.md](PLUGGABLE_CONNECTORS_AND_EXTENSIBILITY.md)** | **RailKavach Open Connector Protocol (ROCP)** | Universal plug-and-play architecture for connecting any future railway product (WILD, OHE, Kavach, Axle Counters, CMS) via simple YAML manifests, canonical event schemas, dynamic Gemini tool registry, and polymorphic UI rendering. |
 | **[STATUTORY_AND_LEGAL_COMPLIANCE.md](STATUTORY_AND_LEGAL_COMPLIANCE.md)** | **Statutory, Legal & Regulatory Compliance Framework** | Exhaustive legal governance across DPDP Act 2023 (Sec 7(i) legitimate uses), The Railways Act 1989 & G&SR rules, RDSO CVVRS specs, Bharatiya Sakshya Adhiniyam 2023 (Sec 63 electronic evidence certificates), RPF/RPUP Acts, CERT-In 2022 directives, HOER fatigue regulations, and Puttaswamy workplace privacy doctrine. |
 | **[ARCHITECTURE_AND_PLAN.md](ARCHITECTURE_AND_PLAN.md)** | **Master System Architecture & Plan of Action** | 5-stage architecture (Capture ➔ Infer ➔ Attribute ➔ Surface ➔ Evidence), 3 production platforms (WDD, Locate, Railcomm), cloud-agnostic pluggable backend adapters, fail-open audio safety, and hour-by-hour Buildathon execution plan. |
-| **[skills.md](skills.md)** | **Google Agent Skills Specification** | Detailed tool signatures and parameters for the 5 specialized skills: Railcomm audio transcript retrieval, Locate cabin violation detection, WDD wagon damage queries, multimodal timeline synchronization, and bilingual statutory report generation. |
+| **[SKILLS.md](../SKILLS.md)** | **Google Agent Skills Specification** | Detailed tool signatures and parameters for the 6 specialized skills: Railcomm audio transcript retrieval, Locate cabin violation detection, WDD wagon damage queries, multimodal timeline synchronization, and bilingual statutory report generation. |
 | **[EVALUATION_GUIDE.md](EVALUATION_GUIDE.md)** | **Buildathon Evaluation Matrix & Winning Strategy** | Analysis of the 6 jury scoring parameters (focusing on the 70% kill-factor: Functional Demo 30%, Architecture 20%, Google AI Depth 20%), plus the strict 3-minute winning demo pitch script. |
 | **[initial.md](initial.md)** | **Original Shortlist Briefing & Event Guidelines** | The original team briefing email, event logistics (GNITS Hyderabad, 20–21 Nov 2026), schedule, submission requirements, and team contacts. |
 
 ---
 
 ### 🖼️ Visual Architecture Diagrams
-* **Infographic Slide Image (16:9 JPG):** **[../assets/railkavach_architecture.jpg](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/railkavach_architecture.jpg)**
-* **Scalable Vector Graphic (SVG):** **[../assets/architecture_diagram.svg](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/architecture_diagram.svg)**
-* **Interactive Web View (HTML):** **[../assets/architecture_visual.html](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/assets/architecture_visual.html)**
+* **Infographic Slide Image (16:9 JPG):** **[../assets/railkavach_architecture.jpg](../assets/railkavach_architecture.jpg)**
+* **Scalable Vector Graphic (SVG):** **[../assets/architecture_diagram.svg](../assets/architecture_diagram.svg)**
+* **Interactive Web View (HTML):** **[../assets/architecture_visual.html](../assets/architecture_visual.html)**

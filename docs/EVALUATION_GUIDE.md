@@ -5,10 +5,10 @@
 ---
 
 ## 📌 Fast Navigation
-* **[ARCHITECTURE_AND_PLAN.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/ARCHITECTURE_AND_PLAN.md)**: Master System Architecture & Phased Tactical Plan of Action (POA).
-* **[skills.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/skills.md)**: Google Agent Skills specification (WDD, Locate, Railcomm tool signatures).
-* **[initial.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/docs/initial.md)**: Original shortlist briefing, schedule, and team communications.
-* **[README.md](file:///c:/Users/satya/OneDrive/Documents/Google-Buildathon/RailKavach-Copilot/README.md)**: Project overview and system summary.
+* **[ARCHITECTURE_AND_PLAN.md](./ARCHITECTURE_AND_PLAN.md)**: Master System Architecture & Phased Tactical Plan of Action (POA).
+* **[skills.md](../SKILLS.md)**: Google Agent Skills specification (WDD, Locate, Railcomm tool signatures).
+* **[initial.md](./initial.md)**: Original shortlist briefing, schedule, and team communications.
+* **[README.md](../README.md)**: Project overview and system summary.
 
 ---
 
@@ -63,7 +63,7 @@ The judges will make up their minds in the **first 90 seconds** of your 3-minute
 * **Our Implementation Strategy:**
   1. **Clean Separation of Concerns:**
      * `data/`: Clean structured JSON data schemas for transcripts, video alerts, and wagon defects.
-     * `src/skills/`: Explicit Google Agent Skills definitions (`skills.md`) with Pydantic/JSON schemas for tool calling.
+     * `backend/app/skills/`: Explicit Google Agent Skills definitions (`SKILLS.md`) with Pydantic/JSON schemas for tool calling.
      * `src/engine.py`: Multi-source correlation and prompt engineering engine.
      * `app.py`: High-performance Streamlit dashboard.
   2. **Production Architecture Narrative:**
@@ -75,7 +75,7 @@ The judges will make up their minds in the **first 90 seconds** of your 3-minute
 * **Our Implementation Strategy:**
   1. **Gemini API Capabilities:**
      * **Long-Context Window:** Ingesting hours of radio transcripts simultaneously without chunking fragmentation.
-     * **Structured Function Calling:** Implementing the 5 Agent Skills defined in `skills.md`.
+     * **Structured Function Calling:** Implementing the 6 Agent Skills defined in `SKILLS.md`.
      * **Strict Grounding:** Timestamp citation formatting (`[03:14:15]`) to prevent hallucinations.
      * **Bilingual Translation & Summarization:** English and pure Hindi Devanagari output generation.
   2. **Gemma Positioning:** Emphasize that lightweight **Gemma models** run directly inside the locomotive cab / division edge servers for privacy and zero-connectivity offline operation.
