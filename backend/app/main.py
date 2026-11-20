@@ -16,6 +16,7 @@ from .skills.wdd_damage import get_wdd_wagon_damages
 from .skills.railcomm_search import search_railcomm_transcripts
 from .skills.locate_violations import get_locate_cabin_violations
 from .engine import engine
+from .services.cloud_services import gcs_vault, alloydb_manager
 from . import observability
 
 @asynccontextmanager
@@ -47,6 +48,11 @@ def health_check():
         "service": "RailKavach Copilot Backend",
         "model_engine": DEFAULT_MODEL,
         "voice_engine": "Bilingual (Hindi / English)",
+        "cloud_integrations": {
+            "gemini": {"status": "ONLINE", "model": DEFAULT_MODEL},
+            "gcs_vault": {"bucket": gcs_vault.bucket_name, "connected": gcs_vault.is_connected},
+            "alloydb": {"connected": alloydb_manager.is_connected, "engine": "PostgreSQL 18 / SQLite fallback"}
+        },
         "supported_file_types": [
             "AUDIO (.wav, .mp3 - Cab VHF Radio)",
             "VIDEO (.mp4 - In-Cab CVVRS Camera)",
@@ -225,6 +231,33 @@ def locate_query_endpoint(params: LocateViolationsInput):
     Skill 2: get_locate_cabin_violations
     """
     return get_locate_cabin_violations(params)
+
+
+# -------------------------------------------------------------
+# AlloyDB & Cloud Storage Operational Endpoints
+# -------------------------------------------------------------
+@app.get("/api/incidents")
+def get_incidents_list(limit: int = 50):
+    """
+    Retrieves confirmed and pending incidents from AlloyDB (or local WAL fallback).
+    """
+    return alloydb_manager.list_incidents(limit=limit)
+
+@app.post("/api/incidents")
+def create_incident_record(incident: dict):
+    """
+    Records an incident and generates cryptographic SHA-256 evidence certificate.
+    """
+    success = alloydb_manager.record_incident(incident)
+    return {"success": success, "incident_id": incident.get("incident_id")}
+
+@app.get("/api/evidence")
+def get_evidence_vault_objects(prefix: str = ""):
+    """
+    Lists evidence objects securely archived in Google Cloud Storage.
+    """
+    return gcs_vault.list_evidence_objects(prefix=prefix)
+
 
 
 # -------------------------------------------------------------

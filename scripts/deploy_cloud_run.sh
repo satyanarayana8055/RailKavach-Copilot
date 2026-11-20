@@ -35,15 +35,27 @@ fi
 # -----------------------------------------------------------------------------
 # Langfuse observability (mandatory). Keys come from the shell env or ./.env.
 # -----------------------------------------------------------------------------
+# Values exported in the shell win over .env (so deploy can use cloud keys while .env holds local ones)
+_SHELL_PK=${LANGFUSE_PUBLIC_KEY:-}; _SHELL_SK=${LANGFUSE_SECRET_KEY:-}; _SHELL_URL=${LANGFUSE_BASE_URL:-}
 if [ -f .env ]; then
   set -a; . ./.env; set +a
 fi
+LANGFUSE_PUBLIC_KEY=${_SHELL_PK:-${LANGFUSE_PUBLIC_KEY:-}}
+LANGFUSE_SECRET_KEY=${_SHELL_SK:-${LANGFUSE_SECRET_KEY:-}}
+LANGFUSE_BASE_URL=${_SHELL_URL:-${LANGFUSE_BASE_URL:-}}
 LANGFUSE_BASE_URL=${LANGFUSE_BASE_URL:-${LANGFUSE_HOST:-https://cloud.langfuse.com}}
 if [ -z "$LANGFUSE_PUBLIC_KEY" ] || [ -z "$LANGFUSE_SECRET_KEY" ]; then
   echo "❌ Error: LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY are required for deployment."
   echo "   Set them in .env or export them, then re-run. (Get keys: Langfuse → Project Settings → API Keys)"
   exit 1
 fi
+case "$LANGFUSE_BASE_URL" in
+  *localhost*|*127.0.0.1*)
+    echo "❌ Error: LANGFUSE_BASE_URL is $LANGFUSE_BASE_URL. Cloud Run cannot reach a local Langfuse."
+    echo "   For deploy, export the Langfuse Cloud or hosted URL and its keys, e.g.:"
+    echo "   LANGFUSE_BASE_URL=https://cloud.langfuse.com LANGFUSE_PUBLIC_KEY=pk-lf-... LANGFUSE_SECRET_KEY=sk-lf-... $0 $PROJECT_ID"
+    exit 1 ;;
+esac
 APP_RELEASE=$(git rev-parse --short HEAD 2>/dev/null || echo "manual")
 
 # Enable required GCP APIs
