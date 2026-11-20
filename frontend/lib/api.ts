@@ -64,3 +64,13 @@ export async function postDemoRequest(req: DemoRequest): Promise<{ reference: st
   });
   return parse(res);
 }
+
+/** POST a governed data endpoint (skills/timeline). Server applies scope + DPDP masking. */
+export async function fetchScoped<T>(path: string, body: object, session: Session): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...sessionHeaders(session) },
+    body: JSON.stringify(body),
+  });
+  return parse(res);
+}

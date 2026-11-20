@@ -1,111 +1,116 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ChatPanel, type ChatMessage } from "@/components/chat/ChatPanel";
+import { Dashboard } from "@/components/dashboard/Dashboard";
+import { useDashboardData } from "@/components/dashboard/useDashboardData";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
-import { RoleGate } from "./RoleGate";
 import { Toast, useToast } from "@/components/Toast";
 import { ArtifactsPanel } from "@/components/workspace/ArtifactsPanel";
-import { CopilotPanel } from "@/components/workspace/CopilotPanel";
 import { FilesPanel } from "@/components/workspace/FilesPanel";
-import { ScenarioDeck } from "@/components/workspace/ScenarioDeck";
-import { Tabs, TAB_META } from "@/components/workspace/Tabs";
 import { TimelinePanel } from "@/components/workspace/TimelinePanel";
 import { WddPanel } from "@/components/workspace/WddPanel";
 import { analyzeFile, ApiError, postChat, type Session } from "@/lib/api";
-import { genericFallback, ROLES, SCENARIO_1_FALLBACK, SCENARIO_4_FALLBACK, SCENARIO_QUERIES, TIMELINE, WELCOME_RESPONSE, type ScenarioId } from "@/lib/data";
-import { governOffline, maskPII } from "@/lib/privacy";
-import type { ChatResponse, FileAnalysisResult, TabId, UserRole } from "@/lib/types";
+import { genericFallback, ROLES, SCENARIO_1_FALLBACK, SCENARIO_4_FALLBACK, SCENARIO_QUERIES, SUGGESTED_PROMPTS, TIMELINE, type ScenarioId } from "@/lib/data";
+import { governOffline, maskPII, requiredSources } from "@/lib/privacy";
+import type { ChatResponse, FileAnalysisResult, UserRole } from "@/lib/types";
+import { RoleGate } from "./RoleGate";
+
+const STARTERS = [
+  { label: "Investigate the 12414 near-SPAD at Suratgarh", query: SCENARIO_QUERIES[1] },
+  { label: "Night-shift fatigue between 02:00 and 05:00", query: SCENARIO_QUERIES[2] },
+  { label: "Audit callouts and caution orders this shift", query: SCENARIO_QUERIES[4] },
+  { label: "Entry vs exit damage on rake BOXN-542", query: SCENARIO_QUERIES[3] },
+  ...SUGGESTED_PROMPTS.filter((p) => p.hindi),
+];
+
+let seq = 0;
+const nextId = () => `m${Date.now().toString(36)}${(seq++).toString(36)}`;
 
 export function Workspace() {
   const [roleCode, setRoleCode] = useState<UserRole | null>(null);
   const [lang, setLang] = useState<"en" | "hi">("en");
   // DPDP: identities masked by default; unmasking = declaring an inquiry purpose (audited server-side).
   const [maskToggle, setMaskToggle] = useState(true);
-  const [tab, setTab] = useState<TabId>("copilot");
-  const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [running, setRunning] = useState<number | null>(null);
-  const [response, setResponse] = useState<ChatResponse>(WELCOME_RESPONSE);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatWide, setChatWide] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [draft, setDraft] = useState("");
+  const [busy, setBusy] = useState(false);
   const [listening, setListening] = useState(false);
-  const [speaking, setSpeaking] = useState(false);
+  const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState<string | null>(null);
   const [fileResult, setFileResult] = useState<FileAnalysisResult | null>(null);
+  const pendingScenario = useRef<ScenarioId | undefined>(undefined);
   const toast = useToast();
 
   const role = ROLES[roleCode ?? "ROLE_SR_DSO"];
-
-  // Deep links: /copilot?tab=timeline or ?scenario=1 (applied once a role is chosen).
-  const [pending, setPending] = useState<{ tab?: TabId; scenario?: ScenarioId }>({});
-  useEffect(() => {
-    const q = new URLSearchParams(window.location.search);
-    const n = Number(q.get("scenario"));
-    setPending({ tab: (q.get("tab") as TabId) || undefined, scenario: n >= 1 && n <= 4 ? (n as ScenarioId) : undefined });
-  }, []);
   const masked = maskToggle || role.forceMasking;
   /** Built per request from an explicit role, so a just-chosen role is never sent stale. */
-  const sessionFor = (code: UserRole): Session => {
-    const r = ROLES[code];
-    const isMasked = maskToggle || r.forceMasking;
-    return { role: code, purpose: isMasked ? "ROUTINE_MONITORING" : code === "ROLE_CRS" ? "STATUTORY_INQUIRY" : "SAFETY_INQUIRY" };
-  };
+  const sessionFor = useCallback(
+    (code: UserRole): Session => {
+      const isMasked = maskToggle || ROLES[code].forceMasking;
+      return { role: code, purpose: isMasked ? "ROUTINE_MONITORING" : code === "ROLE_CRS" ? "STATUTORY_INQUIRY" : "SAFETY_INQUIRY" };
+    },
+    [maskToggle]
+  );
   const mask = useCallback((t: string) => maskPII(t, masked), [masked]);
+  const data = useDashboardData(sessionFor(role.code), roleCode ? role.dataScopes : []);
+  const canChat = role.allowedTabs.includes("copilot");
 
-  const enter = (code: UserRole) => {
-    const r = ROLES[code];
-    setRoleCode(code);
-    setTab(pending.tab && r.allowedTabs.includes(pending.tab) ? pending.tab : r.allowedTabs[0]);
-    if (pending.scenario && r.allowedTabs.includes("copilot")) runScenario(pending.scenario, code);
-    setPending({});
-  };
+  // Deep link: /copilot?scenario=1 runs that question once a role is chosen.
+  useEffect(() => {
+    const n = Number(new URLSearchParams(window.location.search).get("scenario"));
+    if (n >= 1 && n <= 4) pendingScenario.current = n as ScenarioId;
+    setChatOpen(window.matchMedia("(min-width: 1024px)").matches);
+  }, []);
 
-  const switchRole = (code: UserRole) => {
-    const next = ROLES[code];
-    setRoleCode(code);
-    if (!next.allowedTabs.includes(tab)) setTab(next.allowedTabs[0]);
-    toast.show(`Signed in as ${next.title}`);
-  };
-
-  const openTab = (t: TabId) => {
-    if (!role.allowedTabs.includes(t)) {
-      toast.show(`${TAB_META[t].label} isn’t available for ${role.short}`);
-      return;
-    }
-    setTab(t);
-  };
+  // ⌘I / Ctrl+I toggles the chat, like VS Code.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "i") {
+        e.preventDefault();
+        setChatOpen((o) => !o);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   const ask = async (q: string, asRole: UserRole = role.code) => {
     const who = ROLES[asRole];
-    setQuery(q);
-    setLoading(true);
-    if (who.allowedTabs.includes("copilot")) setTab("copilot");
+    if (!who.allowedTabs.includes("copilot")) return toast.show(`The copilot isn’t available for ${who.short}`);
+    const replyId = nextId();
+    setMessages((ms) => [...ms, { id: nextId(), role: "user", text: q }, { id: replyId, role: "assistant", text: "", pending: true }]);
+    setDraft("");
+    setChatOpen(true);
+    setBusy(true);
+    let r: ChatResponse;
     try {
-      setResponse(await postChat(q, lang, sessionFor(asRole)));
+      r = await postChat(q, lang, sessionFor(asRole));
     } catch (e) {
-      if (e instanceof ApiError) {
-        // The server refused: show the refusal. Never substitute cached data for a denial.
-        setResponse({ answer: e.message, citations: [], suggested_actions: [], latency_ms: 0, token_usage: { total_tokens: 0 }, cached: false });
-      } else {
-        // Backend unreachable: offline demo, same scope rules, always masked.
-        setResponse(governOffline(q, who, () => (/miscommunication|caution order|callout/i.test(q) ? SCENARIO_4_FALLBACK : /12414|suratgarh/i.test(q) ? SCENARIO_1_FALLBACK : genericFallback(q))));
-      }
-    } finally {
-      setLoading(false);
+      r =
+        e instanceof ApiError
+          ? // The server refused: show the refusal. Never substitute cached data for a denial.
+            { answer: e.message, citations: [], suggested_actions: [], latency_ms: 0, token_usage: { total_tokens: 0 }, cached: false }
+          : // Backend unreachable: offline demo, same scope rules, always masked.
+            governOffline(q, who, () => (/miscommunication|caution order|callout/i.test(q) ? SCENARIO_4_FALLBACK : /12414|suratgarh/i.test(q) ? SCENARIO_1_FALLBACK : genericFallback(q)));
     }
+    setMessages((ms) => ms.map((m) => (m.id === replyId ? { ...m, pending: false, text: r.answer, response: r } : m)));
+    setBusy(false);
   };
 
-  const runScenario = async (n: ScenarioId, asRole?: UserRole) => {
-    setRunning(n);
-    await ask(SCENARIO_QUERIES[n], asRole);
-    setRunning(null);
+  const enter = (code: UserRole) => {
+    setRoleCode(code);
+    if (pendingScenario.current) ask(SCENARIO_QUERIES[pendingScenario.current], code);
+    pendingScenario.current = undefined;
   };
 
-  const onAction = (a: string) => {
-    const s = a.toLowerCase();
-    if (/report|briefing|inquiry|export/.test(s)) openTab("artifacts");
-    else if (/timeline/.test(s)) openTab("timeline");
-    else if (/rake|boxn|wagon/.test(s)) openTab("wdd");
-    else ask(a);
+  const switchRole = (code: UserRole) => {
+    setRoleCode(code);
+    setMessages([]); // a new role starts a new conversation — no carry-over of another role's answers
+    toast.show(`Signed in as ${ROLES[code].title}`);
   };
 
   const onAnalyze = async (type: string, name: string) => {
@@ -129,17 +134,14 @@ export function Workspace() {
     }
   };
 
-  const speak = () => {
+  const speak = (m: ChatMessage) => {
     if (!("speechSynthesis" in window)) return toast.show("Speech output isn’t supported in this browser");
-    if (speaking) {
-      window.speechSynthesis.cancel();
-      setSpeaking(false);
-      return;
-    }
-    const u = new SpeechSynthesisUtterance(mask(response.answer).replace(/\[\d{2}:\d{2}:\d{2}\]/g, "").replace(/[*#]/g, ""));
+    window.speechSynthesis.cancel();
+    if (speakingId === m.id) return setSpeakingId(null);
+    const u = new SpeechSynthesisUtterance(mask(m.text).replace(/\[\d{2}:\d{2}:\d{2}\]/g, "").replace(/[*#`]/g, ""));
     u.lang = lang === "hi" ? "hi-IN" : "en-IN";
-    u.onstart = () => setSpeaking(true);
-    u.onend = u.onerror = () => setSpeaking(false);
+    u.onstart = () => setSpeakingId(m.id);
+    u.onend = u.onerror = () => setSpeakingId(null);
     window.speechSynthesis.speak(u);
   };
 
@@ -156,7 +158,7 @@ export function Workspace() {
       r.maxAlternatives = 1;
       r.onstart = () => setListening(true);
       r.onresult = (e) => {
-        setQuery(e.results[0][0].transcript);
+        setDraft(e.results[0][0].transcript);
         setListening(false);
       };
       r.onerror = r.onend = () => setListening(false);
@@ -176,11 +178,17 @@ export function Workspace() {
     );
   }
 
+  const views = [
+    ...(role.allowedTabs.includes("artifacts")
+      ? [{ id: "reports", label: "Reports", node: <ArtifactsPanel canSign={role.canSignCRS} mask={mask} onDone={toast.show} /> }]
+      : []),
+    ...(role.allowedTabs.includes("files") ? [{ id: "files", label: "Files", node: <FilesPanel analyzing={analyzing} result={fileResult} onAnalyze={onAnalyze} /> }] : []),
+  ];
+  const showTimeline = role.allowedTabs.includes("timeline") && role.dataScopes.some((s) => s === "RAILCOMM" || s === "LOCATE");
+  const showRake = role.allowedTabs.includes("wdd") && role.dataScopes.includes("WDD");
+
   return (
     <>
-      <a href="#copilot" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[90] focus:rounded-btn focus:bg-white focus:px-4 focus:py-2 focus:font-semibold">
-        Skip to copilot
-      </a>
       <Navbar
         current="copilot"
         controls={{
@@ -197,68 +205,53 @@ export function Workspace() {
         }}
       />
 
-      <main>
-        <section id="copilot" aria-labelledby="copilot-h" className="relative isolate">
-          <div className="bg-grid-light mask-fade-b absolute inset-x-0 top-0 -z-10 h-[420px]" aria-hidden />
-          <div className="mx-auto max-w-[1280px] px-4 py-12 sm:px-6 lg:py-16">
-            <div className="flex flex-wrap items-end justify-between gap-6">
-              <div>
-                <p className="eyebrow eyebrow-light">RailKavach Copilot · Authorised workspace</p>
-                <h1 id="copilot-h" className="h-display h-display-light mt-4 text-[36px] text-ink-950 sm:text-[52px]">
-                  Ask once. <em>See everything.</em>
-                </h1>
-              </div>
-              <div className="flex items-center gap-3 rounded-card border border-[var(--line)] bg-white px-4 py-3 shadow-card">
-                <span className="grid h-9 w-9 place-items-center rounded-btn bg-orange-soft text-orange-ink">
-                  <role.icon className="h-4 w-4" aria-hidden />
-                </span>
-                <div>
-                  <p className="text-sm font-semibold text-ink-950">{role.title}</p>
-                  <p className="font-mono text-[11px] text-ink-500">
-                    {role.division} · {masked ? "PII masked" : "PII visible"}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-10">
-              <ScenarioDeck onRun={runScenario} running={running} />
-            </div>
-
-            <div className="mt-10">
-              <Tabs allowed={role.allowedTabs} active={tab} onChange={setTab} />
-            </div>
-
-            <div id={`panel-${tab}`} role="tabpanel" aria-labelledby={`tab-${tab}`} className="mt-6" key={tab}>
-              <div className="animate-fade-up">
-                {tab === "copilot" && (
-                  <CopilotPanel
-                    query={query}
-                    setQuery={setQuery}
-                    onSubmit={ask}
-                    loading={loading}
-                    response={response}
-                    listening={listening}
-                    onMic={toggleMic}
-                    speaking={speaking}
-                    onSpeak={speak}
-                    mask={mask}
-                    lang={lang}
-                    role={role}
-                    onAction={onAction}
-                  />
-                )}
-                {tab === "files" && <FilesPanel analyzing={analyzing} result={fileResult} onAnalyze={onAnalyze} />}
-                {tab === "timeline" && <TimelinePanel events={TIMELINE} mask={mask} lang={lang} />}
-                {tab === "wdd" && <WddPanel canIssue={role.canIssueWorkOrder} onIssue={(s) => toast.show(`Sick-line order issued · ${s}`)} />}
-                {tab === "artifacts" && <ArtifactsPanel canSign={role.canSignCRS} mask={mask} onDone={toast.show} />}
-              </div>
-            </div>
-          </div>
-        </section>
+      <main
+        id="copilot"
+        className={`min-h-[calc(100vh-var(--nav-h))] bg-paper transition-[padding] duration-300 ease-brand ${
+          chatOpen && canChat ? (chatWide ? "lg:pr-[min(820px,64vw)]" : "lg:pr-[420px]") : ""
+        }`}
+      >
+        <div className="mx-auto max-w-[1280px] px-4 py-8 sm:px-6 lg:py-10">
+          <Dashboard
+            role={role}
+            data={data}
+            mask={mask}
+            lang={lang}
+            onAsk={ask}
+            views={views}
+            compact={chatOpen && chatWide}
+            timeline={showTimeline ? <TimelinePanel events={TIMELINE} mask={mask} lang={lang} /> : undefined}
+            rake={showRake ? <WddPanel canIssue={role.canIssueWorkOrder} onIssue={(s) => toast.show(`Sick-line order issued · ${s}`)} /> : undefined}
+          />
+        </div>
       </main>
 
-      <Footer />
+      {canChat && (
+        <ChatPanel
+          open={chatOpen}
+          expanded={chatWide}
+          onOpen={() => setChatOpen(true)}
+          onClose={() => setChatOpen(false)}
+          onToggleExpand={() => setChatWide((w) => !w)}
+          onNewChat={() => {
+            window.speechSynthesis?.cancel();
+            setMessages([]);
+          }}
+          messages={messages}
+          onSend={(q) => ask(q)}
+          busy={busy}
+          listening={listening}
+          onMic={toggleMic}
+          draft={draft}
+          setDraft={setDraft}
+          speakingId={speakingId}
+          onSpeak={speak}
+          mask={mask}
+          lang={lang}
+          role={role}
+          starters={STARTERS.filter((s) => Array.from(requiredSources(s.query)).every((src) => role.dataScopes.includes(src)))}
+        />
+      )}
       <Toast message={toast.message} />
     </>
   );
