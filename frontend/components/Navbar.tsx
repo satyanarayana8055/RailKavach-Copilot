@@ -24,8 +24,8 @@ interface NavbarProps {
 
 const LINKS: Array<[string, string, NavbarProps["current"] | null]> = [
   ["/#suite", "Platforms", null],
-  ["/architecture", "Architecture", "architecture"],
-  ["/copilot", "Copilot", "copilot"],
+  ["/architecture/", "Architecture", "architecture"],
+  ["/copilot/", "Copilot", "copilot"],
 ];
 
 /** AiSPRY header: brand gradient bar; all text sits on white/ink pills for AA contrast. */

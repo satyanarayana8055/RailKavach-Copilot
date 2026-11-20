@@ -25,7 +25,7 @@ export function CopilotTeaser() {
               Ask a question. <em>Get the evidence.</em>
             </h2>
           </div>
-          <a href="/copilot" className="btn-ink h-12 px-6">
+          <a href="/copilot/" className="btn-ink h-12 px-6">
             Open Copilot · authorised staff <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
         </div>
