@@ -26,7 +26,7 @@ Use this exact text and structure when filling the Hack2skill event submission t
 ### 3. Solution Architecture
 > **5-Stage Cloud-Agnostic Core with Pluggable Edge/Cloud Adapters:**
 > * **Stage 01 (Capture):** Ingests in-cab CVVRS video, VHF wireless radio, wayside 6-camera gantry feeds, and trackside sensor streams with NTP microsecond clock synchronization.
-> * **Stage 02 (Infer):** YOLOv8 cabin vigilance, YOLOv11-L rolling stock damage detection, PaddleOCR wagon numbers, and deep learning audio denoising (Fail-Open architecture).
+> * **Stage 02 (Infer):** YOLOv8 cabin vigilance, YOLOv8 rolling stock damage detection, PaddleOCR wagon numbers, and deep learning audio denoising (Fail-Open architecture).
 > * **Stage 03 (Attribute):** RailKavach Open Connector Protocol (ROCP) normalizing data into Canonical Railway Event envelopes.
 > * **Stage 04 (Surface & Copilot Orchestration):** Google Gemini API / Gemma edge reasoning engine orchestrating 5 Google Agent Skills via dynamic tool discovery.
 > * **Stage 05 (Evidence & Governance):** SHA-256 cryptographic chain of custody, Human-in-the-Loop review verification, and Section 63 Bharatiya Sakshya Adhiniyam, 2023 (BSA) electronic evidence certification.

@@ -79,7 +79,7 @@
       <text x="125" y="48" font-size="11" font-weight="400" fill="#94a3b8">6 Gantry Cameras (Entry &amp; Exit Tracks)</text>
 
       <text x="14" y="68" font-size="11" font-weight="600" fill="#e2e8f0">Stage 02 Infer:</text>
-      <text x="125" y="68" font-size="11" font-weight="400" fill="#94a3b8">YOLOv11-L (8 Damage Classes) + PaddleOCR</text>
+      <text x="125" y="68" font-size="11" font-weight="400" fill="#94a3b8">YOLOv8 (8 Damage Classes) + PaddleOCR</text>
 
       <text x="14" y="88" font-size="11" font-weight="600" fill="#e2e8f0">Damage Classes:</text>
       <text x="125" y="88" font-size="10.5" font-weight="400" fill="#94a3b8">Body, Door, Bogie, Coupler, Spring, Handrail, Ladder</text>

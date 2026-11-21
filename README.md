@@ -18,7 +18,7 @@ RailKavach Copilot provides an autonomous conversational query layer across Indi
 │   │ Detection (WDD)      │    │ Analytics            │    │ Analytics              │   │
 │   │                      │    │                      │    │                        │   │
 │   │ • 6 Gantry Cameras   │    │ • CVVRS Edge AI      │    │ • Denoising (9+ Noise) │   │
-│   │ • YOLOv11-L + OCR    │    │ • YOLOv8 Detection   │    │ • Safety Vocabulary    │   │
+│   │ • YOLOv8 + OCR       │    │ • YOLOv8 Detection   │    │ • Safety Vocabulary    │   │
 │   │ • 8 Damage Classes   │    │ • 5 Violations       │    │ • Hindi/Eng Speech-Txt │   │
 │   │ • Entry vs Exit Cmp  │    │ • 3 Compliant Acts   │    │ • Fail-Open Safety     │   │
 │   └──────────┬───────────┘    └──────────┬───────────┘    └───────────┬────────────┘   │
@@ -33,7 +33,7 @@ RailKavach Copilot provides an autonomous conversational query layer across Indi
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-1. **Wagon Damage Detection (WDD)**: Automated rolling stock inspection via 6 gantry cameras, YOLOv11-L, and PaddleOCR across 8 damage classes. Automates entry-vs-exit condition differentials, slashing inspection times from 5–8 hours to ~2 hours.
+1. **Wagon Damage Detection (WDD)**: Automated rolling stock inspection via 6 gantry cameras, YOLOv8, and PaddleOCR across 8 damage classes. Automates entry-vs-exit condition differentials, slashing inspection times from 5–8 hours to ~2 hours.
 2. **Locate – Locomotive Cabin Video Analytics**: 24×7 edge CVVRS camera monitoring classifying **5 safety violations** (`MOBILE_PHONE`, `SLEEPING`, `EATING_DRINKING`, `HAND_SIGNAL_NOT_RETURNED`, `UNAUTHORIZED_PERSON`) while explicitly recognizing **3 compliant activities** (`WALKIE_TALKIE`, `READING_WRITING`, `CONTROLLING`).
 3. **Railcomm – Audio Analytics**: Real-time deep learning denoising pipeline filtering 9+ noise classes while preserving safety vocabulary (*Caution, Stop, Signal, Loop Line, Brake Pipe 5 kg/cm²*). Governed by the strict **Fail-Open** safety mandate.
 

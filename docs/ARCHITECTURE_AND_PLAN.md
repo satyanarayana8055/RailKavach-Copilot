@@ -23,7 +23,7 @@ RailKavach is not an isolated AI prototype; it is an end-to-end operational plat
 │   │ Detection (WDD)      │    │ Analytics            │    │ Analytics              │   │
 │   │                      │    │                      │    │                        │   │
 │   │ • 6 Gantry Cameras   │    │ • CVVRS Edge AI      │    │ • Denoising (9+ Noise) │   │
-│   │ • YOLOv11-L + OCR    │    │ • YOLOv8 Detection   │    │ • Safety Vocabulary    │   │
+│   │ • YOLOv8 + OCR       │    │ • YOLOv8 Detection   │    │ • Safety Vocabulary    │   │
 │   │ • 8 Damage Classes   │    │ • 5 Violations       │    │ • Hindi/Eng Speech-Txt │   │
 │   │ • Entry vs Exit Cmp  │    │ • 3 Compliant Acts   │    │ • Fail-Open Safety     │   │
 │   └──────────┬───────────┘    └──────────┬───────────┘    └───────────┬────────────┘   │
@@ -39,7 +39,7 @@ RailKavach is not an isolated AI prototype; it is an end-to-end operational plat
 ```
 
 The ecosystem connects three specialized pillars:
-1. **Wagon Damage Detection (WDD):** Automated freight rolling-stock inspection using 6 gantry cameras, YOLOv11-L, and PaddleOCR to identify 8 damage classes and compare entry-vs-exit condition differentials (reducing inspection time from 5–8 hours to ~2 hours).
+1. **Wagon Damage Detection (WDD):** Automated freight rolling-stock inspection using 6 gantry cameras, YOLOv8, and PaddleOCR to identify 8 damage classes and compare entry-vs-exit condition differentials (reducing inspection time from 5–8 hours to ~2 hours).
 2. **Locate – Locomotive Cabin Video Analytics:** 24×7 edge-deployed CVVRS camera monitoring classifying **5 safety violations** (phone use, sleeping, eating/drinking, hand signal not returned, unauthorized occupant) while explicitly respecting **3 compliant activities** (walkie-talkie, reading/writing, controlling). Operates with mandatory human reviewer verification.
 3. **Railcomm – Audio Analytics:** Real-time AI denoising filtering 9+ railway noise classes while preserving safety-critical vocabulary (Caution, Stop, Signal, Block, Train numbers) in Hindi and English. Governed by a strict **FAIL-OPEN** architectural rule (audio never goes silent if AI stalls).
 
@@ -67,7 +67,7 @@ flowchart TD
     end
 
     subgraph STAGE2 ["STAGE 02: INFER (Edge & Real-Time AI Engines)"]
-        WDD_AI["WDD Pipeline<br/>• YOLOv11-L (8 Damage Classes)<br/>• PaddleOCR (Wagon Numbers)"]
+        WDD_AI["WDD Pipeline<br/>• YOLOv8 (8 Damage Classes)<br/>• PaddleOCR (Wagon Numbers)"]
         LOCATE_AI["Locate Pipeline<br/>• YOLOv8 Activity Classification<br/>• 5 Violations & 3 Compliant Acts"]
         RAILCOMM_AI["Railcomm Pipeline<br/>• AI Denoising<br/>• Hindi/Eng Transcripts • FAIL-OPEN"]
         
@@ -165,7 +165,7 @@ flowchart TD
 | Stage | Operational Purpose | WDD Implementation | Locate Implementation | Railcomm Implementation |
 | :--- | :--- | :--- | :--- | :--- |
 | **Stage 01: CAPTURE** | Acquire raw data with split-second timestamps & spatial metadata. | 6 gantry camera streams (entry & exit gates). | In-cab CVVRS continuous video & audio streams. | Cab VHF/Tetra wireless channels & intercom audio. |
-| **Stage 02: INFER** | Execute real-time or edge deep learning models. | YOLOv11-L for 8 damage classes; PaddleOCR for wagon codes. | YOLOv8 activity detection at the cab edge. | AI audio denoising + Hindi/English speech-to-text. |
+| **Stage 02: INFER** | Execute real-time or edge deep learning models. | YOLOv8 for 8 damage classes; PaddleOCR for wagon codes. | YOLOv8 activity detection at the cab edge. | AI audio denoising + Hindi/English speech-to-text. |
 | **Stage 03: ATTRIBUTE** | Convert model raw detections into structured railway events. | Entry vs exit damage differential comparison. | 5 violations vs 3 compliant acts, severity levels, duplicate suppression. | Noise classification (9+ classes), clarity score, safety vocabulary extraction. |
 | **Stage 04: SURFACE** | Present actionable telemetry on role-based operator consoles. | Gantry damage viewer, defect heatmap, OCR logs. | Cabin alert feed, trip compliance scorecards, review queue. | Channel quality meters, live transcript streams, alert triggers. |
 | **Stage 05: EVIDENCE** | Preserve tamper-proof operational records & audit trails. | Historical entry/exit image pairs, wagon repair orders. | Video evidence clips, reviewer decision logs, timestamp attribution. | Denoised + raw audio archive, fail-open audit log, communication transcripts. |
@@ -247,7 +247,7 @@ The 5 Google AI Agent Skills are upgraded to seamlessly integrate with the authe
 
 ### Skill 3: `wdd_wagon_damage_query`
 * **Trigger:** Queries regarding damaged rolling stock, hot axles, brake binding, hanging parts, or entry-vs-exit gantry discrepancies.
-* **Domain Context:** Queries WDD 6-camera gantry records; correlates PaddleOCR wagon identification numbers with YOLOv11 8-class damage detections; computes entry-exit delta.
+* **Domain Context:** Queries WDD 6-camera gantry records; correlates PaddleOCR wagon identification numbers with YOLOv8 8-class damage detections; computes entry-exit delta.
 * **Signature:**
   ```json
   {

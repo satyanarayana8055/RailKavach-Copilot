@@ -105,8 +105,8 @@ Every audio file is analyzed for ambient locomotive noise (diesel traction motor
     * `open_door/`: 192 images (unlatched / swinging bottom discharge doors).
     * `no_door/`: 184 images (catastrophic missing door panels).
     * `dent/`: 210 images (structural body panel buckling).
-    * `side_view/`: 195 images (YOLOv11 side gantry high-speed optical scans).
-    * `top_view/`: 180 images (YOLOv11 overhead laser profilometry).
+    * `side_view/`: 195 images (YOLOv8 side gantry high-speed optical scans).
+    * `top_view/`: 180 images (YOLOv8 overhead laser profilometry).
     * `closed_door/`: 190 images (normal baseline condition).
 * **Download Source Archive:** `data/drive_ingest/WDD_Data-20261120T165333Z-1-001.zip` (836 MB).
 * **Frontend Static Symlink:** `frontend/public/evidence_wdd` -> `data/wdd_images`

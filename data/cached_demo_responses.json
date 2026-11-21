@@ -1,138 +1,298 @@
 {
+  "_generated_by": "scripts/build_demo_cache.py — do not edit by hand; regenerate from the datasets",
   "scenario_1_spad_investigation": {
     "query": "Investigate safety events for Train 12414 near Suratgarh on 2026-11-18.",
     "incident_id": "INC-12414-20261118",
-    "summary": "Train 12414 (Mandore Express, Loco WAP-7 30452) experienced a severe near-SPAD incident approaching Suratgarh Junction at 03:14:15. At 03:11:05, Station Master advised Down Loop Line and Home Signal at RED. Between 03:14:02 and 03:14:30, Loco Pilot Rajesh Kumar was distracted by personal mobile phone usage (Locate AI Alert LOC-20261118-001, confirmed by Reviewer DSO-BKN). Assistant Loco Pilot shouted emergency warning at 03:14:15. Emergency brake applied at 03:14:24; train halted safely 60 meters before the Home Signal at Danger.",
+    "summary": "**Verdict:** Train 12414 stopped 60 m short of the Home Signal at Danger at Suratgarh. The Station Master confirmed no SPAD. The radio record shows the stop came from the Assistant Loco Pilot's warning about phone use, not from the Loco Pilot's own signal observance.\n\n**What was heard (Railcomm)**\n- [03:11:05] Station Master: Down Loop Line set, Home Signal at Danger, Caution Order 30 km/h.\n- [03:11:22] ALP repeated the order back (call-out protocol followed).\n- [03:13:45] ALP called the Distant Signal at Yellow and asked to reduce speed.\n- [03:14:15] ALP: \"Put down the phone, Home Signal ahead is RED! Apply brakes!\"\n- [03:14:24] LP reported emergency brake applied, brake pipe at 0 kg/cm².\n- [03:14:48] LP reported a complete halt 60 m before the Home Signal.\n- [03:15:10] Station Master: signal not passed, no SPAD. Section Controller informed.\n\n**What was seen (Locate)**\n- The cab camera has **no phone alert at the moment of the warning**: records between [03:13:36] and [03:14:40] are routine monitoring, auto-suppressed.\n- The same train has 43 confirmed phone alerts this shift, the nearest at [02:46:24] before and [03:44:32] after the incident.\n\n**Assessment:** Phone use is corroborated by the ALP's radio warning and by repeated confirmed cab alerts, but not captured in the incident minute. Pull the CVVRS footage for 03:13–03:15 before any charge: an AI alert alone must not be the basis of action (Railways Act Section 175).\n\n**Rules engaged:** G&SR 3.78 (signal at danger), G&SR 4.40 (calling out signal aspects), G&SR 4.09 (caution orders), Railway Board Safety Circular No. 2018/Safety(A&R)/19/19 (in-cab phones).",
     "timestamp_citations": [
       {
         "time": "03:11:05",
-        "source": "Railcomm VHF",
-        "event": "SM advises Caution Order 30 kmph, Home Signal RED."
+        "source": "Railcomm VHF CH02",
+        "event": "SM: Down Loop Line, Home Signal at Danger, Caution Order 30 km/h.",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-12414-003"
       },
       {
-        "time": "03:14:02",
-        "source": "Locate Cabin Cam",
-        "event": "LP mobile phone distraction detected (28s duration, 94% conf). Reviewer Status: CONFIRMED by DSO-BKN."
+        "time": "03:11:22",
+        "source": "Railcomm VHF CH02",
+        "event": "ALP repeated the caution order back.",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-12414-004"
       },
       {
         "time": "03:14:15",
-        "source": "Railcomm Cabin Intercom",
-        "event": "ALP Amit Singh shouts: 'सामने होम सिग्नल लाल है! फोन रखिए! ब्रेक लगाइए!'"
+        "source": "Railcomm Cab Intercom",
+        "event": "ALP warned: put down the phone, Home Signal is RED, apply brakes.",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-12414-006"
       },
       {
         "time": "03:14:24",
-        "source": "Loco Telemetry",
-        "event": "Emergency RS Valve tripped; BP drops to 0 kg/cm²."
+        "source": "Railcomm Cab Intercom",
+        "event": "LP: emergency brake applied, brake pipe 0 kg/cm².",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-12414-007"
       },
       {
         "time": "03:14:48",
-        "source": "Railcomm VHF",
-        "event": "Train halted safely 60m before Home Signal. SPAD averted."
+        "source": "Railcomm VHF CH02",
+        "event": "LP: complete halt 60 m before the Home Signal.",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-12414-008"
+      },
+      {
+        "time": "03:15:10",
+        "source": "Railcomm VHF CH02",
+        "event": "SM: signal not passed, no SPAD.",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-12414-009"
+      },
+      {
+        "time": "02:46:24",
+        "source": "Locate Cabin CVVRS",
+        "event": "Confirmed phone use on 12414, last alert before the incident (Mobile Phone).",
+        "status": "CONFIRMED",
+        "evidence_id": "LOC-20261118-0174"
+      },
+      {
+        "time": "03:44:32",
+        "source": "Locate Cabin CVVRS",
+        "event": "Confirmed phone use on 12414, first alert after the incident (Mobile Phone).",
+        "status": "CONFIRMED",
+        "evidence_id": "LOC-20261118-0392"
       }
     ],
-    "root_cause": "Driver inattention and rule violation (personal mobile phone usage in active cab) leading to delayed brake application approaching a stop signal.",
+    "root_cause": "Loss of signal attention by the Loco Pilot approaching a Home Signal at Danger; phone use indicated by the ALP's warning and repeated confirmed cab alerts. Stop achieved by ALP intervention and emergency braking.",
     "bilingual_report": {
-      "english_statutory": "PRELIMINARY INQUIRY REPORT (RULE 113 G&SR)\nDivision: Bikaner | Train: 12414 Exp | Date: 18-Nov-2026\nFinding: Complete stoppage 60 meters prior to Home Signal. Crew violation under Railway Board Mobile Usage Directive 2020 confirmed via CVVRS footage.",
-      "hindi_briefing": "सुरक्षा निर्देश (क्रू लॉबी साइन-ऑन ब्रीफिंग):\nदिनांक 18-नवंबर-2026 को सूरतगढ़ दृष्टिकोण पर 12414 के चालक द्वारा मोबाइल उपयोग से सिग्नल अनदेखी की गंभीर घटना टली। सभी लोको पायलटों को सख्त चेतावनी: रनिंग ड्यूटी के दौरान मोबाइल पूर्णतः बंद रखें। होम सिग्नल पर कौशन गति (30 किमी/घंटा) का अनिवार्य पालन करें।"
+      "english_statutory": "PRELIMINARY INQUIRY NOTE (Railways Act s.115 departmental inquiry)\nDivision: Bikaner | Train: 12414 | Date: 18-Nov-2026 | Location: Suratgarh Home Signal\nFinding: Train halted 60 m before the Home Signal at Danger. No SPAD (SM confirmation on VHF).\nCause: ALP warning about phone use, followed by emergency braking. No cab-camera phone alert in the incident minute;\n43 confirmed phone alerts on the same train this shift.\nAction: Secure CVVRS footage 03:13–03:15; counsel crew under the in-cab phone circular; no charge on AI alerts alone (s.175).",
+      "hindi_briefing": "क्रू लॉबी ब्रीफिंग — गाड़ी 12414, सूरतगढ़, 18 नवंबर 2026\nहोम सिग्नल लाल था। सहायक लोको पायलट ने फोन रखने और ब्रेक लगाने की चेतावनी दी, आपातकालीन ब्रेक लगाया गया और गाड़ी सिग्नल से 60 मीटर पहले रुक गई। सिग्नल पार नहीं हुआ।\nसीख: चलती गाड़ी में निजी फोन बंद रखें, हर सिग्नल को ज़ोर से पुकारें, और कॉशन ऑर्डर दोहराएँ।"
     }
   },
   "scenario_2_fatigue_pattern": {
     "query": "Show driver alertness and fatigue trends between 02:00 and 05:00 AM on Bikaner Division.",
-    "summary": "Analysis of Locate CVVRS alerts on Bikaner Division identifies a concentrated cluster of driver micro-sleep infractions (4 confirmed incidents) strictly occurring between 03:30 AM and 04:45 AM. All incidents occurred on long-distance night freight trains (BOXN-542, BOXN-611) and express run 14707. No fatigue violations occurred during day shifts (06:00 - 18:00).",
+    "summary": "**Finding:** 86 confirmed micro-sleep alerts on the night shift, split across 12414 (44) and BOXN-542 (42). They peak in the **03:00 hour (56 alerts)**, the densest 15 minutes being from 03:30 (42).\n\n**By hour:** 02:00–02:59 · 5, 03:00–03:59 · 56, 04:00–04:59 · 25.\n\n**Alongside:** 86 confirmed phone-use alerts on the same shift, so attention lapses are not only fatigue.\n\n**Review status:** every micro-sleep alert here has been confirmed by a reviewer. Pending alerts are excluded.\n\n**Recommended:** tighten vigilance-control checks between 03:00 and 04:00, review crew rest before these turns, and brief both crews in the lobby.",
     "cluster_data": [
       {
-        "time": "03:45:12",
-        "loco": "WAG-9 31204",
+        "time": "02:07:28",
+        "loco": "WAP7-30245",
+        "train": "12414",
+        "crew": "LP-R.K.Sharma / ALP-Amit.Singh",
+        "duration": "Sleeping (micro-sleep)",
+        "status": "CONFIRMED",
+        "evidence_id": "LOC-20261118-0028"
+      },
+      {
+        "time": "02:07:44",
+        "loco": "WAG9-31890",
         "train": "BOXN-542",
-        "crew": "LP-3108",
-        "duration": "12s micro-sleep",
-        "status": "CONFIRMED"
+        "crew": "LP-M.P.Yadav / ALP-S.Verma",
+        "duration": "Sleeping (micro-sleep)",
+        "status": "CONFIRMED",
+        "evidence_id": "LOC-20261118-0029"
       },
       {
-        "time": "04:12:05",
-        "loco": "WAG-9 31882",
-        "train": "BOXN-611",
-        "crew": "LP-2891",
-        "duration": "16s micro-sleep",
-        "status": "CONFIRMED"
+        "time": "03:26:24",
+        "loco": "WAP7-30245",
+        "train": "12414",
+        "crew": "LP-R.K.Sharma / ALP-Amit.Singh",
+        "duration": "Sleeping (micro-sleep)",
+        "status": "CONFIRMED",
+        "evidence_id": "LOC-20261118-0324"
       },
       {
-        "time": "04:38:22",
-        "loco": "WDP-4D 40112",
-        "train": "14707",
-        "crew": "LP-5012",
-        "duration": "9s micro-sleep",
-        "status": "PENDING"
+        "time": "03:26:40",
+        "loco": "WAG9-31890",
+        "train": "BOXN-542",
+        "crew": "LP-M.P.Yadav / ALP-S.Verma",
+        "duration": "Sleeping (micro-sleep)",
+        "status": "CONFIRMED",
+        "evidence_id": "LOC-20261118-0325"
+      },
+      {
+        "time": "04:25:36",
+        "loco": "WAP7-30245",
+        "train": "12414",
+        "crew": "LP-R.K.Sharma / ALP-Amit.Singh",
+        "duration": "Sleeping (micro-sleep)",
+        "status": "CONFIRMED",
+        "evidence_id": "LOC-20261118-0546"
+      },
+      {
+        "time": "04:25:52",
+        "loco": "WAG9-31890",
+        "train": "BOXN-542",
+        "crew": "LP-M.P.Yadav / ALP-S.Verma",
+        "duration": "Sleeping (micro-sleep)",
+        "status": "CONFIRMED",
+        "evidence_id": "LOC-20261118-0547"
       }
     ],
     "corrective_actions": [
-      "Mandate audio vigilance confirmation intervals reduced from 60s to 30s during 02:00 - 05:00 AM window.",
-      "Conduct surprise breathalyzer and alertness checks at Lalgarh and Suratgarh crew lobbies."
+      "Tighten vigilance-control checks between 03:00 and 04:00",
+      "Review crew rest before night turns on 12414 and BOXN-542",
+      "Brief both crews in the Suratgarh lobby"
     ]
   },
   "scenario_3_wagon_damage_audit": {
     "query": "Audit entry-versus-exit wagon damage for freight rake BOXN-542.",
     "train_no": "BOXN-542",
-    "rake_type": "BOXNHL (58 Wagons)",
-    "summary": "Automated 6-camera WDD gantry differential between Suratgarh Entry (10:15) and Lalgarh Exit (16:45) identified 2 wagons with newly sustained in-transit damage, while 1 pre-existing defect was correctly cleared of contractor liability.",
+    "rake_type": "BOXNHL (58 wagons)",
+    "summary": "**Rake BOXN-542 · 58 BOXNHL wagons** scanned at Suratgarh West Gate Gantry #1 (10:15) and Lalgarh Yard Exit Gantry #2 (16:45).\n\n- **Clear at exit:** 49\n- **New transit damage:** 8, of which 2 serious (door defects)\n- **Pre-existing, not transit:** 1 (wagon #35)\n\n49 + 8 + 1 = 58. Highest priority first:",
     "findings": [
       {
-        "wagon_no": "BOXNHL 22011945123",
+        "wagon_no": "BOXNHL 22011940022",
+        "position": 22,
+        "status": "NEW TRANSIT DAMAGE · CRITICAL",
+        "defects": [
+          "DOOR_DEFECT (critical)"
+        ],
+        "liability": "Catastrophic missing door. Marked for urgent Sick Line mechanical repair at Lalgarh.",
+        "time": "16:50:08",
+        "evidence_id": "WDD-BOXN542-22"
+      },
+      {
+        "wagon_no": "BOXNHL 22011940014",
         "position": 14,
+        "status": "NEW TRANSIT DAMAGE · HIGH",
+        "defects": [
+          "DOOR_DEFECT (high)"
+        ],
+        "liability": "Damage occurred in transit between Suratgarh and Lalgarh. Transit debit note issued to siding operator.",
+        "time": "16:48:16",
+        "evidence_id": "WDD-BOXN542-14"
+      },
+      {
+        "wagon_no": "BOXNHL 22011940007",
+        "position": 7,
         "status": "NEW TRANSIT DAMAGE",
         "defects": [
-          "DOOR_DEFECT (Hanging bottom flap)",
-          "SPRING_BROKEN (Inner coil fracture)"
+          "BODY_PANEL (medium)"
         ],
-        "liability": "Railway transit failure / siding handling damage."
+        "liability": "Transit structural stress / uneven loading detected.",
+        "time": "16:46:38",
+        "evidence_id": "WDD-BOXN542-07"
       },
       {
-        "wagon_no": "BOXNHL 22011945124",
-        "position": 15,
-        "status": "PRE-EXISTING DEFECT",
+        "wagon_no": "BOXNHL 22011940021",
+        "position": 21,
+        "status": "NEW TRANSIT DAMAGE",
         "defects": [
-          "BODY_PANEL (150mm dent detected at entry gantry)"
+          "BODY_PANEL (medium)"
         ],
-        "liability": "Contractor exempt from liability (pre-existing)."
+        "liability": "Transit structural stress / uneven loading detected.",
+        "time": "16:49:54",
+        "evidence_id": "WDD-BOXN542-21"
       },
       {
-        "wagon_no": "BCNHL 33022198001",
+        "wagon_no": "BOXNHL 22011940028",
         "position": 28,
-        "status": "CRITICAL NEW TRANSIT FAILURE",
+        "status": "NEW TRANSIT DAMAGE",
         "defects": [
-          "BRAKE_BEAM_DEFECT (Hanger pin detached, rubbing flange)"
+          "BODY_PANEL (medium)"
         ],
-        "liability": "Immediate mechanical sick-line diversion ordered."
+        "liability": "Transit structural stress / uneven loading detected.",
+        "time": "16:51:32",
+        "evidence_id": "WDD-BOXN542-28"
+      },
+      {
+        "wagon_no": "BOXNHL 22011940042",
+        "position": 42,
+        "status": "NEW TRANSIT DAMAGE",
+        "defects": [
+          "BODY_PANEL (medium)"
+        ],
+        "liability": "Transit structural stress / uneven loading detected.",
+        "time": "16:54:48",
+        "evidence_id": "WDD-BOXN542-42"
+      },
+      {
+        "wagon_no": "BOXNHL 22011940049",
+        "position": 49,
+        "status": "NEW TRANSIT DAMAGE",
+        "defects": [
+          "BODY_PANEL (medium)"
+        ],
+        "liability": "Transit structural stress / uneven loading detected.",
+        "time": "16:56:26",
+        "evidence_id": "WDD-BOXN542-49"
+      },
+      {
+        "wagon_no": "BOXNHL 22011940056",
+        "position": 56,
+        "status": "NEW TRANSIT DAMAGE",
+        "defects": [
+          "BODY_PANEL (medium)"
+        ],
+        "liability": "Transit structural stress / uneven loading detected.",
+        "time": "16:58:04",
+        "evidence_id": "WDD-BOXN542-56"
+      },
+      {
+        "wagon_no": "BOXNHL 22011940035",
+        "position": 35,
+        "status": "PRE-EXISTING (not transit)",
+        "defects": [
+          "BODY_PANEL (medium)"
+        ],
+        "liability": "Pre-existing siding damage before rake entry. Not attributable to transit run.",
+        "time": "16:53:10",
+        "evidence_id": "WDD-BOXN542-35"
       }
     ],
-    "inspection_time_savings": "WDD automated audit completed in 8 minutes versus 5 hours 30 minutes manual examination."
+    "inspection_time_savings": "All 58 wagons compared entry vs exit automatically; only 9 need a person to look."
   },
   "scenario_signal_miscommunications": {
     "query": "Show all signal-related miscommunications, emergency callouts, and caution order exchanges on the Bikaner division during the shift on 18 Nov 2026.",
-    "summary": "Shift Audit of 58 bilingual radio transcripts across Bikaner Division (18-Nov-2026, 00:00–08:00 hrs) identified 4 critical operational exchanges:\n\n1. [03:11:05] SM Suratgarh issued a 30 kmph Caution Order on Loop Line approaching Suratgarh Jn to LP 12414.\n2. [03:14:15] Emergency verbal callout by ALP Amit Singh ('सामने होम सिग्नल लाल है! फोन रखिए!') following driver phone distraction.\n3. [04:32:10] Train 14707 exchanged signal confirmation callouts for Distant Signal (DOUBLE YELLOW) approaching Lalgarh Jn.\n4. [05:18:40] SM Bikaner issued an urgent engineering speed restriction (20 kmph) at KM 182/4 due to track maintenance.\n\nAll callouts complied with G&SR 4.40 calling-out protocol. Section 178 Fail-Open parallel logging confirmed 100% voice radio uptime with zero transmission drops.",
+    "summary": "**Shift audit of 1,053 radio segments** on Bikaner Division, 18 Nov 2026.\n\n**Caution orders:** 124 exchanges. On 12414 the Station Master's 30 km/h order was repeated back by the ALP [03:11:22], as G&SR 4.09 and the call-out rule G&SR 4.40 require.\n\n**Emergency call-outs:** 2, both on 12414 at Suratgarh: the ALP's warning about the phone and the red Home Signal [03:14:15], then the LP's emergency-brake report [03:14:24].\n\n**Fail-open:** 142 segments (13%) were passed through without AI cleaning because the denoiser could not run, mostly on VHF-CH16 (121), VHF-CH02 (11). They were kept as raw audio, never dropped, so nothing in the record is lost.",
     "citations": [
       {
         "time": "03:11:05",
-        "source": "Railcomm VHF Ch 02",
-        "event": "SM Suratgarh issued Caution Order T/409 (30 kmph) on Loop Line to LP 12414."
+        "source": "Railcomm VHF CH02",
+        "event": "SM issued Caution Order 30 km/h, Home Signal at Danger.",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-12414-003"
+      },
+      {
+        "time": "03:11:22",
+        "source": "Railcomm VHF CH02",
+        "event": "ALP repeated the caution order back.",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-12414-004"
       },
       {
         "time": "03:14:15",
-        "source": "Railcomm Cabin Intercom",
-        "event": "ALP shouted emergency callout: 'सामने होम सिग्नल लाल है! फोन रखिए! ब्रेक लगाइए!'"
+        "source": "Railcomm Cab Intercom",
+        "event": "ALP emergency call-out: phone down, Home Signal RED, apply brakes.",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-12414-006"
       },
       {
-        "time": "04:32:10",
-        "source": "Railcomm VHF Ch 01",
-        "event": "LP 14707 & ALP confirmed Distant Signal DOUBLE YELLOW approaching Lalgarh."
+        "time": "03:14:24",
+        "source": "Railcomm Cab Intercom",
+        "event": "LP: emergency brake applied.",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-12414-007"
       },
       {
-        "time": "05:18:40",
-        "source": "Railcomm VHF Ch 02",
-        "event": "SM Bikaner broadcasted urgent Caution Order for track gang at KM 182/4 (20 kmph)."
+        "time": "04:15:20",
+        "source": "Railcomm VHF CH02",
+        "event": "Fail-open: passed through raw (VHF-CH02).",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-GEN-011"
+      },
+      {
+        "time": "03:06:54",
+        "source": "Railcomm VHF CH02",
+        "event": "Fail-open: passed through raw (VHF-CH02).",
+        "status": "CONFIRMED",
+        "evidence_id": "RC-GEN-042"
       }
     ],
-    "fail_open_status": "NORMAL (0 radio dropped frames, Section 178 compliant)",
-    "statutory_rules": ["G&SR 4.40 Calling Out", "G&SR 4.09 Caution Orders", "Section 178 Railways Act 1989"]
+    "fail_open_status": "142 of 1053 segments passed through raw (fail-open), none dropped",
+    "statutory_rules": [
+      "G&SR 4.40 / 4.41 Calling out",
+      "G&SR 4.09 Caution orders",
+      "G&SR 3.78 / 9.02 Signal at danger"
+    ]
   }
 }

@@ -1,5 +1,8 @@
 import { Shield, Zap, Wrench, UserCheck, Briefcase } from "lucide-react";
-import type { ChatResponse, RoleMetadata, TimelineEvent, UserRole, Wagon } from "./types";
+import type { ChatResponse, RoleMetadata, UserRole } from "./types";
+
+// Scenario answers, incident timeline, BOXN-542 rake and inquiry report come from the datasets.
+export { INQUIRY_REPORT, RAKE, SCENARIO_1_FALLBACK, SCENARIO_4_FALLBACK, TIMELINE } from "./demo-data.generated";
 
 export const ROLES: Record<UserRole, RoleMetadata> = {
   ROLE_SR_DSO: {
@@ -107,41 +110,6 @@ export const WELCOME_RESPONSE: ChatResponse = {
   cached: true,
 };
 
-export const SCENARIO_1_FALLBACK: ChatResponse = {
-  answer:
-    "Train 12414 (Mandore Express, WAP-7 30452) narrowly avoided a SPAD approaching Suratgarh Jn. The Loco Pilot was on a personal phone for 28 s while the Home Signal was at Danger; the ALP's shouted warning at 03:14:15 led to an emergency brake at 03:14:24. The train halted 60 m short of the signal.",
-  citations: [
-    { timestamp: "03:11:05", source: "Railcomm VHF", event_description: "Caution Order 30 km/h · Home Signal RED." },
-    { timestamp: "03:14:02", source: "Locate Cabin Cam", event_description: "LP mobile phone use · 28 s · 94% conf.", reviewer_status: "CONFIRMED" },
-    { timestamp: "03:14:15", source: "Railcomm Intercom", event_description: "ALP: 'सामने होम सिग्नल लाल है! ब्रेक लगाइए!'" },
-    { timestamp: "03:14:24", source: "Loco Telemetry", event_description: "RS valve tripped · BP 5.0 → 0 kg/cm²." },
-    { timestamp: "03:14:48", source: "Railcomm VHF", event_description: "Halted 60 m before Home Signal · SPAD averted." },
-  ],
-  suggested_actions: [
-    "Generate Rule 113 inquiry report",
-    "Issue Hindi lobby briefing",
-    "Commend ALP Amit Singh",
-  ],
-  latency_ms: 2,
-  token_usage: { total_tokens: 0 },
-  cached: true,
-};
-
-export const SCENARIO_4_FALLBACK: ChatResponse = {
-  answer:
-    "Shift audit of 58 bilingual radio transcripts (Bikaner Division, 18 Nov 2026, 00:00–08:00) found 4 critical exchanges. All callouts complied with the G&SR 4.40 calling-out protocol; Section 178 fail-open logging confirmed 100% radio uptime.",
-  citations: [
-    { timestamp: "03:11:05", source: "Railcomm VHF Ch 02", event_description: "Caution Order T/409 (30 km/h) on Loop Line to LP 12414.", reviewer_status: "CONFIRMED" },
-    { timestamp: "03:14:15", source: "Railcomm Intercom", event_description: "ALP: 'सामने होम सिग्नल लाल है! फोन रखिए!'", reviewer_status: "CONFIRMED" },
-    { timestamp: "04:32:10", source: "Railcomm VHF Ch 01", event_description: "14707 confirmed Distant Signal DOUBLE YELLOW at Lalgarh.", reviewer_status: "CONFIRMED" },
-    { timestamp: "05:18:40", source: "Railcomm VHF Ch 02", event_description: "Engineering restriction 20 km/h at KM 182/4.", reviewer_status: "CONFIRMED" },
-  ],
-  suggested_actions: ["Open timeline", "Export G&SR 4.40 callout report", "Audit fail-open radio log"],
-  latency_ms: 2,
-  token_usage: { total_tokens: 0 },
-  cached: true,
-};
-
 export const genericFallback = (q: string): ChatResponse => ({
   answer: `Offline mode — showing cached grounding for “${q}”. Cross-referencing Railcomm VHF, Locate CVVRS and WDD gantry records for Bikaner Division.`,
   citations: [{ timestamp: "03:14:15", source: "Railcomm VHF", event_description: "Voice stream keyword matched." }],
@@ -151,62 +119,6 @@ export const genericFallback = (q: string): ChatResponse => ({
   cached: true,
 });
 
-export const TIMELINE: TimelineEvent[] = [
-  { time_str: "03:10:15", source: "RAILCOMM_AUDIO", speaker: "Station Master SOG", event: "SM to LP 12414: acknowledge VHF Channel 02.", event_hi: "गाड़ी संख्या 12414 लोको पायलट, सूरतगढ़ स्टेशन मास्टर सुनिए।", clarity: 0.95, fail_open: false, severity: "INFO" },
-  { time_str: "03:11:05", source: "RAILCOMM_AUDIO", speaker: "Station Master SOG", event: "Down Loop set. Home Signal RED. Caution 30 km/h.", event_hi: "12414, डाउन लूप लाइन तय है। होम सिग्नल लाल है, कौशन ऑर्डर 30 किमी/घंटा।", clarity: 0.94, fail_open: false, severity: "INFO" },
-  { time_str: "03:14:02", source: "LOCATE_CABIN_CAM", speaker: "LP-4412 (Rajesh Kumar)", event: "MOBILE_PHONE · 28 s · 94% conf.", event_hi: "केबिन कैमरा अलर्ट: मोबाइल फोन उपयोग (28 सेकंड)।", clarity: 0.94, reviewer_status: "CONFIRMED", severity: "CRITICAL" },
-  { time_str: "03:14:15", source: "RAILCOMM_AUDIO", speaker: "ALP-5519 (Amit Singh)", event: "ALP: “Put down phone, Home Signal is RED! Apply brake!”", event_hi: "सहायक लोको पायलट: 'सर फोन रखिए, होम सिग्नल लाल है! ब्रेक लगाइए!'", clarity: 0.96, fail_open: false, severity: "CRITICAL" },
-  { time_str: "03:14:24", source: "LOCO_TELEMETRY", speaker: "LP Rajesh Kumar", event: "Emergency brake · BP 5.0 → 0.0 kg/cm².", event_hi: "आपातकालीन ब्रेक! बीपी प्रेशर 0।", clarity: 0.98, severity: "CRITICAL" },
-  { time_str: "03:14:48", source: "RAILCOMM_AUDIO", speaker: "LP Rajesh Kumar", event: "Halted 60 m before Home Signal. SPAD averted.", event_hi: "होम सिग्नल से 60 मीटर पहले खड़ी।", clarity: 0.93, fail_open: false, severity: "INFO" },
-];
-
-/** BOXN-542 rake: 58 wagons; three carry findings from the entry/exit gantry differential. */
-const FINDINGS: Record<number, Omit<Wagon, "pos">> = {
-  14: { 
-    serial: "BOXNHL 22011945123", 
-    entry: "Clear", 
-    exit: "Door defect (unlatched) + broken spring", 
-    status: "NEW_DAMAGE", 
-    note: "Transit damage sustained at contractor siding · Lalgarh Yard Sick-Line tagged",
-    image_url: "/evidence_wdd/open_door/Railways_goods_wagon_in_yard_0aa9832a.png",
-    defect_tag: "DOOR_UNLATCHED (HIGH)"
-  },
-  15: { 
-    serial: "BOXNHL 22011945124", 
-    entry: "Body dent >150 mm", 
-    exit: "Body dent >150 mm", 
-    status: "PRE_EXISTING", 
-    note: "Pre-existing before Suratgarh · contractor exempt from transit penalty",
-    image_url: "/evidence_wdd/dent/Indian_Railways_freight_wagon_view_58bef7e0.jpg",
-    defect_tag: "BODY_PANEL_DENT (PRE-EXISTING)"
-  },
-  28: { 
-    serial: "BCNHL 33022198001", 
-    entry: "Clear", 
-    exit: "Missing discharge door + brake rigging defect", 
-    status: "CRITICAL", 
-    note: "Catastrophic missing door · wheel-flange hazard · immediate mechanical shunting required",
-    image_url: "/evidence_wdd/no_door/Railways_wagon_with_open_door_b4768ba3.png",
-    defect_tag: "MISSING_DOOR (CRITICAL)"
-  },
-};
-
-export const RAKE: Wagon[] = Array.from({ length: 58 }, (_, i) => {
-  const pos = i + 1;
-  const finding = FINDINGS[pos];
-  if (finding) return { pos, ...finding };
-  return { 
-    pos, 
-    serial: `BOXNHL 2201194${5100 + pos}`, 
-    entry: "Clear", 
-    exit: "Clear", 
-    status: "CLEAR", 
-    note: "Compliant optical scan · zero defects detected across all 6 gantry angles",
-    image_url: "/evidence_wdd/side_view/Actual-Image-1-_jpg.rf.607437793c10197e9c59ee78ab7fdc4c.jpg",
-    defect_tag: "CLEAR (NOMINAL)"
-  };
-});
-
 export const SAMPLE_FILES = [
   { type: "wav", name: "cab_radio_suratgarh_031415.wav", label: "Cab radio", ext: "WAV", tone: "blue" },
   { type: "mp4", name: "cvvrs_cab_driver_phone.mp4", label: "CVVRS video", ext: "MP4", tone: "violet" },
@@ -214,29 +126,6 @@ export const SAMPLE_FILES = [
   { type: "pdf", name: "caution_order_t409_sog.pdf", label: "Caution order", ext: "PDF", tone: "amber" },
   { type: "csv", name: "speedometer_brake_curve.csv", label: "Brake telemetry", ext: "CSV", tone: "rose" },
 ] as const;
-
-export const INQUIRY_REPORT = `PRELIMINARY STATUTORY INQUIRY REPORT
-=====================================================
-Authority: Senior Divisional Safety Officer (Sr. DSO)
-Division : Bikaner Division, North Western Railway
-Incident : INC-12414-20261118 (Avoided SPAD Incident)
-Train    : 12414 Mandore Express (WAP-7 30452)
-Date/Time: 18-Nov-2026 at 03:14:15 hrs
-
-1. MASTER EVENT CHRONOLOGY
------------------------------------------------------
-* [03:11:05] SM SOG issued Caution Order (30 kmph) on Loop Line.
-* [03:14:02] Locate CVVRS detected LP mobile phone use (28s).
-* [03:14:15] ALP shouted emergency verbal warning over Cab Intercom.
-* [03:14:24] Emergency brake (RS Valve) tripped; BP drops to 0 kg/cm².
-* [03:14:48] Train stopped 60 meters before Home Signal at Danger.
-
-2. STATUTORY FINDINGS & COMPLIANCE
------------------------------------------------------
-* Loco Pilot Rajesh Kumar breached Railway Board Directive 2020.
-* Violation verified & confirmed by Reviewer DSO-BKN at 06:30:15.
-* ALP Amit Singh commended for swift emergency intervention.
-* DPDP Act 2023: Biometric CVVRS audit logs cryptographically locked.`;
 
 export const HINDI_BRIEFING = `उत्तर पश्चिम रेलवे • बीकानेर मंडल
 क्रू लॉबी दैनिक संरक्षा चेतावनी निर्देश

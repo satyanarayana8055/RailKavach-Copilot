@@ -289,7 +289,9 @@ export function Dashboard({ role, data, mask, lang, onAsk, timeline, rake, views
   const violations = L.filter((a) => !a.is_compliant_activity);
   const pending = violations.filter((a) => a.verification_status === "PENDING_VERIFICATION").length;
   const transit = W.filter((w) => w.delta_transit_damage).length;
-  const criticalWagons = W.filter((w) => w.exit_defects.some((d) => d.severity === "CRITICAL" || d.severity === "HIGH")).length;
+  // Scanned = clear + new transit damage + pre-existing; high/critical is a subset of transit damage.
+  const criticalWagons = W.filter((w) => w.delta_transit_damage && w.exit_defects.some((d) => d.severity === "CRITICAL" || d.severity === "HIGH")).length;
+  const preExisting = W.filter((w) => w.exit_damage_status !== "CLEAR" && !w.delta_transit_damage).length;
   const avgClarity = R.length ? Math.round((R.reduce((s, r) => s + r.clarity_score, 0) / R.length) * 100) : 0;
   const SOURCES: Array<[DataSource, string]> = [["RAILCOMM", "Railcomm · radio"], ["LOCATE", "Locate · cabin video"], ["WDD", "WDD · wagons"]];
   const inScope = SOURCES.filter(([s]) => has(s));
@@ -355,9 +357,9 @@ export function Dashboard({ role, data, mask, lang, onAsk, timeline, rake, views
             </SourceCard>}
             {has("WDD") && <SourceCard icon={Train} title="WDD · wagons" tint="bg-amber-soft text-amber-ink" wide={compact}>
               <Kpi label="Wagons scanned" value={n(W.length, data.wdd)} sub="rake BOXN-542" />
-              <Kpi label="Transit damage" value={n(transit, data.wdd)} tone={transit ? "danger" : "ink"} />
-              <Kpi label="High / critical" value={n(criticalWagons, data.wdd)} tone={criticalWagons ? "danger" : "ink"} />
               <Kpi label="Clear" value={n(W.filter((w) => w.exit_damage_status === "CLEAR").length, data.wdd)} tone="ok" />
+              <Kpi label="New transit damage" value={n(transit, data.wdd)} sub={data.wdd ? `${criticalWagons} high / critical` : undefined} tone={transit ? "danger" : "ink"} />
+              <Kpi label="Pre-existing" value={n(preExisting, data.wdd)} sub="not transit" tone={preExisting ? "amber" : "ink"} />
             </SourceCard>}
           </div>
           {locked.length > 0 && (

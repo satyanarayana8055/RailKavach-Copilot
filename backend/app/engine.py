@@ -110,7 +110,8 @@ class CopilotEngine:
                         timestamp=c.get("time"),
                         source=c.get("source"),
                         event_description=c.get("event"),
-                        reviewer_status="CONFIRMED" if "CONFIRMED" in c.get("event", "") else None
+                        reviewer_status=c.get("status") or ("CONFIRMED" if "CONFIRMED" in c.get("event", "") else None),
+                        evidence_id=c.get("evidence_id"),
                     )
                     for c in data.get("timestamp_citations", [])
                 ]
@@ -138,7 +139,8 @@ class CopilotEngine:
                         timestamp=c.get("time"),
                         source="Locate Cabin CVVRS",
                         event_description=f"Loco {c.get('loco')} ({c.get('train')}): {c.get('duration')} by {c.get('crew')}",
-                        reviewer_status=c.get("status")
+                        reviewer_status=c.get("status"),
+                        evidence_id=c.get("evidence_id"),
                     )
                     for c in data.get("cluster_data", [])
                 ]
@@ -161,7 +163,8 @@ class CopilotEngine:
                         timestamp=c.get("time"),
                         source=c.get("source"),
                         event_description=c.get("event"),
-                        reviewer_status="CONFIRMED"
+                        reviewer_status=c.get("status", "CONFIRMED"),
+                        evidence_id=c.get("evidence_id"),
                     )
                     for c in data.get("citations", [])
                 ]
@@ -172,7 +175,7 @@ class CopilotEngine:
                     suggested_actions=[
                         "Review VHF radio log for Suratgarh Junction (03:10–03:15)",
                         "Export G&SR 4.40 Signal Callout Verification Report",
-                        "Audit Section 178 Fail-Open continuous radio logging"
+                        "Audit fail-open segments passed through raw"
                     ],
                     latency_ms=latency,
                     token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
@@ -185,10 +188,11 @@ class CopilotEngine:
                 _tag_route("cache", scenario="scenario_3_wagon_damage_audit")
                 citations = [
                     Citation(
-                        timestamp="16:45:10",
+                        timestamp=f.get("time", "16:45:14"),
                         source="WDD 6-Gantry Exit Scan",
                         event_description=f"Wagon {f.get('wagon_no')} - {f.get('status')}: {', '.join(f.get('defects', []))}",
-                        reviewer_status="CONFIRMED"
+                        reviewer_status="CONFIRMED",
+                        evidence_id=f.get("evidence_id"),
                     )
                     for f in data.get("findings", [])
                 ]

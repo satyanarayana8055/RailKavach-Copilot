@@ -1,9 +1,12 @@
 "use client";
 
-import { AlertTriangle, CheckCircle2, FileText, Film, Image as ImageIcon, LineChart, Radio, ScanLine } from "lucide-react";
+import { AlertTriangle, CheckCircle2, FileText, Film, Image as ImageIcon, LineChart, Play, Radio, ScanLine } from "lucide-react";
+import { useState } from "react";
 import { SAMPLE_FILES } from "@/lib/data";
 import type { FileAnalysisResult } from "@/lib/types";
 import { Waveform } from "../Waveform";
+import { VideoModal } from "../VideoModal";
+import { PRODUCTS, type Product } from "../ProductSuite";
 
 const TONE = {
   blue: { ink: "text-blue-ink", soft: "bg-blue-soft", icon: Radio },
@@ -22,6 +25,16 @@ interface Props {
 }
 
 export function FilesPanel({ analyzing, result, onAnalyze }: Props) {
+  const [activeVideo, setActiveVideo] = useState<Product | null>(null);
+
+  const getVideoForFile = (name: string): Product | null => {
+    const s = name.toLowerCase();
+    if (s.includes("cabin") || s.includes("locate")) return PRODUCTS[1];
+    if (s.includes("railcomm") || s.includes("radio")) return PRODUCTS[0];
+    if (s.includes("gantry") || s.includes("wdd") || s.includes("wagon")) return PRODUCTS[2];
+    return null;
+  };
+
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
@@ -74,7 +87,22 @@ export function FilesPanel({ analyzing, result, onAnalyze }: Props) {
         </div>
       )}
 
-      {result && !analyzing && <FileResult r={result} />}
+      {result && !analyzing && (
+        <FileResult
+          r={result}
+          onWatchVideo={() => {
+            const prod = getVideoForFile(result.filename);
+            if (prod) setActiveVideo(prod);
+          }}
+          hasVideo={!!getVideoForFile(result.filename)}
+        />
+      )}
+
+      <VideoModal
+        isOpen={!!activeVideo}
+        onClose={() => setActiveVideo(null)}
+        product={activeVideo}
+      />
     </div>
   );
 }
@@ -89,14 +117,31 @@ function Field({ label, children, tone = "default" }: { label: string; children:
   );
 }
 
-function FileResult({ r }: { r: FileAnalysisResult }) {
+function FileResult({
+  r,
+  onWatchVideo,
+  hasVideo,
+}: {
+  r: FileAnalysisResult;
+  onWatchVideo: () => void;
+  hasVideo: boolean;
+}) {
   return (
     <article className="card animate-fade-up p-5 sm:p-6" aria-label="Analysis result">
       <header className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           <CheckCircle2 className="h-5 w-5 text-ok" aria-hidden />
           <span className="font-mono text-sm font-semibold text-ink-950">{r.filename}</span>
           <span className="chip border-cyan/30 bg-cyan-soft font-mono text-cyan-ink">{r.category}</span>
+          {hasVideo && (
+            <button
+              type="button"
+              onClick={onWatchVideo}
+              className="flex items-center gap-1.5 rounded-full border border-orange/40 bg-orange/10 px-3 py-1 font-mono text-xs font-semibold text-orange-ink transition hover:bg-orange/20"
+            >
+              <Play className="h-3 w-3 fill-orange" aria-hidden /> Watch Production Video
+            </button>
+          )}
         </div>
         {r.critical_timestamp && <span className="chip border-orange/30 bg-orange-soft font-mono text-orange-ink">⏱ {r.critical_timestamp}</span>}
       </header>

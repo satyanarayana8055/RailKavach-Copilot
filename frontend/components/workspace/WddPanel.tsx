@@ -1,9 +1,11 @@
 "use client";
 
-import { AlertOctagon, AlertTriangle, ArrowRight, CheckCircle2, History, Wrench } from "lucide-react";
+import { AlertOctagon, AlertTriangle, ArrowRight, CheckCircle2, History, Play, Wrench } from "lucide-react";
 import { useMemo, useState } from "react";
 import { RAKE } from "@/lib/data";
 import type { WagonStatus } from "@/lib/types";
+import { VideoModal } from "../VideoModal";
+import { PRODUCTS } from "../ProductSuite";
 
 /* Status palette (reserved): neutral → warning → serious → critical. Always shipped with icon + label. */
 const STATUS: Record<WagonStatus, { label: string; cell: string; chip: string; icon: typeof CheckCircle2 }> = {
@@ -15,6 +17,7 @@ const STATUS: Record<WagonStatus, { label: string; cell: string; chip: string; i
 
 export function WddPanel({ canIssue, onIssue }: { canIssue: boolean; onIssue: (serial: string) => void }) {
   const [sel, setSel] = useState(14);
+  const [videoOpen, setVideoOpen] = useState(false);
   const wagon = RAKE[sel - 1];
   const s = STATUS[wagon.status];
   const counts = useMemo(
@@ -29,7 +32,14 @@ export function WddPanel({ canIssue, onIssue }: { canIssue: boolean; onIssue: (s
           <p className="mono-label text-ink-500">Rake BOXN-542 · 58 wagons</p>
           <h3 className="mt-1 text-lg font-semibold text-ink-950">Entry vs exit gantry differential</h3>
         </div>
-        <div className="flex items-center gap-3 font-mono text-[12px] text-ink-700">
+        <div className="flex flex-wrap items-center gap-3 font-mono text-[12px] text-ink-700">
+          <button
+            type="button"
+            onClick={() => setVideoOpen(true)}
+            className="flex items-center gap-1.5 rounded-full border border-orange/40 bg-orange/10 px-3 py-1.5 font-mono text-[11px] font-semibold text-orange-ink transition hover:bg-orange/20"
+          >
+            <Play className="h-3 w-3 fill-orange" /> Watch 6-Gantry Video (0:58)
+          </button>
           <span className="rounded-btn bg-paper px-2.5 py-1.5">Suratgarh · 10:15</span>
           <span className="relative h-px w-16 bg-ink-200 sm:w-24">
             <span className="absolute -top-1 left-0 h-2 w-2 animate-[approach_3s_ease-in-out_infinite] rounded-full bg-orange [--stop:56px] sm:[--stop:88px]" aria-hidden />
@@ -140,6 +150,12 @@ export function WddPanel({ canIssue, onIssue }: { canIssue: boolean; onIssue: (s
           </div>
         )}
       </div>
+
+      <VideoModal
+        isOpen={videoOpen}
+        onClose={() => setVideoOpen(false)}
+        product={PRODUCTS[2]}
+      />
     </div>
   );
 }

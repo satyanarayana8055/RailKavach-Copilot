@@ -12,8 +12,8 @@ const LANES: Array<{ id: EventSource; label: string; icon: typeof Radio }> = [
 ];
 
 const WINDOWS = {
-  full: { label: "5 min", from: "03:10:00", to: "03:15:00", ticks: ["03:10", "03:11", "03:12", "03:13", "03:14", "03:15"] },
-  critical: { label: "60 s", from: "03:14:00", to: "03:15:00", ticks: ["03:14:00", "03:14:15", "03:14:30", "03:14:45", "03:15:00"] },
+  full: { label: "6 min", from: "03:10:00", to: "03:16:00", ticks: ["03:10", "03:11", "03:12", "03:13", "03:14", "03:15", "03:16"] },
+  critical: { label: "90 s", from: "03:14:00", to: "03:15:30", ticks: ["03:14:00", "03:14:30", "03:15:00", "03:15:30"] },
 } as const;
 
 /** Brake-pipe pressure (kg/cm²): holds 5.0 until the RS valve trips at 03:14:24. */
@@ -23,7 +23,7 @@ const BP: Array<[string, number]> = [
   ["03:14:26", 2.1],
   ["03:14:29", 0.3],
   ["03:14:31", 0],
-  ["03:15:00", 0],
+  ["03:16:00", 0],
 ];
 
 const LABEL_W = 104; // px gutter for lane labels
@@ -31,7 +31,8 @@ const LABEL_W = 104; // px gutter for lane labels
 export function TimelinePanel({ events, mask, lang }: { events: TimelineEvent[]; mask: (t: string) => string; lang: "en" | "hi" }) {
   const [win, setWin] = useState<keyof typeof WINDOWS>("critical");
   const [view, setView] = useState<"chart" | "table">("chart");
-  const [sel, setSel] = useState(3);
+  // Open on the most severe moment (the first CRITICAL event).
+  const [sel, setSel] = useState(() => Math.max(0, events.findIndex((e) => e.severity === "CRITICAL")));
   const w = WINDOWS[win];
   const t0 = toSeconds(w.from);
   const t1 = toSeconds(w.to);

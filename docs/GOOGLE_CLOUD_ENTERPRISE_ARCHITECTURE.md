@@ -140,7 +140,7 @@ Indian Railways operates over 13,000 passenger trains and 9,000 freight trains d
   * **Autoscaling:** Scales from 0 instances during idle hours to hundreds of concurrent container instances during major safety audits.
   * **Zero Infrastructure Overhead:** Deployed with `gcloud run deploy`, natively integrated with Google Secret Manager and Cloud IAM.
 * **Google Kubernetes Engine (GKE Autopilot):**
-  * Deployed in zonal command centers for heavy AI model batch inference (e.g. running YOLOv11-L on 6-camera gantry video streams and deep audio denoising pipelines).
+  * Deployed in zonal command centers for heavy AI model batch inference (e.g. running YOLOv8 on 6-camera gantry video streams and deep audio denoising pipelines).
 * **Cloud Pub/Sub:**
   * Enterprise message broker handling asynchronous ingestion of camera detections, wayside sensor events, and emergency stop broadcasts across divisions with zero dropped messages.
 

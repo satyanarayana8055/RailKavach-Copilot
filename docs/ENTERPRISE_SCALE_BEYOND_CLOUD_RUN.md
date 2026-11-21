@@ -16,7 +16,7 @@ Serverless container platforms like Google Cloud Run are exceptional for lightwe
 ├──────────────────────────┬─────────────────────────────────────────────────────────────┤
 │ Cloud Run Limitation     │ Operational Railway Reality                                 │
 ├──────────────────────────┼─────────────────────────────────────────────────────────────┤
-│ **No Native Fast GPUs**  │ Running YOLOv11-L on 6 gantry cameras at 60 kmph requires   │
+│ **No Native Fast GPUs**  │ Running YOLOv8 on 6 gantry cameras at 60 kmph requires   │
 │                          │ continuous sub-50ms inference. CPU-only containers fail.   │
 ├──────────────────────────┼─────────────────────────────────────────────────────────────┤
 │ **Stateless & Ephemeral**│ CVVRS video and radio audio demand persistent TCP/UDP       │
@@ -41,7 +41,7 @@ Serverless container platforms like Google Cloud Run are exceptional for lightwe
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                        TIER 1: ON-BOARD & WAYSIDE EDGE AI                              │
 │   • Locomotive Cabs: Ruggedized Industrial IPCs with NVIDIA Jetson Orin (60W)          │
-│   • Gantries: Wayside TensorRT Inference Stations (YOLOv11-L @ 60 FPS, sub-20ms)       │
+│   • Gantries: Wayside TensorRT Inference Stations (YOLOv8 @ 60 FPS, sub-20ms)       │
 │   • Zero Cloud Dependency: Operates in tunnels, deep cuttings, and dark zones          │
 └──────────────────────────────────────────┬─────────────────────────────────────────────┘
                                            │ (Railnet Dedicated 10 Gbps MPLS Fiber)
@@ -73,7 +73,7 @@ Serverless container platforms like Google Cloud Run are exceptional for lightwe
 * **The Problem:** Streaming raw continuous video from thousands of trains across India to cloud servers would saturate Indian telecommunications networks and generate millions in cloud bills.
 * **The Enterprise Solution:**
   * **Locomotive Cabs:** In-cab edge computing units powered by **NVIDIA Jetson Orin Industrial (60W)** running quantized YOLOv8 models locally inside the cab.
-  * **Waysides & Gantries:** High-speed TensorRT inference boxes running YOLOv11-L directly at gantry towers.
+  * **Waysides & Gantries:** High-speed TensorRT inference boxes running YOLOv8 directly at gantry towers.
   * **Intelligent Pruning:** The edge system processes the continuous video locally; **only 10-to-30-second evidence clips associated with confirmed safety infractions or wagon damage are transmitted**.
   * **Result:** **98.4% reduction in network bandwidth and cloud egress costs.**
 

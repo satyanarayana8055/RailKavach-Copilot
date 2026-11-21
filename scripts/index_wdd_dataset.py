@@ -5,8 +5,8 @@ Processes 1,151 authentic Indian Railways wagon images across 6 defect classes:
 - open_door (hanging / unlatched door)
 - no_door (missing door)
 - dent (body panel buckling)
-- side_view (YOLOv11 side gantry optical scan)
-- top_view (YOLOv11 overhead laser / optical scan)
+- side_view (YOLOv8 side gantry optical scan)
+- top_view (YOLOv8 overhead laser / optical scan)
 - closed_door (baseline normal)
 
 Computes SHA-256 hashes, generates entry vs exit differentials for freight rakes

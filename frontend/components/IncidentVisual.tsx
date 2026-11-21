@@ -19,7 +19,7 @@ export function IncidentVisual() {
           </span>
           Live reconstruction
         </span>
-        <span className="text-right font-mono text-[11px] text-ink-200">12414 · SURATGARH · 03:14</span>
+        <span className="text-right font-mono text-[11px] text-ink-200">12414 · SURATGARH</span>
       </div>
 
       <svg viewBox="0 0 560 150" className="mt-3 w-full" aria-hidden>
@@ -81,7 +81,7 @@ export function IncidentVisual() {
             <span className="mono-label flex items-center gap-1.5 text-cyan">
               <Radio className="h-3.5 w-3.5" aria-hidden /> Railcomm
             </span>
-            <span className="font-mono text-[11px] text-ink-300">03:14:15</span>
+            <span className="font-mono text-[11px] text-ink-300">Heard</span>
           </div>
           <Waveform bars={22} className="mt-2 h-7" tone="cyan" />
         </li>
@@ -90,7 +90,7 @@ export function IncidentVisual() {
             <span className="mono-label flex items-center gap-1.5 text-[#ff8a8d]">
               <Camera className="h-3.5 w-3.5" aria-hidden /> Locate
             </span>
-            <span className="font-mono text-[11px] text-ink-300">03:14:02</span>
+            <span className="font-mono text-[11px] text-ink-300">Seen</span>
           </div>
           <div className="mt-2 font-mono text-sm font-semibold text-white">
             PHONE <span className="text-[#ff8a8d]">0.94</span>
@@ -101,7 +101,7 @@ export function IncidentVisual() {
             <span className="mono-label flex items-center gap-1.5 text-amber">
               <Gauge className="h-3.5 w-3.5" aria-hidden /> Brake
             </span>
-            <span className="font-mono text-[11px] text-ink-300">03:14:24</span>
+            <span className="font-mono text-[11px] text-ink-300">Sensed</span>
           </div>
           <svg viewBox="0 0 100 28" className="mt-2 h-7 w-full" aria-hidden>
             <path d="M0 4 H58 C64 4 66 24 74 24 H100" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" />
