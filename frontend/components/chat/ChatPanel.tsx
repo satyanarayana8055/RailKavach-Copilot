@@ -35,6 +35,8 @@ interface Props {
   lang: "en" | "hi";
   role: RoleMetadata;
   starters: Array<{ label: string; query: string; hindi?: boolean }>;
+  modelEngine?: "gemini" | "gemma";
+  setModelEngine?: (m: "gemini" | "gemma") => void;
 }
 
 /* ---------- lightweight markdown: headings, bullets, **bold**, [HH:MM:SS] chips ---------- */
@@ -142,6 +144,7 @@ function AccessLine({ r }: { r: ChatResponse }) {
         {a.pii_masked ? "identities masked" : "identities visible · audited"}
       </span>
       {a.sources_withheld.length > 0 && a.decision !== "DENIED" && <span>· withheld: {a.sources_withheld.join(", ").toLowerCase()}</span>}
+      <span>· {r.model_engine ?? (r.cached ? "cached" : "gemini")}</span>
       <span>· {r.cached ? "cached" : `${r.token_usage?.total_tokens ?? 0} tok`} · {r.latency_ms} ms</span>
       {a.audit_seq != null ? <span title={a.audit_hash ?? undefined}>· audit #{a.audit_seq}</span> : <span>· offline</span>}
     </p>
@@ -254,6 +257,26 @@ export function ChatPanel(p: Props) {
         <Sparkles className="h-4 w-4 text-orange" aria-hidden />
         <h2 className="text-sm font-semibold text-ink-950">Copilot</h2>
         <span className="truncate rounded-full bg-paper px-2 py-0.5 font-mono text-[11px] text-ink-600">{p.role.short}</span>
+        {p.setModelEngine && (
+          <div className="ml-1 flex items-center rounded-full border border-[var(--line)] bg-paper p-0.5 font-mono text-[11px]" role="group" aria-label="Model Engine">
+            <button
+              type="button"
+              onClick={() => p.setModelEngine?.("gemini")}
+              className={`rounded-full px-2 py-0.5 transition ${p.modelEngine !== "gemma" ? "bg-orange font-semibold text-white shadow-xs" : "text-ink-600 hover:text-ink-950"}`}
+              title="Google Gemini Cloud (1.5 Flash)"
+            >
+              Gemini
+            </button>
+            <button
+              type="button"
+              onClick={() => p.setModelEngine?.("gemma")}
+              className={`rounded-full px-2 py-0.5 transition ${p.modelEngine === "gemma" ? "bg-amber font-semibold text-ink-950 shadow-xs" : "text-ink-600 hover:text-ink-950"}`}
+              title="Gemma Local Edge (Zero cloud dependency)"
+            >
+              Gemma
+            </button>
+          </div>
+        )}
         <div className="ml-auto flex items-center">
           {[
             { icon: SquarePen, label: "New chat", on: p.onNewChat },

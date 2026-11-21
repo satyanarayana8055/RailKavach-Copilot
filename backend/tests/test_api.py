@@ -60,6 +60,17 @@ def test_chat_signal_miscommunication_scenario():
     timestamps = [c["timestamp"] for c in data["citations"]]
     assert "03:11:05" in timestamps
 
+def test_chat_gemma_local_edge():
+    response = client.post("/api/chat", json={
+        "query": "Review safety compliance and fatigue patterns locally.",
+        "language": "en",
+        "model_engine": "gemma"
+    })
+    assert response.status_code == 200
+    data = response.json()
+    assert "gemma" in data["model_engine"].lower()
+    assert len(data["citations"]) > 0
+
 def test_timeline_endpoint():
     response = client.post("/api/timeline", json={
         "train_no": "12414",

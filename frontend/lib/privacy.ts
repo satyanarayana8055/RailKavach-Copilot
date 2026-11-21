@@ -18,7 +18,6 @@ export function maskPII(text: string, enabled: boolean): string {
 
 const KEYWORDS: Record<Exclude<DataSource, "TELEMETRY">, string[]> = {
   WDD: ["wagon", "wdd", "boxn", "rake", "gantry", "sick line", "sick-line", "shunting", "dent", "bulge", "वैगन", "डिब्बा"],
-  WILD: ["wild", "wheel impact", "wheel load", "axle load"],
   LOCATE: ["phone", "mobile", "cabin", "cvvrs", "fatigue", "alertness", "drowsy", "sleep", "footplate", "violation", "camera", "थकान", "फोन"],
   RAILCOMM: ["radio", "vhf", "callout", "call-out", "caution order", "miscommunication", "transcript", "audio", "intercom", "exchange", "signal", "सिग्नल", "रेडियो"],
 };
@@ -32,7 +31,7 @@ export function requiredSources(query: string): Set<DataSource> {
   return need;
 }
 
-const LABEL: Record<DataSource, string> = { RAILCOMM: "Railcomm audio", LOCATE: "Locate cabin video", WDD: "Wagon Damage Detection", WILD: "WILD wheel sensors", TELEMETRY: "Loco telemetry" };
+const LABEL: Record<DataSource, string> = { RAILCOMM: "Railcomm audio", LOCATE: "Locate cabin video", WDD: "Wagon Damage Detection", TELEMETRY: "Loco telemetry" };
 
 /** Offline answers: refuse out-of-scope queries exactly like the server, and always mask identities. */
 export function governOffline(query: string, role: RoleMetadata, answer: () => ChatResponse): ChatResponse {

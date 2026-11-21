@@ -31,6 +31,7 @@ const nextId = () => `m${Date.now().toString(36)}${(seq++).toString(36)}`;
 export function Workspace() {
   const [roleCode, setRoleCode] = useState<UserRole | null>(null);
   const [lang, setLang] = useState<"en" | "hi">("en");
+  const [modelEngine, setModelEngine] = useState<"gemini" | "gemma">("gemini");
   // DPDP: identities masked by default; unmasking = declaring an inquiry purpose (audited server-side).
   const [maskToggle, setMaskToggle] = useState(true);
   const [chatOpen, setChatOpen] = useState(false);
@@ -88,7 +89,7 @@ export function Workspace() {
     setBusy(true);
     let r: ChatResponse;
     try {
-      r = await postChat(q, lang, sessionFor(asRole));
+      r = await postChat(q, lang, sessionFor(asRole), modelEngine);
     } catch (e) {
       r =
         e instanceof ApiError
@@ -249,6 +250,8 @@ export function Workspace() {
           mask={mask}
           lang={lang}
           role={role}
+          modelEngine={modelEngine}
+          setModelEngine={setModelEngine}
           starters={STARTERS.filter((s) => Array.from(requiredSources(s.query)).every((src) => role.dataScopes.includes(src)))}
         />
       )}

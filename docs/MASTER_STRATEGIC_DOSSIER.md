@@ -16,7 +16,7 @@ All specifications, datasets, and guides are organized inside the project reposi
 | :--- | :--- | :--- |
 | **Google Cloud Architecture** | **[docs/GOOGLE_CLOUD_ENTERPRISE_ARCHITECTURE.md](docs/GOOGLE_CLOUD_ENTERPRISE_ARCHITECTURE.md)** | National-scale Google Cloud backend mapping (Cloud Run, AlloyDB, BigQuery + Vector Search, GCS WORM, MCP Data Bus, Vertex AI Gemini 1.5, Gemma 2 on-prem, Pub/Sub, Dataflow, Cloud KMS, Cloud DLP). |
 | **Statutory & Legal Compliance** | **[docs/STATUTORY_AND_LEGAL_COMPLIANCE.md](docs/STATUTORY_AND_LEGAL_COMPLIANCE.md)** | Exhaustive legal governance across DPDP Act 2023 (Sec 7(i) legitimate uses), The Railways Act 1989 & G&SR rules, RDSO CVVRS specs, Bharatiya Sakshya Adhiniyam 2023 (Sec 63 electronic evidence certificates), RPF/RPUP Acts, CERT-In 2022 directives, HOER fatigue regulations, and Puttaswamy workplace privacy doctrine. |
-| **Open Connector Protocol (ROCP)** | **[docs/PLUGGABLE_CONNECTORS_AND_EXTENSIBILITY.md](docs/PLUGGABLE_CONNECTORS_AND_EXTENSIBILITY.md)** | Zero-code plug-and-play architecture for connecting any future railway product (WILD, OHE, Kavach, Axle Counters) via simple YAML manifests, canonical event schemas, and dynamic Gemini tool registries. |
+| **Open Connector Protocol (ROCP)** | **[docs/PLUGGABLE_CONNECTORS_AND_EXTENSIBILITY.md](docs/PLUGGABLE_CONNECTORS_AND_EXTENSIBILITY.md)** | Zero-code plug-and-play architecture for connecting any future railway product (Kavach, OHE, Kavach, Axle Counters) via simple YAML manifests, canonical event schemas, and dynamic Gemini tool registries. |
 | **Google AI Studio Guide** | **[docs/GOOGLE_AI_STUDIO_GUIDE.md](docs/GOOGLE_AI_STUDIO_GUIDE.md)** | Pre-calibrated System Instruction, 3 Golden Demo Questions, and JSON tool schemas for immediate copy-pasting into Google AI Studio. |
 | **Hack2skill Submission Guide** | **[docs/HACK2SKILL_SUBMISSION_TEMPLATE.md](docs/HACK2SKILL_SUBMISSION_TEMPLATE.md)** | Word-for-word copy for Problem Statement, Proposed Solution, Solution Architecture, Google AI Tools/Models, and pitch deck criteria. |
 | **Evaluation & Pitch Strategy** | **[docs/EVALUATION_GUIDE.md](docs/EVALUATION_GUIDE.md)** | Breakdown of the 70% jury kill-factor (Functional Product 30%, Architecture 20%, Google AI Depth 20%), tough Q&A responses, and the 3-minute winning script. |
@@ -46,7 +46,7 @@ All specifications, datasets, and guides are organized inside the project reposi
 | • Raw radio denoising pipelines (Railcomm) | **3. Long-Context Multimodal Reasoning:** Leveraging Gemini's 2M-token context to ingest hours of raw radio transcripts without chunk loss. |
 | • Production railway domain access at NWR | **4. Statutory Evidence & BSA 2023 Certification:** Automated generation of Commission of Railway Safety (CRS) inquiry reports with Part A & B electronic evidence certificates. |
 | | **5. Bilingual Devanagari Reasoning:** Real-time generation of crew lobby sign-on warning slips in Hindi and English. |
-| | **6. RailKavach Open Connector Protocol (ROCP):** Zero-code extensibility allowing any new railway product (e.g. WILD) to be connected via YAML manifests. |
+| | **6. RailKavach Open Connector Protocol (ROCP):** Zero-code extensibility allowing any new railway product (e.g. Kavach) to be connected via YAML manifests. |
 
 ---
 
@@ -102,7 +102,7 @@ To ensure national scalability across all 68 divisions, RailKavach Copilot is ma
 | **BigQuery + Vector Search** | **Petabyte Telemetry Lakehouse** | Serverless SQL and multimodal vector search across 3.68M lines and 11,000 files. |
 | **BigQuery ML (BQML)** | **Predictive Anomaly Engine** | Built-in SQL time-series forecasting for fatigue clusters (02:00–05:00 AM) and repeat component defects. |
 | **Cloud Run** | **Serverless Compute Runtime** | Autoscaling containerized FastAPI backend and Next.js frontend with zero server administration. |
-| **Cloud Pub/Sub & Dataflow** | **Real-Time Sensor Telemetry Ingestion** | Ingests millions of sensor events (WILD, OHE, axle counters) with zero dropped messages. |
+| **Cloud Pub/Sub & Dataflow** | **Real-Time Sensor Telemetry Ingestion** | Ingests millions of sensor events (Kavach, OHE, axle counters) with zero dropped messages. |
 | **Sensitive Data Protection (DLP)** | **Automated Privacy Redaction** | Redacts driver personal PII (Aadhaar, unmasked phone) complying with DPDP Act 2023. |
 | **Cloud KMS (Cloud HSM)** | **FIPS 140-2 Level 3 Cryptography** | Hardware-backed cryptographic keys signing video and audio evidence digests. |
 
@@ -153,9 +153,9 @@ RailKavach-Copilot/
 │   ├── config.py                            # Pydantic Settings (GCS, DB, Gemini, Port)
 │   ├── services/                            # gcs_service.py, postgres_service.py, gemini_service.py
 │   └── routers/                             # copilot.py, timeline.py, connectors.py, reports.py, analytics.py, evidence.py
-├── data/                                    # 📊 Synthetic Datasets (58 Transcripts, 22 Alerts, 11 Wagons, 2 WILD Telemetry)
+├── data/                                    # 📊 Synthetic Datasets (58 Transcripts, 22 Alerts, 11 Wagons, 2 Kavach Telemetry)
 │   └── cached_demo_responses.json           # Zero-latency fallback cache for 100% venue offline uptime
-├── connectors/                              # 🔌 Active Manifests (railcomm.yaml, locate.yaml, wdd.yaml, wild.yaml)
+├── connectors/                              # 🔌 Active Manifests (railcomm.yaml, locate.yaml, wdd.yaml, kavach.yaml)
 └── run_fullstack.sh                         # 🚀 1-Click Launch Script (FastAPI + Next.js)
 ```
 

@@ -18,7 +18,7 @@ flowchart TD
     subgraph INGESTION ["INGESTION & MESSAGING LAYER"]
         CAM["CVVRS Cabin Video & WDD Gantries"]
         VHF["VHF/Tetra Radio Voice Streams"]
-        IOT["Wayside Sensors (WILD, OHE, Axle Counters)"]
+        IOT["Wayside Sensors (Kavach, OHE, Axle Counters)"]
         PUBSUB["Google Cloud Pub/Sub<br/>(High-Throughput Global Message Broker)"]
         DATAFLOW["Google Cloud Dataflow (Apache Beam)<br/>(Real-Time Stream Preprocessing & Framing)"]
         
@@ -117,7 +117,7 @@ Indian Railways operates over 13,000 passenger trains and 9,000 freight trains d
 * **BigQuery ML (BQML):**
   * Runs predictive anomaly detection directly in SQL (time-series forecasting, driver fatigue clustering during 02:00–05:00 AM circadian lows) without moving data out of the data warehouse.
 * **Cloud Dataflow (Apache Beam):**
-  * Real-time stream processing pipeline ingesting live telemetry from wayside WILD sensors, axle counters, and CVVRS streaming feeds into BigQuery and GCS.
+  * Real-time stream processing pipeline ingesting live telemetry from wayside Kavach sensors, axle counters, and CVVRS streaming feeds into BigQuery and GCS.
 
 ---
 

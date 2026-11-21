@@ -11,7 +11,7 @@
 2. Click **Create New Prompt** ➔ Select **Chat Prompt** (or **Freeform Prompt**).
 3. Select Model: **Gemini 1.5 Pro** (or **Gemini 1.5 Flash**).
 4. Set **System Instructions** (Copy Section 2 below).
-5. Attach the sample JSON files (`data/railcomm_transcripts.json`, `data/locate_alerts.json`, `data/wdd_inspections.json`, `data/wild_telemetry.json`) or configure the Tool Definitions.
+5. Attach the sample JSON files (`data/railcomm_transcripts.json`, `data/locate_alerts.json`, `data/wdd_inspections.json`, `data/kavach_telemetry.json`) or configure the Tool Definitions.
 6. Run the **3 Golden Demo Questions** (Section 3 below).
 
 ---
@@ -27,7 +27,7 @@ OPERATING INSTRUCTIONS & RULES:
 2. Distinguish raw AI detections from Human Reviewer Confirmed decisions (STATUS: CONFIRMED vs STATUS: PENDING_VERIFICATION).
 3. Distinguish compliant operational acts (WALKIE_TALKIE, READING_WRITING caution order, CONTROLLING) from safety violations (MOBILE_PHONE, SLEEPING, EATING_DRINKING, HAND_SIGNAL_NOT_RETURNED).
 4. Use authentic Indian Railways operational terminology (SPAD, Home Signal, Distant Signal, Caution Order, Loop Line, Brake Pipe Pressure 5.0 kg/cm², Loco Pilot, Guard, Station Master).
-5. Cross-correlate across all available modalities: Railcomm radio audio, Locate CVVRS cabin camera video, Wagon Damage Detection (WDD) wayside gantry OCR, and Wheel Impact Load Detector (WILD) sensors.
+5. Cross-correlate across all available modalities: Railcomm radio audio, Locate CVVRS cabin camera video, Wagon Damage Detection (WDD) wayside gantry OCR, and Kavach-TCAS Train Protection sensors.
 6. Provide dual-language fluency in English and Devanagari Hindi (हिन्दी).
 ```
 
@@ -43,7 +43,7 @@ OPERATING INSTRUCTIONS & RULES:
 * Identifies distant signal yellow announcement at `[03:10:15]`.
 * Highlights Station Master Suratgarh caution order on Loop Line 2 at `[03:11:40]`.
 * Surfaces Locate cab video alert (`LOC-01`) at `[03:13:45]` showing Loco Pilot holding a mobile phone for 38.5 seconds (Confirmed by Sr. DSO Bikaner).
-* Surfaces micro-sleep episode at `[03:14:10]` and WILD sensor wheel impact of 248.5 kN at `[03:14:12]`.
+* Surfaces micro-sleep episode at `[03:14:10]` and Kavach sensor wheel impact of 248.5 kN at `[03:14:12]`.
 * Highlights Station Master emergency radio callout *'गाड़ी 12414 रोको! लाल सिग्नल है!'* at `[03:14:20]`.
 * Cites violation of **Railway Board JPO Circular 2018/19** and **Section 175 of The Railways Act, 1989**, certified under **Section 63 of Bharatiya Sakshya Adhiniyam, 2023 (BSA 2023)**.
 

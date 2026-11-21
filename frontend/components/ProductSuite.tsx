@@ -146,10 +146,10 @@ function ProductRow({ p, flip }: { p: Product; flip: boolean }) {
 /** ROCP: any new railway product connects via a YAML manifest — no orchestrator code changes. */
 function PlugInBand() {
   const yaml = [
-    ["product_id", '"wild_wheel_impact_detector"'],
-    ["display_name", '"Wheel Impact Load Detector (WILD)"'],
-    ["modality", '"SENSOR_TELEMETRY"'],
-    ["endpoint.url", '"local://data/wild_telemetry.json"'],
+    ["product_id", '"kavach_tcas_telemetry"'],
+    ["display_name", '"Kavach-TCAS Train Protection"'],
+    ["modality", '"SIGNAL_TELEMETRY"'],
+    ["endpoint.url", '"local://data/telemetry_signals.json"'],
   ];
   const { ref, inView } = useInView<HTMLDivElement>(0.35);
   const line = (i: number) => rv(0.3 + i * 0.35, { rx: -8, ry: 0 });
@@ -173,7 +173,7 @@ function PlugInBand() {
           ))}
         </ol>
         <ul className="mt-6 flex flex-wrap gap-2" aria-label="Next connectors">
-          {["WILD · connected", "OHE", "Kavach-TCAS", "Axle counters", "CMS"].map((t, i) => (
+          {["Kavach-TCAS · connected", "OHE Camera", "Axle counters", "CMS"].map((t, i) => (
             <li
               key={t}
               className={`rounded-full px-3 py-1 text-xs font-semibold ${i === 0 ? "bg-ok/15 text-ok" : "border border-white/10 text-ink-300"}`}
@@ -185,7 +185,7 @@ function PlugInBand() {
       </div>
       <figure className="overflow-hidden rounded-card border border-white/[0.08] bg-[#070a14]">
         <figcaption className="flex items-center justify-between border-b border-white/[0.07] px-4 py-2.5 font-mono text-[11px] text-ink-300">
-          <span>connectors/wild.yaml</span>
+          <span>connectors/kavach.yaml</span>
           <span className="reveal flex items-center gap-1.5 text-ok" style={line(5)}>
             <span className="h-1.5 w-1.5 animate-blink rounded-full bg-ok" aria-hidden /> registered
           </span>

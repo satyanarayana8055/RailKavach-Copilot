@@ -200,7 +200,7 @@ export function RailcommVisual({ active }: { active: boolean }) {
         </div>
 
         <div className="flex flex-wrap gap-2 pt-1">
-          {["CNN + RNN · U-Net", "Real-time streaming"].map((t) => (
+          {["AI denoising", "Real-time streaming"].map((t) => (
             <span key={t} className="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-ink-200">
               {t}
             </span>

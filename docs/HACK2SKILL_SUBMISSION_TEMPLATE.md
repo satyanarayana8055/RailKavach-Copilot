@@ -20,13 +20,13 @@ Use this exact text and structure when filling the Hack2skill event submission t
 > A conversational, multimodal safety assistant that sits on top of existing railway sensors with **zero new hardware footprint**. Railway officers ask in Hindi or English what went wrong on any train run, and the Copilot instantly cross-correlates:
 > 1. What was **heard** on the locomotive cab radio (Railcomm VHF/Tetra speech-to-text transcripts),
 > 2. What was **seen** inside the driver cabin (Locate CVVRS video vigilance detections),
-> 3. What was **sensed** on the rolling stock and track (WDD 6-camera wagon inspection and WILD axle sensors).  
+> 3. What was **sensed** on the rolling stock and track (WDD 6-camera wagon inspection and Kavach axle sensors).  
 > In under 15 seconds, it reconstructs a millisecond-grounded chronological timeline, highlights regulatory violations (mobile use, micro-sleep, brake binding), drafts statutory CRS inquiry reports, and issues bilingual crew lobby safety slips.
 
 ### 3. Solution Architecture
 > **5-Stage Cloud-Agnostic Core with Pluggable Edge/Cloud Adapters:**
 > * **Stage 01 (Capture):** Ingests in-cab CVVRS video, VHF wireless radio, wayside 6-camera gantry feeds, and trackside sensor streams with NTP microsecond clock synchronization.
-> * **Stage 02 (Infer):** YOLOv8 cabin vigilance, YOLOv11-L rolling stock damage detection, PaddleOCR wagon numbers, and U-Net deep learning audio denoising (Fail-Open architecture).
+> * **Stage 02 (Infer):** YOLOv8 cabin vigilance, YOLOv11-L rolling stock damage detection, PaddleOCR wagon numbers, and deep learning audio denoising (Fail-Open architecture).
 > * **Stage 03 (Attribute):** RailKavach Open Connector Protocol (ROCP) normalizing data into Canonical Railway Event envelopes.
 > * **Stage 04 (Surface & Copilot Orchestration):** Google Gemini API / Gemma edge reasoning engine orchestrating 5 Google Agent Skills via dynamic tool discovery.
 > * **Stage 05 (Evidence & Governance):** SHA-256 cryptographic chain of custody, Human-in-the-Loop review verification, and Section 63 Bharatiya Sakshya Adhiniyam, 2023 (BSA) electronic evidence certification.

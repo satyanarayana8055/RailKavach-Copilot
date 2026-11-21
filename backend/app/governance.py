@@ -37,8 +37,8 @@ from .schemas.rbac import ROLE_REGISTRY, RoleProfile, UserRole
 # --------------------------------------------------------------------------------------------
 # Data sources and purposes
 # --------------------------------------------------------------------------------------------
-RAILCOMM, LOCATE, WDD, WILD, TELEMETRY = "RAILCOMM", "LOCATE", "WDD", "WILD", "TELEMETRY"
-SOURCE_LABELS = {RAILCOMM: "Railcomm audio", LOCATE: "Locate cabin video", WDD: "Wagon Damage Detection", WILD: "WILD wheel sensors", TELEMETRY: "Loco telemetry"}
+RAILCOMM, LOCATE, WDD, TELEMETRY = "RAILCOMM", "LOCATE", "WDD", "TELEMETRY"
+SOURCE_LABELS = {RAILCOMM: "Railcomm audio", LOCATE: "Locate cabin video", WDD: "Wagon Damage Detection", TELEMETRY: "Loco telemetry"}
 
 
 class Purpose:
@@ -54,7 +54,6 @@ class Purpose:
 # Query → sources it needs. Incident reconstruction (12414 / SPAD) is inherently cross-modal.
 _SOURCE_KEYWORDS: dict[str, Iterable[str]] = {
     WDD: ("wagon", "wdd", "boxn", "rake", "gantry", "sick line", "sick-line", "shunting", "dent", "bulge", "वैगन", "डिब्बा"),
-    WILD: ("wild", "wheel impact", "wheel load", "axle load"),
     LOCATE: ("phone", "mobile", "cabin", "cvvrs", "fatigue", "alertness", "drowsy", "sleep", "footplate", "violation", "camera", "थकान", "फोन"),
     RAILCOMM: ("radio", "vhf", "callout", "call-out", "caution order", "miscommunication", "transcript", "audio", "intercom", "exchange", "signal", "सिग्नल", "रेडियो"),
 }
@@ -78,8 +77,6 @@ def source_of(label: str) -> Optional[str]:
         return LOCATE
     if any(k in s for k in ("wdd", "gantry", "wagon")):
         return WDD
-    if "wild" in s:
-        return WILD
     if any(k in s for k in ("telemetry", "brake", "bp ", "speed", "loco")):
         return TELEMETRY
     return None

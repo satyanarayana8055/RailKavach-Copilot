@@ -9,7 +9,7 @@
 ## 1. Architectural Vision: The Universal Railway Intelligence Mesh
 
 RailKavach starts with 3 foundational production products (**WDD** for freight wagons, **Locate** for cabin vision, and **Railcomm** for radio audio). However, Indian Railways continuously deploys new IoT, trackside, signalling, and onboard safety systems:
-* **WILD** (Wheel Impact Load Detector)
+* **Kavach** (Wheel Impact Load Detector)
 * **HABD / HOT BOX** (Hot Axle & Box Hot Detector)
 * **OHE Inspection Systems** (Overhead Equipment pantograph/catenary monitoring)
 * **Kavach / TCAS** (Train Collision Avoidance System onboard telemetry)
@@ -23,7 +23,7 @@ RailKavach starts with 3 foundational production products (**WDD** for freight w
 │                                                                                        │
 │   Existing Core Products              Future / Third-Party Railway Safety Products    │
 │  ┌──────────┐ ┌──────────┐ ┌──────────┐   ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌───┐ │
-│  │ WDD      │ │ Locate   │ │ Railcomm │   │ WILD     │ │ OHE Cam  │ │ Kavach   │ │...│ │
+│  │ WDD      │ │ Locate   │ │ Railcomm │   │ Kavach     │ │ OHE Cam  │ │ Kavach   │ │...│ │
 │  │ Gantry   │ │ Cabin CV │ │ Audio DL │   │ Axle Load│ │ Pantogr. │ │ TCAS Log │ │   │ │
 │  └────┬─────┘ └────┬─────┘ └────┬─────┘   └────┬─────┘ └────┬─────┘ └────┬─────┘ └───┘ │
 │       │            │            │              │            │            │             │
@@ -76,17 +76,17 @@ Your product exposes an internal or secure REST endpoint (e.g. `GET /api/v1/tele
 Create a single YAML configuration file defining how the Copilot should interact with your endpoint:
 
 ```yaml
-# connectors/wild_axle_detector.yaml
-product_id: "wild_axle_detector"
-display_name: "Wheel Impact Load Detector (WILD)"
+# connectors/kavach_axle_detector.yaml
+product_id: "kavach_axle_detector"
+display_name: "Kavach-TCAS Train Protection"
 version: "1.0.0"
 category: "TRACKSIDE_SAFETY_SENSOR"
 modality: "SENSOR_TELEMETRY"   # Options: VIDEO | AUDIO | IMAGE | SENSOR_TELEMETRY | SIGNALLING
 
 endpoint:
-  url: "${WILD_API_ENDPOINT:-http://wild-service.railway.internal/v1/events}"
+  url: "${Kavach_API_ENDPOINT:-http://kavach-service.railway.internal/v1/events}"
   auth_type: "bearer"          # Options: none | bearer | api_key | basic
-  token_env_var: "WILD_API_TOKEN"
+  token_env_var: "Kavach_API_TOKEN"
   timeout_seconds: 5
   retry_count: 2
 
@@ -98,8 +98,8 @@ query_capabilities:
 
 # Google AI Agent Tool Definition (Automatically converted into Gemini FunctionDeclaration)
 gemini_tool_definition:
-  name: "query_wild_wheel_impact_data"
-  description: "Queries Wheel Impact Load Detector (WILD) telemetry. Returns axle load, dynamic wheel impact forces (in kN), and defect classifications (e.g., flat tyre, unbalanced loading)."
+  name: "query_kavach_wheel_impact_data"
+  description: "Queries Kavach-TCAS Train Protection telemetry. Returns axle load, dynamic wheel impact forces (in kN), and defect classifications (e.g., flat tyre, unbalanced loading)."
   parameters:
     type: "object"
     properties:
@@ -145,8 +145,8 @@ To enable seamless cross-modal correlation, every connector normalizes incoming 
 
 ```json
 {
-  "event_id": "EVT-WILD-20261118-031412-042",
-  "source_product": "wild_axle_detector",
+  "event_id": "EVT-Kavach-20261118-031412-042",
+  "source_product": "kavach_axle_detector",
   "modality": "SENSOR_TELEMETRY",
   "timestamp": "2026-11-18T03:14:12.450Z",
   "train_no": "12414",
@@ -166,8 +166,8 @@ To enable seamless cross-modal correlation, every connector normalizes incoming 
     "speed_kmph": 68.2
   },
   "evidence": {
-    "raw_payload_uri": "minio://telemetry/wild/20261118/12414_axle4.json",
-    "preview_uri": "https://storage.railkavach.ai/previews/wild_12414_axle4.png",
+    "raw_payload_uri": "minio://telemetry/kavach/20261118/12414_axle4.json",
+    "preview_uri": "https://storage.railkavach.ai/previews/kavach_12414_axle4.png",
     "mime_type": "image/png",
     "sha256_hash": "a4f89d3421e90b8c9f01e523412356ab7890cd12345678ef0123456789abcdef"
   }
@@ -298,19 +298,19 @@ class ConnectorRegistry:
 
 ## 5. Examples: Ready-to-Use Manifests for New Railway Products
 
-### Example 1: Wheel Impact Load Detector (WILD)
+### Example 1: Kavach-TCAS Train Protection
 ```yaml
-# connectors/wild.yaml
-product_id: "wild_axle_detector"
-display_name: "Wheel Impact Load Detector (WILD)"
+# connectors/kavach.yaml
+product_id: "kavach_axle_detector"
+display_name: "Kavach-TCAS Train Protection"
 modality: "SENSOR_TELEMETRY"
 endpoint:
-  url: "https://api.railways.gov.in/v1/wild/measurements"
+  url: "https://api.railways.gov.in/v1/kavach/measurements"
   auth_type: "bearer"
-  token_env_var: "WILD_API_KEY"
+  token_env_var: "Kavach_API_KEY"
 gemini_tool_definition:
-  name: "query_wild_impact_data"
-  description: "Queries trackside WILD sensors for abnormal wheel impacts (>200 kN) or unbalanced axle loads."
+  name: "query_kavach_impact_data"
+  description: "Queries trackside Kavach sensors for abnormal wheel impacts (>200 kN) or unbalanced axle loads."
   parameters:
     type: "object"
     properties:
@@ -367,13 +367,13 @@ gemini_tool_definition:
 When Gemini receives a query:
 > *"Did Train 12414 have any mechanical or wheel impact issues before overshooting the signal?"*
 
-1. **Autonomous Tool Routing:** Gemini inspects all dynamically registered tools and identifies that `query_wild_impact_data` and `get_wdd_wagon_damages` are relevant.
+1. **Autonomous Tool Routing:** Gemini inspects all dynamically registered tools and identifies that `query_kavach_impact_data` and `get_wdd_wagon_damages` are relevant.
 2. **Parallel Fetching:** The orchestrator queries both endpoints concurrently.
 3. **Canonical Fusion:** The `multimodal_timeline_synchronizer` sorts the responses along with Railcomm radio audio and Locate video alerts:
 
 ```
 [03:13:50] 🚆 WDD Gantry: Wagon BOXN-542 brake beam hanging defect detected.
-[03:14:12] ⚠️ WILD Sensor (KM 142/18): Wheel 4 impact surge 248.5 kN (Abnormal).
+[03:14:12] ⚠️ Kavach Sensor (KM 142/18): Wheel 4 impact surge 248.5 kN (Abnormal).
 [03:14:15] 🔴 Locate Cab Cam: Loco Pilot looking down at mobile phone.
 [03:14:20] 📻 Railcomm Audio: Station Master shouts "लाल सिग्नल... रोको रोको!"
 [03:14:35] 🚨 Kavach TCAS: Auto-emergency brake application initiated (Brake Pipe drops to 0).

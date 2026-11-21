@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form, BackgroundTasks, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
-from .config import DEFAULT_MODEL
+from .config import DEFAULT_MODEL, LOCAL_GEMMA_MODEL, LOCAL_GEMMA_URL
 from .schemas.chat import AccessInfo, ChatQueryRequest, ChatQueryResponse
 from .schemas.skills import (
     TimelineSyncInput, ReportGenInput, PatternAnomalyInput,
@@ -53,7 +53,8 @@ def health_check():
         "model_engine": DEFAULT_MODEL,
         "voice_engine": "Bilingual (Hindi / English)",
         "cloud_integrations": {
-            "gemini": {"status": "ONLINE", "model": DEFAULT_MODEL},
+            "gemini": {"status": "ONLINE", "model": DEFAULT_MODEL, "tier": "cloud"},
+            "gemma": {"status": "READY", "model": LOCAL_GEMMA_MODEL, "tier": "local_edge", "endpoint": LOCAL_GEMMA_URL},
             "gcs_vault": {"bucket": gcs_vault.bucket_name, "connected": gcs_vault.is_connected},
             "alloydb": {"connected": alloydb_manager.is_connected, "engine": "PostgreSQL 18 / SQLite fallback"}
         },
@@ -180,7 +181,7 @@ def _analyze(fname: str, ftype: str) -> dict:
         return {
             "filename": fname,
             "category": "CAB_RADIO_AUDIO",
-            "summary": "Audio stream denoised via Railcomm U-Net + Transformer pipeline. 9+ noise classes suppressed.",
+            "summary": "Audio stream denoised via Railcomm AI denoising. 9+ noise classes suppressed.",
             "duration": "04m:15s",
             "safety_keywords_detected": ["Caution Order 30 kmph", "Home Signal RED", "Loop Line", "Emergency Brake"],
             "fail_open_status": "NORMAL (Zero Bypass)",

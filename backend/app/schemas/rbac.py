@@ -15,7 +15,7 @@ class RoleProfile(BaseModel):
     designation: str
     division: str
     allowed_tabs: List[str]
-    data_scopes: List[str]          # RAILCOMM | LOCATE | WDD | WILD | TELEMETRY — enforced server-side
+    data_scopes: List[str]          # RAILCOMM | LOCATE | WDD | TELEMETRY — enforced server-side
     can_view_audit_log: bool = False
     can_verify_alerts: bool
     can_view_unmasked_pii: bool
@@ -30,7 +30,7 @@ ROLE_REGISTRY = {
         designation="Sr. Divisional Safety Officer, Bikaner Division",
         division="Bikaner (NWR)",
         allowed_tabs=["copilot", "files", "timeline", "wdd", "artifacts"],
-        data_scopes=["RAILCOMM", "LOCATE", "WDD", "WILD", "TELEMETRY"],
+        data_scopes=["RAILCOMM", "LOCATE", "WDD", "TELEMETRY"],
         can_view_audit_log=True,
         can_verify_alerts=True,
         can_view_unmasked_pii=True,
@@ -57,7 +57,7 @@ ROLE_REGISTRY = {
         designation="Sr. Divisional Mechanical Engineer (C&W), Lalgarh Yard",
         division="Bikaner (NWR)",
         allowed_tabs=["wdd", "files", "copilot"],
-        data_scopes=["WDD", "WILD"],
+        data_scopes=["WDD", "TELEMETRY"],
         can_verify_alerts=False,
         can_view_unmasked_pii=False,
         can_sign_crs_report=False,
@@ -83,7 +83,7 @@ ROLE_REGISTRY = {
         designation="Commissioner of Railway Safety, Northern Circle",
         division="All Zones (Statutory Independent)",
         allowed_tabs=["copilot", "files", "timeline", "wdd", "artifacts"],
-        data_scopes=["RAILCOMM", "LOCATE", "WDD", "WILD", "TELEMETRY"],
+        data_scopes=["RAILCOMM", "LOCATE", "WDD", "TELEMETRY"],
         can_view_audit_log=True,
         can_verify_alerts=True,
         can_view_unmasked_pii=True,

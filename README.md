@@ -18,7 +18,7 @@ RailKavach Copilot provides an autonomous conversational query layer across Indi
 │   │ Detection (WDD)      │    │ Analytics            │    │ Analytics              │   │
 │   │                      │    │                      │    │                        │   │
 │   │ • 6 Gantry Cameras   │    │ • CVVRS Edge AI      │    │ • Denoising (9+ Noise) │   │
-│   │ • YOLOv11-L + OCR    │    │ • YOLOv8 Detection   │    │ • U-Net + Transformer  │   │
+│   │ • YOLOv11-L + OCR    │    │ • YOLOv8 Detection   │    │ • Safety Vocabulary    │   │
 │   │ • 8 Damage Classes   │    │ • 5 Violations       │    │ • Hindi/Eng Speech-Txt │   │
 │   │ • Entry vs Exit Cmp  │    │ • 3 Compliant Acts   │    │ • Fail-Open Safety     │   │
 │   └──────────┬───────────┘    └──────────┬───────────┘    └───────────┬────────────┘   │

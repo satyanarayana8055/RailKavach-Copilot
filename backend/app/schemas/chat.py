@@ -6,6 +6,7 @@ class ChatQueryRequest(BaseModel):
     query: str = Field(..., description="Conversational inquiry from safety officer")
     language: str = Field(default="en", description="Preferred output language: 'en' (English) or 'hi' (Devanagari Hindi)")
     incident_id: Optional[str] = Field(default=None, description="Optional incident scope")
+    model_engine: Optional[str] = Field(default="gemini", description="Inference engine: 'gemini' (Gemini Cloud) or 'gemma' (Gemma Local Edge)")
 
 class AccessInfo(BaseModel):
     """Server-side governance outcome for this answer (RBAC scope + DPDP handling)."""
@@ -28,3 +29,4 @@ class ChatQueryResponse(BaseModel):
     cached: bool = Field(default=False, description="Whether response was served from zero-latency fail-safe cache")
     bilingual_payload: Optional[Dict[str, str]] = Field(default=None, description="Devanagari Hindi and English paired content")
     access: Optional[AccessInfo] = Field(default=None, description="RBAC/DPDP governance applied to this answer")
+    model_engine: Optional[str] = Field(default="gemini-3.5-flash-lite", description="Model engine that produced the answer")

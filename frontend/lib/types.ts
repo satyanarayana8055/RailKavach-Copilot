@@ -20,9 +20,10 @@ export interface ChatResponse {
   };
   /** Server-side RBAC/DPDP outcome (absent in offline mode). */
   access?: AccessInfo;
+  model_engine?: string;
 }
 
-export type DataSource = "RAILCOMM" | "LOCATE" | "WDD" | "WILD" | "TELEMETRY";
+export type DataSource = "RAILCOMM" | "LOCATE" | "WDD" | "TELEMETRY";
 export type Purpose = "ROUTINE_MONITORING" | "CREW_BRIEFING" | "SAFETY_INQUIRY" | "STATUTORY_INQUIRY";
 
 export interface AccessInfo {

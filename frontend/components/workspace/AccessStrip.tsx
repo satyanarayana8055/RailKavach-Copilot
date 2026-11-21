@@ -1,7 +1,7 @@
 import { Eye, EyeOff, Fingerprint, Lock, ShieldAlert, ShieldCheck } from "lucide-react";
 import type { AccessInfo, DataSource } from "@/lib/types";
 
-const LABEL: Record<DataSource, string> = { RAILCOMM: "Railcomm", LOCATE: "Locate", WDD: "WDD", WILD: "WILD", TELEMETRY: "Telemetry" };
+const LABEL: Record<DataSource, string> = { RAILCOMM: "Railcomm", LOCATE: "Locate", WDD: "WDD", TELEMETRY: "Telemetry" };
 
 /** What the server decided for this answer: scope, withheld sources, DPDP masking, audit entry. */
 export function AccessStrip({ access }: { access?: AccessInfo }) {

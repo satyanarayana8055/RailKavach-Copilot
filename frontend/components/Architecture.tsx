@@ -5,7 +5,7 @@ import { useInView } from "./hooks";
 
 const STAGES = [
   { n: "01", name: "Capture", icon: Radar, tags: ["CVVRS video", "VHF radio", "Gantry cams", "NTP sync"] },
-  { n: "02", name: "Infer", icon: ScanEye, tags: ["YOLOv8", "YOLOv11-L", "PaddleOCR", "U-Net denoise"] },
+  { n: "02", name: "Infer", icon: ScanEye, tags: ["YOLOv8", "YOLOv11-L", "PaddleOCR", "Audio denoise"] },
   { n: "03", name: "Attribute", icon: Cable, tags: ["ROCP", "Canonical events"] },
   { n: "04", name: "Surface", icon: BrainCircuit, tags: ["Gemini 1.5 Pro / Flash", "6 Agent Skills"], hot: true },
   { n: "05", name: "Evidence", icon: Fingerprint, tags: ["SHA-256 custody", "Human review", "BSA 2023 §63"] },

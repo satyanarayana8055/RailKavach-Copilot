@@ -144,7 +144,7 @@ The **Research Designs & Standards Organisation (RDSO)**, the technical wing of 
 In railway signalling and telecommunications, safety systems follow **Fail-Safe** and **Fail-Open** principles:
 * **Fail-Safe (Signalling):** If a track circuit fails, the signal automatically drops to RED (Danger).
 * **Fail-Open (Safety Voice Communications):** Under Indian Railways communication doctrine, **the AI pipeline must NEVER become the cause of radio silence**.
-  * If the deep learning noise-cancellation pipeline (U-Net / Transformer) encounters GPU memory exhaustion, server crash, or network timeout, the audio stream **bypasses AI entirely** and routes raw VHF/Tetra audio directly to the speaker.
+  * If the deep learning noise-cancellation pipeline encounters GPU memory exhaustion, server crash, or network timeout, the audio stream **bypasses AI entirely** and routes raw VHF/Tetra audio directly to the speaker.
   * Operational voice communications remain non-blocking and zero-latency.
 
 ---

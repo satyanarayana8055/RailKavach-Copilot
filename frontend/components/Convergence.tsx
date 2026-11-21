@@ -6,7 +6,7 @@ import { dly, rv } from "./reveal";
 const SOURCES = [
   { y: 24, verb: "HEARD", name: "Railcomm", meta: "11,354 audio files", color: "#009fce" },
   { y: 134, verb: "SEEN", name: "Locate", meta: "CVVRS video alerts", color: "#f48220" },
-  { y: 244, verb: "SENSED", name: "WDD + WILD", meta: "Gantry & axle sensors", color: "#f59e0b" },
+  { y: 244, verb: "SENSED", name: "WDD", meta: "6-Gantry trackside cameras", color: "#f59e0b" },
 ];
 
 /** "Data-rich, insight-poor": three siloed dashboards converge into one reasoning layer. */
@@ -50,7 +50,7 @@ export function Convergence() {
 
         {/* Convergence diagram */}
         <figure className="card overflow-hidden p-4 sm:p-6">
-          <svg viewBox="0 0 560 330" className="w-full" role="img" aria-label="Railcomm (heard), Locate (seen) and WDD plus WILD (sensed) converge into RailKavach Copilot, producing one grounded timeline">
+          <svg viewBox="0 0 560 330" className="w-full" role="img" aria-label="Railcomm (heard), Locate (seen) and WDD (sensed) converge into RailKavach Copilot, producing one grounded timeline">
             <defs>
               <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur stdDeviation="8" />

@@ -1,0 +1,28 @@
+product_id: "kavach_tcas_telemetry"
+display_name: "Kavach-TCAS Train Protection"
+version: "1.0.0"
+category: "ONBOARD_SIGNAL_TELEMETRY"
+modality: "SIGNAL_TELEMETRY"
+endpoint:
+  url: "local://data/telemetry_signals.json"
+  auth_type: "none"
+  timeout_seconds: 5
+query_capabilities:
+  can_filter_by_train: true
+  can_filter_by_loco: true
+gemini_tool_definition:
+  name: "query_kavach_tcas_telemetry"
+  description: "Queries Kavach (Train Collision Avoidance System) signal telemetry, brake pipe pressure, and movement authority."
+  parameters:
+    type: "object"
+    properties:
+      train_no:
+        type: "string"
+        description: "Train number (e.g. '12414')"
+    required: ["train_no"]
+ui_rendering:
+  badge_color: "#0284c7"
+  icon: "shield"
+  primary_metric: "brake_pipe_kg_cm2"
+  metric_unit: "kg/cm²"
+  threshold_alert: 5.0
