@@ -33,6 +33,29 @@ try:
 except ImportError:
     GENAI_AVAILABLE = False
 
+
+def wdd_totals(records: list) -> str:
+    """Exact rake counts, so the model never has to count (scanned = clear + new transit damage + pre-existing)."""
+    damaged = [w for w in records if w.get("exit_damage_status") == "DAMAGED"]
+    new = [w for w in damaged if w.get("delta_transit_damage")]
+    serious = [w for w in new if any(d.get("severity") in ("HIGH", "CRITICAL") for d in w.get("exit_defects", []))]
+    return (f"TOTALS (use these exact numbers): {len(records)} wagons scanned = {len(records) - len(damaged)} clear + "
+            f"{len(new)} new transit damage + {len(damaged) - len(new)} pre-existing (not transit). "
+            f"{len(serious)} of the new-damage wagons are HIGH/CRITICAL.")
+
+
+def reply_language_rule(language: str | None) -> str:
+    """Answer in the officer's own language: Hindi, English, or Hinglish (Roman-script Hindi mixed with English)."""
+    lang = (language or "").lower()
+    if lang == "hi":
+        return "LANGUAGE: Reply in formal Devanagari Hindi; keep codes and numbers as written (12414, BOXN-542, T/409, G&SR 4.40)."
+    if lang == "mixed":
+        return ("LANGUAGE: The officer spoke Hinglish. Reply in natural Hinglish, Roman script: Hindi sentence structure with railway "
+                "terms in English (Loco Pilot, Home Signal, caution order, wagon), as a colleague in the control office would speak.")
+    return ("LANGUAGE: Reply in the language of the officer's question. English question: English. Devanagari Hindi: Devanagari Hindi. "
+            "Hinglish (Hindi words in Roman script mixed with English): reply in Hinglish, Roman script.")
+
+
 def load_cache() -> Dict[str, Any]:
     cache_path = DATA_DIR / "cached_demo_responses.json"
     if not cache_path.exists():
@@ -222,8 +245,8 @@ class CopilotEngine:
             wdd_summary = ""
             if (is_wdd_query or not sees_timeline) and "WDD" in scope:
                 wdd_records = get_wdd_wagon_damages(WddDamagesInput())
-                damaged_wagons = [w for w in wdd_records if w.get("exit_damage_status") == "DAMAGED"][:6]
-                wdd_summary = "\nWayside Wagon Damage Detection (WDD 6-Gantry Differential Context):\n" + "\n".join([
+                damaged_wagons = [w for w in wdd_records if w.get("exit_damage_status") == "DAMAGED"]
+                wdd_summary = "\nWayside Wagon Damage Detection (WDD 6-Gantry Differential Context):\n" + wdd_totals(wdd_records) + "\n" + "\n".join([
                     f"- Wagon #{w.get('position_in_rake')} ({w.get('wagon_no')}): Entry={w.get('entry_damage_status')}, Exit={w.get('exit_damage_status')}, Transit Delta={w.get('delta_transit_damage')}, Defects={', '.join([d.get('class', '') + ' (' + d.get('severity', '') + ')' for d in w.get('exit_defects', [])])}. Liability: {w.get('liability_attribution')}"
                     for w in damaged_wagons
                 ])
@@ -231,7 +254,8 @@ class CopilotEngine:
             user_prompt = f"Operational Timeline Context:\n{timeline_summary}\n{wdd_summary}\n\nOfficer Inquiry: {req.query}"
             system_instruction = (
                 "You are RailKavach Copilot powered by Local Gemma, on-premise AI safety investigation assistant for Indian Railways.\n"
-                "Ground every event with an exact timestamp badge [HH:MM:SS], human reviewer status, and G&SR statutory provisions."
+                "Ground every event with an exact timestamp badge [HH:MM:SS], human reviewer status, and G&SR statutory provisions.\n"
+                + reply_language_rule(req.language)
             )
 
             # Try local Ollama/HTTP Gemma
@@ -289,7 +313,8 @@ class CopilotEngine:
                     "3. Clearly separate confirmed violations (CONFIRMED) from raw unverified AI alerts (PENDING_VERIFICATION).\n"
                     "4. Protect routine duties (walkie-talkie, reading caution orders T/409, brake valve adjustments) as SYSTEM_SUPPRESSED under G&SR Rule 113.\n"
                     "5. Conclude with the governing statutory rules under Indian Railways G&SR and The Railways Act 1989.\n"
-                    "6. Maintain authentic Indian Railways terminology (LP, ALP, Guard, Station Master, Caution Order T/409, BP pressure, SPAD). If replying in Hindi, use formal Devanagari rail safety phrasing."
+                    "6. Maintain authentic Indian Railways terminology (LP, ALP, Guard, Station Master, Caution Order T/409, BP pressure, SPAD). If replying in Hindi, use formal Devanagari rail safety phrasing.\n"
+                    + reply_language_rule(req.language)
                 )
 
                 # Fetch timeline context within bounded window
@@ -301,8 +326,8 @@ class CopilotEngine:
                 wdd_summary = ""
                 if (is_wdd_query or not sees_timeline) and "WDD" in scope:
                     wdd_records = get_wdd_wagon_damages(WddDamagesInput())
-                    damaged_wagons = [w for w in wdd_records if w.get("exit_damage_status") == "DAMAGED"][:6]
-                    wdd_summary = "\nWayside Wagon Damage Detection (WDD 6-Gantry Differential Context):\n" + "\n".join([
+                    damaged_wagons = [w for w in wdd_records if w.get("exit_damage_status") == "DAMAGED"]
+                    wdd_summary = "\nWayside Wagon Damage Detection (WDD 6-Gantry Differential Context):\n" + wdd_totals(wdd_records) + "\n" + "\n".join([
                         f"- Wagon #{w.get('position_in_rake')} ({w.get('wagon_no')}): Entry={w.get('entry_damage_status')}, Exit={w.get('exit_damage_status')}, Transit Delta={w.get('delta_transit_damage')}, Defects={', '.join([d.get('class', '') + ' (' + d.get('severity', '') + ')' for d in w.get('exit_defects', [])])}. Liability: {w.get('liability_attribution')}"
                         for w in damaged_wagons
                     ])

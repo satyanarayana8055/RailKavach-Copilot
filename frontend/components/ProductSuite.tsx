@@ -68,13 +68,12 @@ export const PRODUCTS: Product[] = [
       </>
     ),
     description:
-      "Edge-deployed YOLOv8 computer vision analyzing multi-camera CVVRS footplate video feeds 24/7. Automatically identifies five critical SOP violations (mobile phone, micro-sleep, eating, posture, unauthorized cab entry) while whitelisting compliant railway operations with human reviewer audits.",
+      "Edge-deployed YOLOv8 computer vision analyzing multi-camera CVVRS footplate video feeds. Automatically identifies five critical SOP violations (mobile phone, micro-sleep, eating, posture, unauthorized cab entry) while whitelisting compliant railway operations with human reviewer audits.",
     tags: ["CVVRS Multi-Camera", "YOLOv8 Edge Vision", "Human Review Audit", "DPDP Act Masked"],
     stats: [
       { value: 5, label: "Violation types detected" },
       { value: 3, label: "Compliant duties whitelisted" },
-      { value: 100, suffix: "%", label: "Journey journey coverage" },
-      { value: 24, suffix: "×7", label: "Continuous monitoring" },
+      { value: 100, suffix: "%", label: "Journey coverage" },
     ],
     posterUrl: "/images/products/nmr-railway/cvvrs-dashboard-v3.jpg",
     videoUrl: "/videos/products/locate-demo-2026-10-v2.mp4",
@@ -104,7 +103,6 @@ export const PRODUCTS: Product[] = [
       { value: 6, label: "Gantry camera angles" },
       { value: 8, label: "Damage defect classes" },
       { value: 99.2, decimals: 1, suffix: "%", label: "Frame detection rate" },
-      { value: 2, prefix: "5–8→", suffix: "h", label: "Inspection / train" },
     ],
     posterUrl: "/images/products/nmr-railway/wdd-dashboard-v2.jpg",
     videoUrl: "/videos/products/wdd-demo-2026-11.mp4",
@@ -273,7 +271,7 @@ function ProductRow({
             ))}
           </ul>
 
-          <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-white/[0.08] pt-6 sm:grid-cols-4">
+          <div className={`mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-white/[0.08] pt-6 ${p.stats.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-4"}`}>
             {p.stats.map((s, i) => (
               <div key={s.label} className="reveal" style={rv(0.55 + i * 0.1, { ry: 10 })}>
                 <Stat {...s} />
@@ -313,72 +311,6 @@ function ProductRow({
   );
 }
 
-/** ROCP: Universal plug-and-play architecture for connecting any railway product via YAML manifests */
-function PlugInBand() {
-  const yaml = [
-    ["product_id", '"kavach_tcas_telemetry"'],
-    ["display_name", '"Kavach-TCAS Train Protection"'],
-    ["modality", '"SIGNAL_TELEMETRY"'],
-    ["endpoint.url", '"local://data/telemetry_signals.json"'],
-  ];
-  const { ref, inView } = useInView<HTMLDivElement>(0.35);
-  const line = (i: number) => rv(0.3 + i * 0.35, { rx: -8, ry: 0 });
-
-  return (
-    <div ref={ref} data-on={inView} className="mb-16 grid items-center gap-8 rounded-panel border border-dashed border-white/15 bg-white/[0.02] p-6 sm:p-8 lg:mb-24 lg:grid-cols-[1fr_1.1fr]">
-      <div>
-        <div className="flex items-baseline gap-4">
-          <span className="font-mono text-5xl font-semibold text-transparent [-webkit-text-stroke:1px_rgba(245,158,11,.7)]">+</span>
-          <span className="mono-label text-ink-300">RailKavach Open Connector Protocol</span>
-        </div>
-        <h3 className="h-display mt-3 text-[28px] text-white sm:text-[34px]">
-          Plug in <em>any product.</em>
-        </h3>
-        <p className="mt-3 text-sm text-ink-200">
-          Any railway vendor or signal sensor can integrate without editing the reasoning orchestrator. Expose an endpoint, author a YAML manifest, and the Copilot registers it dynamically as a Gemini tool.
-        </p>
-        <ol className="mt-6 flex flex-wrap items-center gap-2 font-mono text-[12px] text-ink-200">
-          {["Expose endpoint", "Drop YAML", "Auto-registered as Gemini tool"].map((s, i) => (
-            <li key={s} className="flex items-center gap-2">
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-amber font-semibold text-ink-950">{i + 1}</span>
-              {s}
-              {i < 2 && <span className="h-px w-5 bg-white/20" aria-hidden />}
-            </li>
-          ))}
-        </ol>
-        <ul className="mt-6 flex flex-wrap gap-2" aria-label="Next connectors">
-          {["Kavach-TCAS · connected", "OHE Camera", "Axle counters", "CMS"].map((t, i) => (
-            <li
-              key={t}
-              className={`rounded-full px-3 py-1 text-xs font-semibold ${i === 0 ? "bg-ok/15 text-ok" : "border border-white/10 text-ink-300"}`}
-            >
-              {t}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <figure className="overflow-hidden rounded-card border border-white/[0.08] bg-[#070a14]">
-        <figcaption className="flex items-center justify-between border-b border-white/[0.07] px-4 py-2.5 font-mono text-[11px] text-ink-300">
-          <span>connectors/kavach.yaml</span>
-          <span className="reveal flex items-center gap-1.5 text-ok" style={line(5)}>
-            <span className="h-1.5 w-1.5 animate-blink rounded-full bg-ok" aria-hidden /> registered
-          </span>
-        </figcaption>
-        <pre className="overflow-x-auto p-4 font-mono text-[13px] leading-7">
-          {yaml.map(([k, v], i) => (
-            <div key={k} className="reveal" style={line(i)}>
-              <span className="text-cyan">{k}</span>
-              <span className="text-ink-400">: </span>
-              <span className="text-amber">{v}</span>
-            </div>
-          ))}
-          <div className="reveal text-ink-500" style={line(4)}># → FunctionDeclaration generated · 0 code changes</div>
-        </pre>
-      </figure>
-    </div>
-  );
-}
-
 export function ProductSuite() {
   const [activeVideoProduct, setActiveVideoProduct] = useState<Product | null>(null);
 
@@ -405,7 +337,6 @@ export function ProductSuite() {
           ))}
         </div>
 
-        <PlugInBand />
       </div>
 
       {/* Interactive Production Video Lightbox Modal */}

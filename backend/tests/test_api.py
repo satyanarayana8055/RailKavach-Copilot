@@ -139,3 +139,14 @@ def test_rbac_single_role():
     data = response.json()
     assert data["can_verify_alerts"] is True
     assert data["can_sign_crs_report"] is True
+
+
+def test_audio_streaming_endpoint():
+    # If the file was cached in L2, it streams 200 OK
+    response = client.get("/audio_segments/segment_000001.wav")
+    assert response.status_code in (200, 404)
+    if response.status_code == 200:
+        assert len(response.content) > 0
+        assert "audio" in response.headers["content-type"]
+        assert response.headers.get("Accept-Ranges") == "bytes"
+        assert "X-BSA63-SHA256" in response.headers

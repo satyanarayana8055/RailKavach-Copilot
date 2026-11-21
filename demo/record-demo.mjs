@@ -216,12 +216,10 @@ try {
 
   /* 8 — Hindi */
   await caption("08 · HINDI", "Ask in Hindi, get the answer in Hindi", "Voice input and read-aloud work too");
-  await click(page.getByRole("button", { name: "Switch to Hindi" }), 900);
   await ask("क्या 12403 का सिग्नल लाल था?");
   await lastAnswerToTop();
   await pause(2600);
   await shot("hindi");
-  await click(page.getByRole("button", { name: "Switch to English" }), 600);
 
   /* 9 — panel controls */
   await caption("09 · YOUR WORKSPACE", "Widen the chat for long reports");
@@ -233,43 +231,31 @@ try {
   await shot("collapsed");
   await click(page.getByRole("button", { name: "Open Copilot chat" }), 1200);
 
-  /* 10 — DPDP */
-  await caption("10 · DPDP", "Identities are masked by default", "Unmasking declares a safety inquiry, and is audited");
-  await click(page.locator('button[title="Toggle DPDP PII masking"]'), 1800);
-  await click(chat().getByRole("button", { name: "New chat" }), 600);
-  await ask("Investigate safety events for Train 12414 near Suratgarh on 2026-11-18.");
-  await scrollThread(4000);
-  await moveTo(chat().locator("p.font-mono").last());
-  await caption("10 · DPDP", "Names visible · purpose recorded in the audit log");
-  await pause(2600);
-  await shot("unmasked");
-  await click(page.locator('button[title="Toggle DPDP PII masking"]'), 1200);
-
-  /* 11 — reports */
-  await caption("11 · REPORTS", "Statutory inquiry and crew briefing, ready to sign");
+  /* 10 — reports */
+  await caption("10 · REPORTS", "Statutory inquiry and crew briefing, ready to sign");
   await click(page.getByRole("tab", { name: "Reports" }), 1800);
   await shot("reports");
   await pause(1500);
   await click(page.getByRole("tab", { name: "Overview" }), 800);
 
-  /* 12 — role scope: Crew Controller */
-  await caption("12 · ROLE SCOPE", "Crew Controller · radio and cabin only", "Wagon data isn't in this role's scope");
+  /* 11 — role scope: Crew Controller */
+  await caption("11 · ROLE SCOPE", "Crew Controller · radio and cabin only", "Wagon data isn't in this role's scope");
   await switchRole("Crew Controller");
   await pause(1500);
   await moveTo(page.getByText("Not in your scope:"));
   await pause(1800);
   await shot("crew-dashboard");
   await ask("Audit entry-versus-exit wagon damage for freight rake BOXN-542.");
-  await caption("12 · ROLE SCOPE", "Out-of-scope questions are refused, not answered from cache", "The refusal is logged too");
+  await caption("11 · ROLE SCOPE", "Out-of-scope questions are refused, not answered from cache", "The refusal is logged too");
   await pause(3000);
   await shot("crew-refused");
   await ask("Show driver alertness and fatigue trends between 02:00 and 05:00 AM on Bikaner Division.");
   await lastAnswerToTop();
-  await caption("12 · ROLE SCOPE", "In-scope questions get full answers");
+  await caption("11 · ROLE SCOPE", "In-scope questions get full answers");
   await pause(2600);
 
-  /* 13 — role scope: DME */
-  await caption("13 · ROLE SCOPE", "Sr. DME · wagons only");
+  /* 12 — role scope: DME */
+  await caption("12 · ROLE SCOPE", "Sr. DME · wagons only");
   await switchRole("Sr. DME");
   await pause(1800);
   await shot("dme-dashboard");

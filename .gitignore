@@ -259,3 +259,4 @@ data/drive_ingest/
 # Runtime records with personal data — never commit
 data/audit/
 data/demo_requests/
+data/gcs_cache/

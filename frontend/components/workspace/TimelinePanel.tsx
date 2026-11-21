@@ -2,6 +2,7 @@
 
 import { AlertTriangle, Camera, Gauge, Radio } from "lucide-react";
 import { useState } from "react";
+import { API_BASE } from "@/lib/api";
 import { toSeconds } from "@/lib/privacy";
 import type { EventSource, TimelineEvent } from "@/lib/types";
 
@@ -194,11 +195,16 @@ export function TimelinePanel({ events, mask, lang }: { events: TimelineEvent[];
             )}
             {selected.image_url && (
               <div className="mt-3 flex items-center gap-3">
-                <a href={selected.image_url} target="_blank" rel="noreferrer" className="group block relative overflow-hidden rounded-md border border-[var(--line)] bg-black/5 hover:border-ink-500 transition">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={selected.image_url} alt="Locate Cabin CVVRS frame" className="h-20 w-32 object-cover transition group-hover:scale-105" />
-                  <span className="absolute bottom-1 right-1 bg-black/70 text-[10px] text-white px-1.5 py-0.5 rounded font-mono">CVVRS CAM</span>
-                </a>
+                {(() => {
+                  const imgSrc = selected.image_url.startsWith("http") ? selected.image_url : `${API_BASE}${selected.image_url}`;
+                  return (
+                    <a href={imgSrc} target="_blank" rel="noreferrer" className="group block relative overflow-hidden rounded-md border border-[var(--line)] bg-black/5 hover:border-ink-500 transition">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={imgSrc} alt="Locate Cabin CVVRS frame" className="h-20 w-32 object-cover transition group-hover:scale-105" />
+                      <span className="absolute bottom-1 right-1 bg-black/70 text-[10px] text-white px-1.5 py-0.5 rounded font-mono">CVVRS CAM</span>
+                    </a>
+                  );
+                })()}
                 <div className="text-xs text-ink-600">
                   <span className="font-semibold block text-ink-900">Locate In-Cab Evidence Frame</span>
                   <span className="font-mono text-[11px] text-ink-500">Admissible Section 63 BSA 2023</span>

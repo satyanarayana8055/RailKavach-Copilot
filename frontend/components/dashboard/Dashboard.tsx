@@ -2,6 +2,7 @@
 
 import { AlertTriangle, Camera, CloudOff, Lock, MessageSquarePlus, Pause, Play, Radio, ShieldCheck, Train, Volume2 } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
+import { API_BASE } from "@/lib/api";
 import type { DataSource, RoleMetadata } from "@/lib/types";
 import type { CabinAlert, DashboardData, RadioRow } from "./useDashboardData";
 
@@ -199,9 +200,17 @@ function RadioList({ rows, mask, lang, onAsk }: { rows: RadioRow[]; mask: (t: st
       setPlayingId(null);
     } else {
       audioEl?.pause();
-      const a = new Audio(r.audio_url);
+      const audioSrc = r.audio_url.startsWith("http") ? r.audio_url : `${API_BASE}${r.audio_url}`;
+      const a = new Audio(audioSrc);
       a.onended = () => setPlayingId(null);
-      a.play().catch(() => {});
+      a.onerror = (e) => {
+        console.error("Audio playback error for", audioSrc, e);
+        setPlayingId(null);
+      };
+      a.play().catch((err) => {
+        console.error("Audio playback failed:", err);
+        setPlayingId(null);
+      });
       setAudioEl(a);
       setPlayingId(r.id);
     }

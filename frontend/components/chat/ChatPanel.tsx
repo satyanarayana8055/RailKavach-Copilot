@@ -2,9 +2,10 @@
 
 import {
   ArrowUp, Camera, ChevronDown, Eye, EyeOff, Fingerprint, Maximize2, Mic, MicOff, Minimize2, PanelRightClose,
-  Radio, ShieldAlert, Sparkles, SquarePen, Train, Volume2, VolumeX,
+  Loader2, Pause, Play, Radio, ShieldAlert, Sparkles, Square, SquarePen, Train, Volume2, VolumeX,
 } from "lucide-react";
 import { Fragment, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import type { VoiceState } from "@/lib/voice";
 import type { ChatResponse, RoleMetadata } from "@/lib/types";
 import type { Session } from "@/lib/api";
 import { CustodyRow, RuleChips } from "./Trust";
@@ -29,10 +30,17 @@ interface Props {
   busy: boolean;
   listening: boolean;
   onMic: () => void;
+  /** Live voice input state: level 0..1 for the meter, interim captions while speaking. */
+  voice?: { state: VoiceState; level: number; interim: string; cancel: () => void };
   draft: string;
   setDraft: (q: string) => void;
   speakingId: string | null;
   onSpeak: (m: ChatMessage) => void;
+  speakPaused?: boolean;
+  /** e.g. "Indian English · Rishi" */
+  speakVoice?: string;
+  onPauseSpeak?: () => void;
+  onStopSpeak?: () => void;
   mask: (t: string) => string;
   lang: "en" | "hi";
   role: RoleMetadata;
@@ -348,6 +356,10 @@ export function ChatPanel(p: Props) {
           <label htmlFor="copilot-input" className="sr-only">
             Ask the copilot
           </label>
+          {p.voice && p.voice.state !== "idle" && <VoiceBar v={p.voice} lang={p.lang} onStop={p.onMic} />}
+          {p.speakingId && !(p.voice && p.voice.state !== "idle") && p.onStopSpeak && (
+            <SpeakBar paused={!!p.speakPaused} voice={p.speakVoice} onPause={p.onPauseSpeak} onStop={p.onStopSpeak} />
+          )}
           <textarea
             id="copilot-input"
             ref={input}
@@ -363,10 +375,13 @@ export function ChatPanel(p: Props) {
               type="button"
               onClick={p.onMic}
               aria-pressed={p.listening}
-              aria-label={p.listening ? "Stop voice input" : "Voice input"}
-              className={`grid h-8 w-8 place-items-center rounded-btn transition ${p.listening ? "bg-danger-soft text-danger-ink" : "text-ink-500 hover:bg-paper hover:text-ink-950"}`}
+              aria-label={p.listening ? "Stop voice input" : "Ask by voice, in Hindi or English"}
+              title="Ask by voice · हिन्दी or English"
+              disabled={p.voice?.state === "transcribing"}
+              className={`flex h-8 items-center gap-1.5 rounded-btn px-2 transition disabled:opacity-60 ${p.listening ? "bg-danger-soft text-danger-ink" : "text-ink-500 hover:bg-paper hover:text-ink-950"}`}
             >
               {p.listening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+              <span className="font-mono text-[10.5px] font-semibold">हिं · EN</span>
             </button>
             <span className="hidden font-mono text-[10px] text-ink-400 sm:inline">Enter to send · Shift+Enter new line</span>
             <button
@@ -382,5 +397,89 @@ export function ChatPanel(p: Props) {
         </div>
       </div>
     </aside>
+  );
+}
+
+/** Shown above the input while the mic is open: live level, what we've heard so far, and a stop button. */
+function VoiceBar({ v, lang, onStop }: { v: { state: VoiceState; level: number; interim: string; cancel: () => void }; lang: "en" | "hi"; onStop: () => void }) {
+  const listening = v.state === "listening";
+  const bars = 18;
+  return (
+    <div role="status" aria-live="polite" className="flex items-center gap-3 border-b border-[var(--line)] px-3 py-2.5">
+      <span className={`relative grid h-8 w-8 shrink-0 place-items-center rounded-full ${listening ? "bg-danger text-white" : "bg-ink-950 text-white"}`}>
+        {listening && <span className="absolute inset-0 rounded-full bg-danger/40 motion-safe:animate-ping" aria-hidden />}
+        {listening ? <Mic className="relative h-4 w-4" aria-hidden /> : <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
+      </span>
+      <div className="min-w-0 flex-1">
+        {listening ? (
+          <span className="flex h-5 items-center gap-[3px]" aria-hidden>
+            {Array.from({ length: bars }, (_, i) => {
+              const shape = 0.35 + 0.65 * Math.sin(((i + 1) / (bars + 1)) * Math.PI);
+              return <span key={i} className="w-[3px] rounded-full bg-danger transition-[height] duration-75" style={{ height: `${Math.max(12, Math.min(100, v.level * shape * 160))}%` }} />;
+            })}
+          </span>
+        ) : (
+          <span className="block text-[12.5px] font-semibold text-ink-900">{lang === "hi" ? "समझ रहे हैं…" : "Transcribing…"}</span>
+        )}
+        <span className={`mt-0.5 block truncate text-[12.5px] ${v.interim ? "text-ink-800" : "text-ink-400"} ${/[\u0900-\u097F]/.test(v.interim) ? "hi" : ""}`}>
+          {v.interim || (listening ? (lang === "hi" ? "बोलिए… हिन्दी या English" : "Listening… speak in Hindi or English") : "Hindi, English or both")}
+        </span>
+      </div>
+      {listening && (
+        <>
+          <button type="button" onClick={v.cancel} className="rounded-btn px-2 py-1 text-[12px] font-semibold text-ink-500 hover:bg-paper hover:text-ink-950">
+            Cancel
+          </button>
+          <button type="button" onClick={onStop} className="flex items-center gap-1 rounded-btn bg-ink-950 px-2.5 py-1 text-[12px] font-semibold text-white hover:bg-ink-800">
+            <Square className="h-3 w-3 fill-current" aria-hidden /> Done
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
+
+/** Shown while an answer is read aloud: pause/resume and stop, always one click away. */
+function SpeakBar({ paused, voice, onPause, onStop }: { paused: boolean; voice?: string; onPause?: () => void; onStop: () => void }) {
+  return (
+    <div role="status" aria-live="polite" className="flex items-center gap-3 border-b border-[var(--line)] px-3 py-2.5">
+      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-orange-soft text-orange-ink">
+        <Volume2 className="h-4 w-4" aria-hidden />
+      </span>
+      <span className="flex min-w-0 flex-1 items-center gap-2.5">
+        <span className="flex h-4 items-end gap-[3px]" aria-hidden>
+          {[0, 1, 2, 3].map((i) => (
+            <span
+              key={i}
+              className={`w-[3px] origin-bottom rounded-full bg-orange ${paused ? "h-1.5" : "h-4 motion-safe:animate-eq"}`}
+              style={{ animationDelay: `${i * 0.15}s` }}
+            />
+          ))}
+        </span>
+        <span className="min-w-0">
+          <span className="block truncate text-[12.5px] font-semibold text-ink-900">{paused ? "Paused" : "Reading aloud"}</span>
+          {voice && <span className="block truncate font-mono text-[10px] text-ink-500">{voice}</span>}
+        </span>
+      </span>
+      {onPause && (
+        <button
+          type="button"
+          onClick={onPause}
+          aria-label={paused ? "Resume reading" : "Pause reading"}
+          className="flex items-center gap-1 rounded-btn border border-[var(--line)] px-2.5 py-1 text-[12px] font-semibold text-ink-800 hover:border-ink-300"
+        >
+          {paused ? <Play className="h-3 w-3 fill-current" aria-hidden /> : <Pause className="h-3 w-3 fill-current" aria-hidden />}
+          {paused ? "Resume" : "Pause"}
+        </button>
+      )}
+      <button
+        type="button"
+        onClick={onStop}
+        aria-label="Stop reading"
+        className="flex items-center gap-1 rounded-btn bg-ink-950 px-2.5 py-1 text-[12px] font-semibold text-white hover:bg-ink-800"
+      >
+        <Square className="h-3 w-3 fill-current" aria-hidden /> Stop
+      </button>
+    </div>
   );
 }

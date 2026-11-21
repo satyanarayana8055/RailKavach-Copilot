@@ -25,6 +25,7 @@ from .governance import (
 )
 from .custody import certificate_text, registry as custody_registry
 from .statutes import extract as extract_rules, library as rule_library
+from . import voice
 from .schemas.chat import RuleRef
 
 @asynccontextmanager
@@ -400,7 +401,8 @@ def stream_audio_from_gcs(filename: str):
                 "Cache-Control": "public, max-age=86400, immutable",
                 "ETag": f'"{sha256_hash}"',
                 "X-GCS-Tier": tier,
-                "X-BSA63-SHA256": sha256_hash
+                "X-BSA63-SHA256": sha256_hash,
+                "Accept-Ranges": "bytes"
             }
         )
     except FileNotFoundError:
@@ -418,7 +420,8 @@ def stream_cabin_evidence_from_gcs(filename: str):
                 "Cache-Control": "public, max-age=86400, immutable",
                 "ETag": f'"{sha256_hash}"',
                 "X-GCS-Tier": tier,
-                "X-BSA63-SHA256": sha256_hash
+                "X-BSA63-SHA256": sha256_hash,
+                "Accept-Ranges": "bytes"
             }
         )
     except FileNotFoundError:
@@ -436,7 +439,8 @@ def stream_wdd_evidence_from_gcs(path: str):
                 "Cache-Control": "public, max-age=86400, immutable",
                 "ETag": f'"{sha256_hash}"',
                 "X-GCS-Tier": tier,
-                "X-BSA63-SHA256": sha256_hash
+                "X-BSA63-SHA256": sha256_hash,
+                "Accept-Ranges": "bytes"
             }
         )
     except FileNotFoundError:
@@ -509,6 +513,29 @@ def evidence_certificate(evidence_id: str, principal: Principal = Depends(get_pr
     text = certificate_text(v, item, officer=principal.role.title, role_title=principal.role.role.value,
                             request_id=f"{principal.request_id} · audit #{entry['seq']}")
     return _PlainText(protect(principal, text), headers={"Content-Disposition": f'attachment; filename="BSA63-{evidence_id}.txt"'})
+
+
+@app.post("/api/voice/transcribe")
+async def voice_transcribe(
+    audio: UploadFile = File(...),
+    lang_hint: Optional[str] = Form(None),
+    principal: Principal = Depends(get_principal),
+):
+    """Speech-to-text for the Copilot mic (Hindi / English / mixed). 503 tells the browser to use its own recogniser."""
+    mime = (audio.content_type or "").split(";")[0].lower()
+    if mime not in voice.ALLOWED_MIME:
+        raise HTTPException(status_code=415, detail=f"Unsupported audio type: {mime or 'unknown'}")
+    data = await audio.read(voice.MAX_BYTES + 1)
+    if len(data) > voice.MAX_BYTES:
+        raise HTTPException(status_code=413, detail="Recording too long")
+    if len(data) < 1200:
+        return {"text": "", "language": lang_hint or "en", "engine": "none"}
+    try:
+        out = voice.transcribe(data, mime, lang_hint)
+    except voice.VoiceUnavailable:
+        raise HTTPException(status_code=503, detail="Server transcription unavailable")
+    audit.record(principal, endpoint="/api/voice/transcribe", decision="ALLOWED", required=set(), withheld=set(), query=out["text"] or None)
+    return out
 
 
 @app.get("/api/rules")

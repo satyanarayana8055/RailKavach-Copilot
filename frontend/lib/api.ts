@@ -35,7 +35,7 @@ async function parse<T>(res: Response): Promise<T> {
   throw new ApiError(res.status, detail);
 }
 
-export async function postChat(query: string, language: "en" | "hi", session: Session, modelEngine: "gemini" | "gemma" = "gemini"): Promise<ChatResponse> {
+export async function postChat(query: string, language: "en" | "hi" | "mixed", session: Session, modelEngine: "gemini" | "gemma" = "gemini"): Promise<ChatResponse> {
   const res = await fetch(`${API_BASE}/api/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json", ...sessionHeaders(session) },

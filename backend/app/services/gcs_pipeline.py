@@ -44,11 +44,49 @@ class GCSLowLatencyPipeline:
         }
         self._init_gcs()
 
+    def _get_credentials(self):
+        """
+        Attempts to acquire GCP credentials using multiple fallback strategies:
+          1. Environment variable / Standard ADC (google.auth.default)
+          2. Local gcloud CLI access token (gcloud auth print-access-token)
+        """
+        if not GCS_AVAILABLE:
+            return None
+        # 1. Standard ADC or GOOGLE_APPLICATION_CREDENTIALS
+        try:
+            import google.auth
+            creds, _ = google.auth.default()
+            return creds
+        except Exception:
+            pass
+
+        # 2. Local gcloud CLI access token fallback
+        try:
+            import subprocess
+            from google.oauth2.credentials import Credentials
+            token = subprocess.check_output(
+                ["gcloud", "auth", "print-access-token"],
+                stderr=subprocess.DEVNULL,
+                text=True,
+                timeout=5
+            ).strip()
+            if token:
+                return Credentials(token)
+        except Exception:
+            pass
+
+        return None
+
     def _init_gcs(self):
         if not GCS_AVAILABLE:
             return
         try:
-            self.client = storage.Client()
+            project = os.getenv("GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "seraphic-beacon-515305-d2"
+            creds = self._get_credentials()
+            if creds:
+                self.client = storage.Client(credentials=creds, project=project)
+            else:
+                self.client = storage.Client(project=project)
             self.bucket = self.client.bucket(self.bucket_name)
         except Exception:
             self.client = None
@@ -95,25 +133,59 @@ class GCSLowLatencyPipeline:
             return data, ctype, sha256, "L2_SSD_CACHE"
 
         # 3. Tier 3: Live GCS Bucket Fetch
+        if not self.bucket:
+            self._init_gcs()
+
         if self.bucket:
+            for attempt in range(2):
+                try:
+                    blob = self.bucket.blob(clean)
+                    if blob.exists():
+                        data = blob.download_as_bytes()
+                        ctype = blob.content_type or self._detect_content_type(clean, default_content_type)
+                        sha256 = hashlib.sha256(data).hexdigest()
+
+                        # Save to Tier 2 local SSD cache
+                        local_cache_file.parent.mkdir(parents=True, exist_ok=True)
+                        local_cache_file.write_bytes(data)
+
+                        # Save to Tier 1 RAM cache
+                        self._store_l1(clean, data, ctype)
+
+                        self.stats["gcs_fetches"] += 1
+                        self.stats["total_bytes_served"] += len(data)
+                        self._update_latency((time.perf_counter() - t0) * 1000)
+                        return data, ctype, sha256, "GCS_LIVE_STREAM"
+                    else:
+                        break
+                except Exception:
+                    if attempt == 0:
+                        self._init_gcs()
+                    else:
+                        break
+
+        # 3b. CLI Fallback: gcloud storage cp to edge cache if client library timed out or blocked
+        if not local_cache_file.exists():
             try:
-                blob = self.bucket.blob(clean)
-                if blob.exists():
-                    data = blob.download_as_bytes()
-                    ctype = blob.content_type or self._detect_content_type(clean, default_content_type)
+                import subprocess
+                gcs_uri = f"gs://{self.bucket_name}/{clean}"
+                local_cache_file.parent.mkdir(parents=True, exist_ok=True)
+                subprocess.run(
+                    ["gcloud", "storage", "cp", gcs_uri, str(local_cache_file)],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    check=True,
+                    timeout=10
+                )
+                if local_cache_file.exists():
+                    data = local_cache_file.read_bytes()
+                    ctype = self._detect_content_type(clean, default_content_type)
                     sha256 = hashlib.sha256(data).hexdigest()
-
-                    # Save to Tier 2 local SSD cache
-                    local_cache_file.parent.mkdir(parents=True, exist_ok=True)
-                    local_cache_file.write_bytes(data)
-
-                    # Save to Tier 1 RAM cache
                     self._store_l1(clean, data, ctype)
-
                     self.stats["gcs_fetches"] += 1
                     self.stats["total_bytes_served"] += len(data)
                     self._update_latency((time.perf_counter() - t0) * 1000)
-                    return data, ctype, sha256, "GCS_LIVE_STREAM"
+                    return data, ctype, sha256, "GCS_CLI_STREAM"
             except Exception:
                 pass
 

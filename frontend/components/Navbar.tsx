@@ -9,11 +9,6 @@ import type { UserRole } from "@/lib/types";
 interface WorkspaceControls {
   role: UserRole;
   onRole: (r: UserRole) => void;
-  masked: boolean;
-  maskForced: boolean;
-  onToggleMask: () => void;
-  lang: "en" | "hi";
-  onToggleLang: () => void;
 }
 
 /** Omit `controls` on pages without the workspace: shows a "Request a demo" CTA instead. */
@@ -71,7 +66,7 @@ export function Navbar({ controls, current = "home" }: NavbarProps) {
   );
 }
 
-function Controls({ role, onRole, masked, maskForced, onToggleMask, lang, onToggleLang }: WorkspaceControls) {
+function Controls({ role, onRole }: WorkspaceControls) {
   const [open, setOpen] = useState(false);
   const wrap = useRef<HTMLDivElement>(null);
   const roleMeta = ROLES[role];
@@ -90,25 +85,6 @@ function Controls({ role, onRole, masked, maskForced, onToggleMask, lang, onTogg
 
   return (
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
-          <button type="button" onClick={onToggleLang} className="nav-pill" aria-label={lang === "en" ? "Switch to Hindi" : "Switch to English"}>
-            <Languages className="h-4 w-4 text-blue" aria-hidden />
-            <span className={lang === "en" ? "hi" : ""}>
-              {lang === "en" ? (<><span className="sm:hidden">हि</span><span className="hidden sm:inline">हिन्दी</span></>) : "EN"}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            onClick={onToggleMask}
-            aria-pressed={masked}
-            disabled={maskForced}
-            title={maskForced ? "Masking enforced for this role (DPDP Act 2023)" : "Toggle DPDP PII masking"}
-            className={`nav-pill disabled:cursor-not-allowed ${masked ? "!bg-violet-soft !text-violet-ink" : ""}`}
-          >
-            {masked ? <Lock className="h-4 w-4" aria-hidden /> : <Unlock className="h-4 w-4 text-ink-500" aria-hidden />}
-            <span className="hidden sm:inline">DPDP</span>
-          </button>
-
           <div ref={wrap} className="relative">
             <button
               type="button"

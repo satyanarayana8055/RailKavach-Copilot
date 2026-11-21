@@ -2,6 +2,7 @@
 
 import { AlertOctagon, AlertTriangle, ArrowRight, CheckCircle2, History, Play, Wrench } from "lucide-react";
 import { useMemo, useState } from "react";
+import { API_BASE } from "@/lib/api";
 import { RAKE } from "@/lib/data";
 import type { WagonStatus } from "@/lib/types";
 import { VideoModal } from "../VideoModal";
@@ -138,7 +139,7 @@ export function WddPanel({ canIssue, onIssue }: { canIssue: boolean; onIssue: (s
             <div className="relative mt-1 max-h-56 overflow-hidden rounded-btn bg-black/5 border border-[var(--line)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={wagon.image_url}
+                src={wagon.image_url.startsWith("http") ? wagon.image_url : `${API_BASE}${wagon.image_url}`}
                 alt={`Wagon scan for ${wagon.serial}`}
                 className="h-48 w-full object-cover transition hover:scale-105"
               />

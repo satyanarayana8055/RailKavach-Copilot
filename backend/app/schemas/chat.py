@@ -4,7 +4,7 @@ from .evidence import Citation
 
 class ChatQueryRequest(BaseModel):
     query: str = Field(..., description="Conversational inquiry from safety officer")
-    language: str = Field(default="en", description="Preferred output language: 'en' (English) or 'hi' (Devanagari Hindi)")
+    language: str = Field(default="en", description="Answer language: 'en' (English), 'hi' (Devanagari Hindi) or 'mixed' (Hinglish, Roman script)")
     incident_id: Optional[str] = Field(default=None, description="Optional incident scope")
     model_engine: Optional[str] = Field(default="gemini", description="Inference engine: 'gemini' (Gemini Cloud) or 'gemma' (Gemma Local Edge)")
 

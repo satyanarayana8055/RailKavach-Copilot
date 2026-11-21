@@ -15,8 +15,15 @@ import { WddPanel } from "@/components/workspace/WddPanel";
 import { analyzeFile, ApiError, postChat, type Session } from "@/lib/api";
 import { genericFallback, ROLES, SCENARIO_1_FALLBACK, SCENARIO_4_FALLBACK, SCENARIO_QUERIES, SUGGESTED_PROMPTS, TIMELINE, type ScenarioId } from "@/lib/data";
 import { governOffline, maskPII, requiredSources } from "@/lib/privacy";
+import { canSpeak, pauseSpeaking, resumeSpeaking, speak, stopSpeaking, useVoiceInput } from "@/lib/voice";
 import type { ChatResponse, FileAnalysisResult, UserRole } from "@/lib/types";
 import { RoleGate } from "./RoleGate";
+
+type AnswerLang = "en" | "hi" | "mixed";
+/** Typed questions: Devanagari → Hindi; common Roman-script Hindi words → Hinglish; otherwise English. */
+const HINGLISH = /\b(kya|kitne|kitna|kaun|kab|kahan|kaise|kyun|hai|hain|tha|thi|ka|ki|ke|ko|mein|se|aur|bhi|nahi|karo|batao|dikhao|wala|wali)\b/gi;
+const questionLang = (q: string): AnswerLang =>
+  /[\u0900-\u097F]/.test(q) ? "hi" : (q.match(HINGLISH)?.length ?? 0) >= 2 ? "mixed" : "en";
 
 const STARTERS = [
   { label: "Investigate the 12414 near-SPAD at Suratgarh", query: SCENARIO_QUERIES[1] },
@@ -31,17 +38,19 @@ const nextId = () => `m${Date.now().toString(36)}${(seq++).toString(36)}`;
 
 export function Workspace() {
   const [roleCode, setRoleCode] = useState<UserRole | null>(null);
-  const [lang, setLang] = useState<"en" | "hi">("en");
+  // UI copy stays English; answers follow the language of each question.
+  const lang = "en" as "en" | "hi";
   const [modelEngine, setModelEngine] = useState<"gemini" | "gemma">("gemini");
   // DPDP: identities masked by default; unmasking = declaring an inquiry purpose (audited server-side).
-  const [maskToggle, setMaskToggle] = useState(true);
+  const maskToggle = true; // identities always masked in this demo (DPDP data minimisation)
   const [chatOpen, setChatOpen] = useState(false);
   const [chatWide, setChatWide] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
-  const [listening, setListening] = useState(false);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
+  const [speakPaused, setSpeakPaused] = useState(false);
+  const [speakVoice, setSpeakVoice] = useState("");
   const [analyzing, setAnalyzing] = useState<string | null>(null);
   const [fileResult, setFileResult] = useState<FileAnalysisResult | null>(null);
   const pendingScenario = useRef<ScenarioId | undefined>(undefined);
@@ -58,6 +67,17 @@ export function Workspace() {
     [maskToggle]
   );
   const mask = useCallback((t: string) => maskPII(t, masked), [masked]);
+  const askRef = useRef<(q: string, r?: UserRole, l?: AnswerLang, v?: boolean) => void>(() => undefined);
+  const voice = useVoiceInput({
+    session: sessionFor(roleCode ?? "ROLE_SR_DSO"),
+    hint: lang,
+    onFinal: (text, spoken) => {
+      stopSpeaking();
+      setSpeakingId(null);
+      askRef.current(text, undefined, spoken, true);
+    },
+    onError: (msg) => toast.show(msg),
+  });
   // Stable per role + purpose, so views that fetch on session change don't refetch every render.
   const session = useMemo(() => sessionFor(role.code), [sessionFor, role.code]);
   const data = useDashboardData(session, roleCode ? role.dataScopes : []);
@@ -82,7 +102,7 @@ export function Workspace() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const ask = async (q: string, asRole: UserRole = role.code) => {
+  const ask = async (q: string, asRole: UserRole = role.code, answerLang: AnswerLang = questionLang(q), viaVoice = false) => {
     const who = ROLES[asRole];
     if (!who.allowedTabs.includes("copilot")) return toast.show(`The copilot isn’t available for ${who.short}`);
     const replyId = nextId();
@@ -92,7 +112,7 @@ export function Workspace() {
     setBusy(true);
     let r: ChatResponse;
     try {
-      r = await postChat(q, lang, sessionFor(asRole), modelEngine);
+      r = await postChat(q, answerLang, sessionFor(asRole), modelEngine);
     } catch (e) {
       r =
         e instanceof ApiError
@@ -103,7 +123,11 @@ export function Workspace() {
     }
     setMessages((ms) => ms.map((m) => (m.id === replyId ? { ...m, pending: false, text: r.answer, response: r } : m)));
     setBusy(false);
+    // Asked by voice → answer by voice.
+    if (viaVoice && r.answer) speakMessage({ id: replyId, role: "assistant", text: r.answer });
   };
+
+  askRef.current = ask;
 
   const enter = (code: UserRole) => {
     setRoleCode(code);
@@ -138,38 +162,18 @@ export function Workspace() {
     }
   };
 
-  const speak = (m: ChatMessage) => {
-    if (!("speechSynthesis" in window)) return toast.show("Speech output isn’t supported in this browser");
-    window.speechSynthesis.cancel();
-    if (speakingId === m.id) return setSpeakingId(null);
-    const u = new SpeechSynthesisUtterance(mask(m.text).replace(/\[\d{2}:\d{2}:\d{2}\]/g, "").replace(/[*#`]/g, ""));
-    u.lang = lang === "hi" ? "hi-IN" : "en-IN";
-    u.onstart = () => setSpeakingId(m.id);
-    u.onend = u.onerror = () => setSpeakingId(null);
-    window.speechSynthesis.speak(u);
-  };
-
-  const toggleMic = () => {
-    type SR = new () => { lang: string; interimResults: boolean; maxAlternatives: number; onstart: () => void; onresult: (e: { results: { 0: { 0: { transcript: string } } } }) => void; onerror: () => void; onend: () => void; start: () => void };
-    const w = window as unknown as { SpeechRecognition?: SR; webkitSpeechRecognition?: SR };
-    const Rec = w.SpeechRecognition || w.webkitSpeechRecognition;
-    if (!Rec) return toast.show("Voice input needs Chrome or Edge");
-    if (listening) return setListening(false);
-    try {
-      const r = new Rec();
-      r.lang = lang === "hi" ? "hi-IN" : "en-IN";
-      r.interimResults = false;
-      r.maxAlternatives = 1;
-      r.onstart = () => setListening(true);
-      r.onresult = (e) => {
-        setDraft(e.results[0][0].transcript);
-        setListening(false);
-      };
-      r.onerror = r.onend = () => setListening(false);
-      r.start();
-    } catch {
-      setListening(false);
+  const speakMessage = (m: ChatMessage, as?: "en" | "hi") => {
+    if (!canSpeak()) return toast.show("Speech output isn’t supported in this browser");
+    if (speakingId === m.id) {
+      stopSpeaking();
+      return setSpeakingId(null);
     }
+    setSpeakingId(m.id);
+    setSpeakPaused(false);
+    speak(mask(m.text), { lang: as, onStart: setSpeakVoice }).finally(() => {
+      setSpeakingId((id) => (id === m.id ? null : id));
+      setSpeakPaused(false);
+    });
   };
 
   if (!roleCode) {
@@ -199,14 +203,6 @@ export function Workspace() {
         controls={{
           role: roleCode,
           onRole: switchRole,
-          masked,
-          maskForced: role.forceMasking,
-          onToggleMask: () => {
-            setMaskToggle((m) => !m);
-            toast.show(maskToggle ? "Inquiry purpose declared — identity access is audited" : "Identities masked (routine monitoring)");
-          },
-          lang,
-          onToggleLang: () => setLang((l) => (l === "en" ? "hi" : "en")),
         }}
       />
 
@@ -239,18 +235,36 @@ export function Workspace() {
           onClose={() => setChatOpen(false)}
           onToggleExpand={() => setChatWide((w) => !w)}
           onNewChat={() => {
-            window.speechSynthesis?.cancel();
+            stopSpeaking();
+            voice.cancel();
             setMessages([]);
           }}
           messages={messages}
           onSend={(q) => ask(q)}
           busy={busy}
-          listening={listening}
-          onMic={toggleMic}
+          listening={voice.state !== "idle"}
+          voice={voice}
+          onMic={() => {
+            stopSpeaking();
+            setSpeakingId(null);
+            voice.toggle();
+          }}
           draft={draft}
           setDraft={setDraft}
           speakingId={speakingId}
-          onSpeak={speak}
+          onSpeak={(m) => speakMessage(m)}
+          speakPaused={speakPaused}
+          speakVoice={speakVoice}
+          onPauseSpeak={() => {
+            if (speakPaused) resumeSpeaking();
+            else pauseSpeaking();
+            setSpeakPaused((v) => !v);
+          }}
+          onStopSpeak={() => {
+            stopSpeaking();
+            setSpeakingId(null);
+            setSpeakPaused(false);
+          }}
           mask={mask}
           lang={lang}
           role={role}
