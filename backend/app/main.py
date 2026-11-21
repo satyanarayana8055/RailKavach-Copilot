@@ -22,6 +22,9 @@ from .governance import (
     LOCATE, RAILCOMM, TELEMETRY, WDD, Principal, audit, deny_reason, get_principal, protect, require,
     required_sources, source_of,
 )
+from .custody import certificate_text, registry as custody_registry
+from .statutes import extract as extract_rules, library as rule_library
+from .schemas.chat import RuleRef
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -69,6 +72,14 @@ def health_check():
         "observability": observability.status(),
     }
 
+def _with_custody(c):
+    """Bind a citation to its registered evidence record (id + SHA-256 recorded at ingest), if there is one."""
+    item = custody_registry().resolve(c.source, c.timestamp, c.event_description, c.evidence_id)
+    if item:
+        c.evidence_id, c.sha256, c.media_url = item["evidence_id"], item["sha256"], item.get("media_url")
+    return c
+
+
 @app.post("/api/chat", response_model=ChatQueryResponse)
 def chat_endpoint(req: ChatQueryRequest, background: BackgroundTasks, principal: Principal = Depends(get_principal)):
     """
@@ -106,7 +117,8 @@ def chat_endpoint(req: ChatQueryRequest, background: BackgroundTasks, principal:
             kept.append(c)
         else:
             withheld.add(src)
-    resp.citations = kept
+    resp.citations = [_with_custody(c) for c in kept]
+    resp.rules = [RuleRef(**r) for r in extract_rules(resp.answer)]
     decision = "PARTIAL" if withheld else "ALLOWED"
     entry = audit.record(principal, endpoint="/api/chat", decision=decision, required=needed, withheld=withheld,
                          query=req.query, citations=len(kept))
@@ -367,6 +379,55 @@ def get_role_profile(role_code: UserRole):
 # -------------------------------------------------------------
 # Accountability: hash-chained access audit log (Sr. DSO / CRS)
 # -------------------------------------------------------------
+# -------------------------------------------------------------
+# Evidence custody (BSA 2023 §63) and the rule library
+# -------------------------------------------------------------
+from fastapi.responses import PlainTextResponse as _PlainText
+
+
+def _custody_item(evidence_id: str, principal: Principal, endpoint: str) -> dict:
+    item = custody_registry().items.get(evidence_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="No registered evidence record with this ID.")
+    try:
+        require(principal, {item["kind"]}, endpoint)
+    except HTTPException:
+        audit.record(principal, endpoint=endpoint, decision="DENIED", required={item["kind"]}, withheld={item["kind"]}, query=evidence_id)
+        raise
+    return item
+
+
+@app.get("/api/evidence/{evidence_id}/verify")
+def verify_evidence(evidence_id: str, principal: Principal = Depends(get_principal)):
+    """Re-hash the original file and compare it with the SHA-256 recorded at ingest."""
+    item = _custody_item(evidence_id, principal, "/api/evidence/verify")
+    result = custody_registry().verify(evidence_id)
+    audit.record(principal, endpoint="/api/evidence/verify", decision="ALLOWED", required={item["kind"]}, withheld=set(), query=evidence_id)
+    return protect(principal, result)
+
+
+@app.get("/api/evidence/{evidence_id}/certificate", response_class=_PlainText)
+def evidence_certificate(evidence_id: str, principal: Principal = Depends(get_principal)):
+    """Draft BSA 2023 §63(4) certificate (Part A + Part B) for signature. Sr. DSO / CRS only."""
+    endpoint = "/api/evidence/certificate"
+    if not (principal.role.can_sign_crs_report or principal.role.can_view_audit_log):
+        audit.record(principal, endpoint=endpoint, decision="DENIED", required=set(), withheld=set(), query=evidence_id)
+        raise HTTPException(status_code=403, detail=f"{principal.role.title} cannot prepare §63 certificates.")
+    item = _custody_item(evidence_id, principal, endpoint)
+    v = custody_registry().verify(evidence_id)
+    entry = audit.record(principal, endpoint=endpoint, decision="ALLOWED", required={item["kind"]}, withheld=set(), query=evidence_id)
+    text = certificate_text(v, item, officer=principal.role.title, role_title=principal.role.role.value,
+                            request_id=f"{principal.request_id} · audit #{entry['seq']}")
+    return _PlainText(protect(principal, text), headers={"Content-Disposition": f'attachment; filename="BSA63-{evidence_id}.txt"'})
+
+
+@app.get("/api/rules")
+def get_rule_library(principal: Principal = Depends(get_principal)):
+    """The rule library answers are checked against (summaries; not the gazetted text)."""
+    lib = rule_library()
+    return {"source": lib["source"], "rules": lib["rules"]}
+
+
 @app.get("/api/audit")
 def get_audit_log(limit: int = 50, principal: Principal = Depends(get_principal)):
     """Who asked what, under which purpose, and what they were shown. Tamper-evident (hash chain)."""

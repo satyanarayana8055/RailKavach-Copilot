@@ -45,38 +45,64 @@ def _sentences(text: str) -> list[str]:
     return re.split(r"(?<=[.;\n])\s+", text)
 
 
-def _numbers_near(sentence: str, act_match: re.Match, num_pat: str) -> list[str]:
-    """Provision numbers in the same sentence as the act name: 'Section 175', 'Rule 3.78 / 9.02', 'Sections 184 and 185'."""
-    out: list[str] = []
-    for m in re.finditer(rf"{_PROVISION}\s*({num_pat})((?:\s*(?:,|/|&|and|or)\s*(?:{_PROVISION}\s*)?(?:{num_pat}))*)", sentence, re.I):
-        out.append(m.group(1))
-        out += re.findall(num_pat, m.group(2) or "")
-    # "G&SR 4.40" — number directly after the act name, no "Rule" keyword
-    direct = re.match(rf"\s*({num_pat})\b", sentence[act_match.end():])
-    if direct:
-        out.append(direct.group(1))
+_NUM = r"\d{1,3}(?:\.\d{2})?[A-Z]?"
+
+
+def _provisions(sentence: str) -> list[tuple[int, int, str]]:
+    """(position, number) for 'Section 175', 'Rule 3.78 / 9.02', 'Sections 184 and 185', 'G&SR 4.40'."""
+    out: list[tuple[int, int, str]] = []
+    for m in re.finditer(rf"{_PROVISION}\s*({_NUM})((?:\s*(?:,|/|&|and|or)\s*(?:{_PROVISION}\s*)?{_NUM}\b)*)", sentence, re.I):
+        out.append((m.start(), m.end(), m.group(1)))
+        out += [(m.start(), m.end(), n) for n in re.findall(_NUM, m.group(2) or "")]
     return out
+
+
+def _entry(rule: dict) -> dict:
+    return {**{k: rule[k] for k in ("id", "act", "ref", "label", "title", "summary")}, "status": "IN_LIBRARY"}
 
 
 def extract(answer: str) -> list[dict]:
     lib = library()
     found: dict[str, dict] = {}
+
+    def add(family: str, act: str, short: str, n: str) -> None:
+        n = n.upper()
+        rule = lib["index"].get((family, n))
+        if rule:
+            found.setdefault(rule["id"], _entry(rule))
+        else:
+            label = f"{short} {'s.' if family in ('RA', 'DPDP', 'BSA') else ''}{n}"
+            found.setdefault(f"?{family}-{n}", {"id": f"?{family}-{n}", "act": act, "ref": n, "label": label,
+                                                "title": None, "summary": None, "status": "NOT_IN_LIBRARY"})
+
     for sentence in _sentences(answer or ""):
-        for family, act, short, name_re, num_pat in _ACTS:
-            for am in name_re.finditer(sentence):
-                for n in _numbers_near(sentence, am, num_pat):
-                    n = n.upper()
-                    rule = lib["index"].get((family, n)) or lib["index"].get((family, re.sub(r"\(.*", "", n)))
-                    if rule:
-                        found.setdefault(rule["id"], {**{k: rule[k] for k in ("id", "act", "ref", "label", "title", "summary")}, "status": "IN_LIBRARY"})
-                    else:
-                        label = f"{short} {'s.' if family in ('RA', 'DPDP', 'BSA') else ''}{n}"
-                        found.setdefault(f"?{family}-{n}", {"id": f"?{family}-{n}", "act": act, "ref": n, "label": label, "title": None,
-                                                            "summary": None, "status": "NOT_IN_LIBRARY"})
-                break  # one scan per act per sentence is enough
-        if _CIRCULAR.search(sentence):
-            r = next(x for x in lib["rules"] if x["id"] == "RB-PHONE")
-            found.setdefault(r["id"], {**{k: r[k] for k in ("id", "act", "ref", "label", "title", "summary")}, "status": "IN_LIBRARY"})
+        acts = [(m.start(), m.end(), fam, act, short, pat)
+                for fam, act, short, name_re, pat in _ACTS for m in name_re.finditer(sentence)]
+        if not acts:
+            continue
+        # A number written straight after the act name ("G&SR 4.40") belongs to that act.
+        for start, end, fam, act, short, pat in acts:
+            d = re.match(rf"\s*\(?({pat})\b", sentence[end:])
+            if d and not re.match(rf"\s*\(?\d{{4}}", sentence[end:]):  # skip years: "Railways Act, 1989"
+                add(fam, act, short, d.group(1))
+        # Every "Section/Rule N" belongs to the nearest act name: preceding, or following within "… of the Railways Act".
+        for pos, pend, n in _provisions(sentence):
+            # "Section 175 of the Railways Act" / "under the DPDP Act": the act that follows wins.
+            tail = re.match(r"\s*(?:\([^)]*\)\s*)?(?:of|under)\s+(?:the\s+)?(?:indian\s+)?", sentence[pend:], re.I)
+            if tail:
+                after = [a for a in acts if a[0] == pend + tail.end()]
+                if after and re.fullmatch(after[0][5], n, re.I):
+                    add(after[0][2], after[0][3], after[0][4], n)
+                    continue
+            best, best_d = None, 10**9
+            for start, end, *rest in acts:
+                dist = pos - end if end <= pos else (start - pos + 15 if start - pos < 60 else 10**9)
+                if 0 <= dist < best_d:
+                    best, best_d = rest, dist
+            if best and re.fullmatch(best[3], n, re.I):
+                add(best[0], best[1], best[2], n)
+    if _CIRCULAR.search(answer or ""):  # whole answer: "Circular No. 2018/…" would split as a sentence
+        found.setdefault("RB-PHONE", _entry(next(x for x in lib["rules"] if x["id"] == "RB-PHONE")))
     # Known rules first, then those needing a manual check.
     return sorted(found.values(), key=lambda r: (r["status"] != "IN_LIBRARY", r["label"]))
 

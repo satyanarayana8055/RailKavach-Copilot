@@ -34,3 +34,5 @@ class Citation(BaseModel):
     event_description: str = Field(description="Summary of the evidenced event")
     reviewer_status: Optional[str] = Field(default=None, description="Human reviewer verification status if applicable")
     evidence_id: Optional[str] = Field(default=None, description="Record identifier")
+    sha256: Optional[str] = Field(default=None, description="SHA-256 digest recorded at ingest (BSA 2023 §63 Part B); None if not a registered record")
+    media_url: Optional[str] = Field(default=None, description="Where the original audio/image is served, if available")

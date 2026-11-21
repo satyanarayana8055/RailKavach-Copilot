@@ -1,4 +1,4 @@
-import type { ChatResponse, FileAnalysisResult, Purpose, UserRole } from "./types";
+import type { AuditLogResponse, ChatResponse, CustodyCheck, FileAnalysisResult, Purpose, UserRole } from "./types";
 
 /**
  * Browser-reachable backend origin. Override with NEXT_PUBLIC_API_URL
@@ -77,4 +77,34 @@ export async function fetchScoped<T>(path: string, body: object, session: Sessio
     body: JSON.stringify(body),
   });
   return parse(res);
+}
+
+
+/** GET a governed endpoint with the role/purpose headers. */
+export async function getScoped<T>(path: string, session: Session): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, { headers: sessionHeaders(session) });
+  return parse(res);
+}
+
+/** Re-hash the original file server-side and compare with the SHA-256 recorded at ingest. */
+export const verifyEvidence = (id: string, session: Session) => getScoped<CustodyCheck>(`/api/evidence/${encodeURIComponent(id)}/verify`, session);
+
+export const fetchAuditLog = (session: Session, limit = 200) => getScoped<AuditLogResponse>(`/api/audit?limit=${limit}`, session);
+
+/** Download the draft BSA 2023 §63 certificate (Sr. DSO / CRS). */
+export async function downloadCertificate(id: string, session: Session): Promise<void> {
+  const res = await fetch(`${API_BASE}/api/evidence/${encodeURIComponent(id)}/certificate`, { headers: sessionHeaders(session) });
+  if (!res.ok) {
+    let msg = `Request failed (${res.status})`;
+    try {
+      msg = (await res.json()).detail ?? msg;
+    } catch {}
+    throw new ApiError(res.status, msg);
+  }
+  const url = URL.createObjectURL(await res.blob());
+  const a = Object.assign(document.createElement("a"), { href: url, download: `BSA63-${id}.txt` });
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }

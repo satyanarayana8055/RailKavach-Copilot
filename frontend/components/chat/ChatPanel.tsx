@@ -6,6 +6,8 @@ import {
 } from "lucide-react";
 import { Fragment, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import type { ChatResponse, RoleMetadata } from "@/lib/types";
+import type { Session } from "@/lib/api";
+import { CustodyRow, RuleChips } from "./Trust";
 
 export interface ChatMessage {
   id: string;
@@ -35,6 +37,8 @@ interface Props {
   lang: "en" | "hi";
   role: RoleMetadata;
   starters: Array<{ label: string; query: string; hindi?: boolean }>;
+  /** Role + purpose used to verify evidence and download §63 drafts. */
+  session: Session;
   modelEngine?: "gemini" | "gemma";
   setModelEngine?: (m: "gemini" | "gemma") => void;
 }
@@ -99,7 +103,7 @@ function sourceIcon(src: string) {
   return Radio;
 }
 
-function Evidence({ r, mask }: { r: ChatResponse; mask: (t: string) => string }) {
+function Evidence({ r, mask, p }: { r: ChatResponse; mask: (t: string) => string; p: Props }) {
   const [open, setOpen] = useState(false);
   if (!r.citations.length) return null;
   return (
@@ -125,6 +129,7 @@ function Evidence({ r, mask }: { r: ChatResponse; mask: (t: string) => string })
                   {c.reviewer_status && <span className="text-ok-ink">· {c.reviewer_status.replace(/_/g, " ").toLowerCase()}</span>}
                 </span>
                 {mask(c.event_description)}
+                {r.access && <CustodyRow c={c} session={p.session} canCertify={p.role.canSignCRS || p.role.canViewAudit} />}
               </li>
             );
           })}
@@ -174,7 +179,8 @@ function AssistantMessage({ m, p }: { m: ChatMessage; p: Props }) {
   return (
     <div className="group">
       <Markdown text={p.mask(r.answer)} />
-      <Evidence r={r} mask={p.mask} />
+      <RuleChips rules={r.rules} />
+      <Evidence r={r} mask={p.mask} p={p} />
       <AccessLine r={r} />
       <div className="mt-2 flex flex-wrap items-center gap-1.5">
         {r.suggested_actions?.slice(0, 3).map((a) => (

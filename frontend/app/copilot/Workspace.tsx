@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChatPanel, type ChatMessage } from "@/components/chat/ChatPanel";
+import { AuditView } from "@/components/dashboard/AuditView";
 import { Dashboard } from "@/components/dashboard/Dashboard";
 import { useDashboardData } from "@/components/dashboard/useDashboardData";
 import { Footer } from "@/components/Footer";
@@ -57,7 +58,9 @@ export function Workspace() {
     [maskToggle]
   );
   const mask = useCallback((t: string) => maskPII(t, masked), [masked]);
-  const data = useDashboardData(sessionFor(role.code), roleCode ? role.dataScopes : []);
+  // Stable per role + purpose, so views that fetch on session change don't refetch every render.
+  const session = useMemo(() => sessionFor(role.code), [sessionFor, role.code]);
+  const data = useDashboardData(session, roleCode ? role.dataScopes : []);
   const canChat = role.allowedTabs.includes("copilot");
 
   // Deep link: /copilot?scenario=1 runs that question once a role is chosen.
@@ -184,6 +187,7 @@ export function Workspace() {
       ? [{ id: "reports", label: "Reports", node: <ArtifactsPanel canSign={role.canSignCRS} mask={mask} onDone={toast.show} /> }]
       : []),
     ...(role.allowedTabs.includes("files") ? [{ id: "files", label: "Files", node: <FilesPanel analyzing={analyzing} result={fileResult} onAnalyze={onAnalyze} /> }] : []),
+    ...(role.canViewAudit ? [{ id: "audit", label: "Audit", node: <AuditView session={session} /> }] : []),
   ];
   const showTimeline = role.allowedTabs.includes("timeline") && role.dataScopes.some((s) => s === "RAILCOMM" || s === "LOCATE");
   const showRake = role.allowedTabs.includes("wdd") && role.dataScopes.includes("WDD");
@@ -252,6 +256,7 @@ export function Workspace() {
           role={role}
           modelEngine={modelEngine}
           setModelEngine={setModelEngine}
+          session={session}
           starters={STARTERS.filter((s) => Array.from(requiredSources(s.query)).every((src) => role.dataScopes.includes(src)))}
         />
       )}

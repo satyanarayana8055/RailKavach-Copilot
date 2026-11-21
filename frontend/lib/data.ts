@@ -13,6 +13,7 @@ export const ROLES: Record<UserRole, RoleMetadata> = {
     dataScopes: ["RAILCOMM", "LOCATE", "WDD", "TELEMETRY"],
     forceMasking: false,
     canSignCRS: true,
+    canViewAudit: true,
     canIssueWorkOrder: false,
   },
   ROLE_SR_DEE: {
@@ -26,6 +27,7 @@ export const ROLES: Record<UserRole, RoleMetadata> = {
     dataScopes: ["RAILCOMM", "LOCATE", "TELEMETRY"],
     forceMasking: false,
     canSignCRS: false,
+    canViewAudit: false,
     canIssueWorkOrder: false,
   },
   ROLE_SR_DME: {
@@ -39,6 +41,7 @@ export const ROLES: Record<UserRole, RoleMetadata> = {
     dataScopes: ["WDD", "TELEMETRY"],
     forceMasking: true,
     canSignCRS: false,
+    canViewAudit: false,
     canIssueWorkOrder: true,
   },
   ROLE_CREW_CONTROLLER: {
@@ -52,6 +55,7 @@ export const ROLES: Record<UserRole, RoleMetadata> = {
     dataScopes: ["RAILCOMM", "LOCATE"],
     forceMasking: true,
     canSignCRS: false,
+    canViewAudit: false,
     canIssueWorkOrder: false,
   },
   ROLE_CRS: {
@@ -65,6 +69,7 @@ export const ROLES: Record<UserRole, RoleMetadata> = {
     dataScopes: ["RAILCOMM", "LOCATE", "WDD", "TELEMETRY"],
     forceMasking: false,
     canSignCRS: true,
+    canViewAudit: true,
     canIssueWorkOrder: false,
   },
 };

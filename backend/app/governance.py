@@ -162,9 +162,10 @@ class PIIMasker:
         dev = sorted(_DEVANAGARI_ALIASES, key=len, reverse=True)
         self._dev = re.compile("(" + "|".join(re.escape(n) for n in dev) + ")")
         self._crew_id = re.compile(r"\b(A?LP|GD|SM|TM|CC)-(\d{3,6})\b")
-        self._phone = re.compile(r"(?<!\d)(?:\+91[\s-]?|0)?[6-9]\d{4}[\s-]?\d{5}(?!\d)")
+        # Not inside a longer alphanumeric run: SHA-256 digests and audit hashes contain digit runs too.
+        self._phone = re.compile(r"(?<![\dA-Za-z])(?:\+91[\s-]?|0)?[6-9]\d{4}[\s-]?\d{5}(?![\dA-Za-z])")
         self._email = re.compile(r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b")
-        self._aadhaar = re.compile(r"(?<!\d)\d{4}[\s-]\d{4}[\s-]\d{4}(?!\d)")
+        self._aadhaar = re.compile(r"(?<![\dA-Za-z])\d{4}[\s-]\d{4}[\s-]\d{4}(?![\dA-Za-z])")
 
     def token(self, canonical: str) -> str:
         return hmac.new(self.key, canonical.lower().encode(), hashlib.sha256).hexdigest()[:4].upper()

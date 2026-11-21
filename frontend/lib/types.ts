@@ -5,6 +5,57 @@ export interface Citation {
   source: string;
   event_description: string;
   reviewer_status?: string | null;
+  /** Registered evidence record this citation resolves to (server-side custody registry). */
+  evidence_id?: string | null;
+  /** SHA-256 recorded at ingest (BSA 2023 §63 Part B). Absent = not a registered record. */
+  sha256?: string | null;
+  media_url?: string | null;
+}
+
+/** A legal provision named in an answer, checked against the rule library. */
+export interface RuleRef {
+  id: string;
+  act: string;
+  ref: string;
+  label: string;
+  title?: string | null;
+  summary?: string | null;
+  status: "IN_LIBRARY" | "NOT_IN_LIBRARY";
+}
+
+export interface CustodyCheck {
+  evidence_id: string;
+  kind: string;
+  file: string;
+  status: "VERIFIED" | "MISMATCH" | "FILE_UNAVAILABLE";
+  recorded_sha256: string;
+  computed_sha256: string | null;
+  size_bytes: number | null;
+  checked_at: string;
+  detail: string;
+}
+
+export interface AuditEntry {
+  seq: number;
+  ts: string;
+  request_id: string;
+  role: string;
+  purpose: string;
+  endpoint: string;
+  decision: "ALLOWED" | "PARTIAL" | "DENIED";
+  sources_required: string[];
+  sources_withheld: string[];
+  pii_unmasked: boolean;
+  citations_returned: number;
+  query_masked: string | null;
+  query_sha256: string | null;
+  prev_hash: string;
+  hash: string;
+}
+
+export interface AuditLogResponse {
+  chain: { intact: boolean; entries: number; head_hash?: string; broken_at_seq?: number };
+  entries: AuditEntry[];
 }
 
 export interface ChatResponse {
@@ -20,6 +71,8 @@ export interface ChatResponse {
   };
   /** Server-side RBAC/DPDP outcome (absent in offline mode). */
   access?: AccessInfo;
+  /** Legal provisions named in the answer, checked against the rule library. */
+  rules?: RuleRef[];
   model_engine?: string;
 }
 
@@ -95,6 +148,8 @@ export interface RoleMetadata {
   forceMasking: boolean;
   canSignCRS: boolean;
   canIssueWorkOrder: boolean;
+  /** Mirrors RoleProfile.can_view_audit_log (Sr. DSO, CRS). */
+  canViewAudit: boolean;
 }
 
 export type WagonStatus = "CLEAR" | "PRE_EXISTING" | "NEW_DAMAGE" | "CRITICAL";
