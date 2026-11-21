@@ -388,6 +388,60 @@ def get_gcs_cache_stats(principal: Principal = Depends(get_principal)):
         "stats": gcs_pipeline.stats
     }
 
+@app.get("/audio_segments/{filename}")
+def stream_audio_from_gcs(filename: str):
+    """Zero-local streaming: serves audio segments directly from sovereign GCS via low-latency pipeline."""
+    try:
+        data, ctype, sha256_hash, tier = gcs_pipeline.fetch_bytes(f"audio/{filename}", default_content_type="audio/wav")
+        return Response(
+            content=data,
+            media_type=ctype,
+            headers={
+                "Cache-Control": "public, max-age=86400, immutable",
+                "ETag": f'"{sha256_hash}"',
+                "X-GCS-Tier": tier,
+                "X-BSA63-SHA256": sha256_hash
+            }
+        )
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Audio segment not found on GCS")
+
+@app.get("/evidence_cabin/{filename}")
+def stream_cabin_evidence_from_gcs(filename: str):
+    """Zero-local streaming: serves cabin CCTV frames directly from sovereign GCS via low-latency pipeline."""
+    try:
+        data, ctype, sha256_hash, tier = gcs_pipeline.fetch_bytes(f"locate/{filename}", default_content_type="image/png")
+        return Response(
+            content=data,
+            media_type=ctype,
+            headers={
+                "Cache-Control": "public, max-age=86400, immutable",
+                "ETag": f'"{sha256_hash}"',
+                "X-GCS-Tier": tier,
+                "X-BSA63-SHA256": sha256_hash
+            }
+        )
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Cabin evidence not found on GCS")
+
+@app.get("/evidence_wdd/{path:path}")
+def stream_wdd_evidence_from_gcs(path: str):
+    """Zero-local streaming: serves WDD wagon defect scans directly from sovereign GCS via low-latency pipeline."""
+    try:
+        data, ctype, sha256_hash, tier = gcs_pipeline.fetch_bytes(f"wdd/{path}", default_content_type="image/jpeg")
+        return Response(
+            content=data,
+            media_type=ctype,
+            headers={
+                "Cache-Control": "public, max-age=86400, immutable",
+                "ETag": f'"{sha256_hash}"',
+                "X-GCS-Tier": tier,
+                "X-BSA63-SHA256": sha256_hash
+            }
+        )
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="WDD evidence not found on GCS")
+
 
 
 # -------------------------------------------------------------
