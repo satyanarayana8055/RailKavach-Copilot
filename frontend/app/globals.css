@@ -16,6 +16,9 @@
   --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
   --nav-h: 64px;
 }
+@media (min-width: 640px) {
+  :root { --nav-h: 82px; } /* aispry.ai: 64px logo + 8px padding top and bottom + 1px rule */
+}
 
 @layer base {
   html {
@@ -201,4 +204,20 @@
     transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* aispry.ai header: base orange, with a 2×-wide orange→cyan layer drifting left and back (navCapsuleGrad, 9s). */
+.nav-glow { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.nav-glow::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 200%;
+  background: linear-gradient(to right, #f48220 0%, #009fce 100%);
+  animation: nav-capsule-grad 9s ease-in-out infinite;
+}
+@keyframes nav-capsule-grad { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .nav-glow::before { animation: none; transform: translateX(-25%); } }
+
+@layer components {
+  /* One type size across the header: links, labels and pills all 15px. */
+  .nav-link { @apply rounded-btn px-3.5 py-2 text-[15px] font-medium text-white transition duration-200 ease-brand hover:bg-white/15; }
+  .nav-pill { @apply inline-flex h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-full bg-white px-4 text-[15px] font-semibold text-ink-950 shadow-[0_6px_16px_rgba(15,23,42,.18)] transition duration-200 ease-brand hover:-translate-y-px hover:shadow-[0_10px_22px_rgba(0,0,0,.22)] sm:h-[42px] sm:px-5; }
 }

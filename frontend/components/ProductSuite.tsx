@@ -38,7 +38,7 @@ export const PRODUCTS: Product[] = [
       </>
     ),
     description:
-      "A railway-trained CNN + RNN + U-Net + Transformer stack that strips engine roar (up to 110 dB), horns, and platform babble out of operational VHF radio in real time, while protecting safety call-outs (G&SR 4.40) and caution orders (T/409) under fail-open architecture.",
+      "Railway-trained AI denoising that strips engine roar (up to 110 dB), horns, and platform babble out of operational VHF radio in real time, while protecting safety call-outs (G&SR 4.40) and caution orders (T/409) under fail-open architecture.",
     tags: ["Acoustic AI Denoising", "Bilingual Hindi + English", "G&SR 4.40 Callouts", "Fail-Open Safety"],
     stats: [
       { value: 85, suffix: "%", label: "Noise reduction" },
@@ -148,20 +148,40 @@ function ProductRow({
               onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onWatchVideo(p)}
               aria-label={`Watch production demo video for ${p.name}`}
             >
-              {/* Poster Image */}
-              <img
-                src={p.posterUrl}
-                alt={`${p.name} live dashboard interface`}
-                className="aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10 transition group-hover:opacity-85" />
+              {/* Poster Image / Background Video Animation for Locate */}
+              {p.num === "02" ? (
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#050d1c]">
+                  <video
+                    className="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    poster="/images/products/locate-login-hero-frame.webp"
+                    src="/videos/locate-login-hero.mp4"
+                    aria-label="Locate NWRLCVA locomotive cabin surveillance animation"
+                  />
+                  {/* Subtle edge vignette matching nwrlcva.aispry.ai */}
+                  <div className="pointer-events-none absolute inset-0 [background:radial-gradient(ellipse_at_50%_45%,transparent_55%,rgb(5_13_28/0.85)_100%)]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20 transition group-hover:opacity-75" />
+                </div>
+              ) : (
+                <>
+                  <img
+                    src={p.posterUrl}
+                    alt={`${p.name} live dashboard interface`}
+                    className="aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10 transition group-hover:opacity-85" />
+                </>
+              )}
 
               {/* Status Header Badge */}
               <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full border border-white/20 bg-ink-950/80 px-3 py-1 backdrop-blur-md">
                 <span className="h-2 w-2 animate-blink rounded-full bg-ok" aria-hidden />
                 <span className="font-mono text-[11px] font-semibold text-white uppercase tracking-wider">
-                  Recorded in Production · NWR
+                  {p.num === "02" ? "Live Cabin Animation · NWR LCVA" : "Recorded in Production · NWR"}
                 </span>
               </div>
 

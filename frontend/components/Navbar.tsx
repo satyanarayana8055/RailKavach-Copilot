@@ -32,29 +32,29 @@ const LINKS: Array<[string, string, NavbarProps["current"] | null]> = [
 export function Navbar({ controls, current = "home" }: NavbarProps) {
 
   return (
-    <header className="sticky top-0 z-50 h-[var(--nav-h)] border-b border-white/25 bg-brand-x shadow-nav">
+    <header className="sticky top-0 z-50 h-[var(--nav-h)] border-b border-white/30 bg-orange shadow-nav">
+      <span className="nav-glow" aria-hidden />
       <ScrollProgress />
-      <div className="mx-auto flex h-full max-w-[1280px] items-center gap-3 px-4 sm:px-6">
+      <div className="relative mx-auto flex h-full max-w-[1300px] items-center gap-2 px-4 sm:px-8">
         <div className="flex shrink-0 items-center gap-3">
           <a href="https://aispry.ai" target="_blank" rel="noopener noreferrer" aria-label="AiSPRY — opens aispry.ai in a new tab">
+            {/* aispry.ai renders this logo at 120 × 64 */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/brand/aispry-logo.png" alt="AiSPRY" className="h-8 w-auto" width={60} height={32} />
+            <img src="/images/brand/aispry-logo.png" alt="AiSPRY" className="h-12 w-auto sm:h-16" width={120} height={64} />
           </a>
-          <a
-            href="/"
-            className="hidden rounded-full bg-ink-950/80 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-ink-950 sm:inline"
-          >
+          <span className="hidden h-7 w-px bg-white/40 sm:block" aria-hidden />
+          <a href="/" className="hidden text-[15px] font-semibold tracking-[0.02em] text-white transition hover:text-white/80 sm:inline">
             RailKavach
           </a>
         </div>
 
-        <nav aria-label="Sections" className="ml-4 hidden items-center gap-1 rounded-full bg-ink-950/45 p-1 lg:flex">
+        <nav aria-label="Sections" className="ml-6 hidden items-center gap-1 lg:flex">
           {LINKS.map(([href, label, page]) => (
             <a
               key={href}
               href={href}
               aria-current={page === current ? "page" : undefined}
-              className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${page === current ? "bg-white text-ink-950" : "text-white hover:bg-white/15"}`}
+              className={`nav-link ${page === current ? "bg-white/20" : ""}`}
             >
               {label}
             </a>
@@ -62,7 +62,7 @@ export function Navbar({ controls, current = "home" }: NavbarProps) {
         </nav>
 
         {controls ? <Controls {...controls} /> : (
-          <a href="/#demo" className="btn-pill-white ml-auto">
+          <a href="/#demo" className="nav-pill ml-auto">
             Request a demo <ArrowRight className="h-4 w-4 text-orange-ink" aria-hidden />
           </a>
         )}
@@ -90,7 +90,7 @@ function Controls({ role, onRole, masked, maskForced, onToggleMask, lang, onTogg
 
   return (
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
-          <button type="button" onClick={onToggleLang} className="btn-pill-white" aria-label={lang === "en" ? "Switch to Hindi" : "Switch to English"}>
+          <button type="button" onClick={onToggleLang} className="nav-pill" aria-label={lang === "en" ? "Switch to Hindi" : "Switch to English"}>
             <Languages className="h-4 w-4 text-blue" aria-hidden />
             <span className={lang === "en" ? "hi" : ""}>
               {lang === "en" ? (<><span className="sm:hidden">हि</span><span className="hidden sm:inline">हिन्दी</span></>) : "EN"}
@@ -103,7 +103,7 @@ function Controls({ role, onRole, masked, maskForced, onToggleMask, lang, onTogg
             aria-pressed={masked}
             disabled={maskForced}
             title={maskForced ? "Masking enforced for this role (DPDP Act 2023)" : "Toggle DPDP PII masking"}
-            className={`btn-pill-white disabled:cursor-not-allowed ${masked ? "!bg-violet-soft !text-violet-ink" : ""}`}
+            className={`nav-pill disabled:cursor-not-allowed ${masked ? "!bg-violet-soft !text-violet-ink" : ""}`}
           >
             {masked ? <Lock className="h-4 w-4" aria-hidden /> : <Unlock className="h-4 w-4 text-ink-500" aria-hidden />}
             <span className="hidden sm:inline">DPDP</span>
@@ -115,7 +115,7 @@ function Controls({ role, onRole, masked, maskForced, onToggleMask, lang, onTogg
               onClick={() => setOpen((o) => !o)}
               aria-haspopup="listbox"
               aria-expanded={open}
-              className="btn-pill-white"
+              className="nav-pill"
             >
               <roleMeta.icon className="h-4 w-4 text-orange-ink" aria-hidden />
               <span className="sm:hidden">{roleMeta.short}</span>
