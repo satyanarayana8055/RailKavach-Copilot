@@ -16,7 +16,7 @@ PRO_MODEL = os.getenv("PRO_MODEL", "gemini-3.8-flash")
 # Local Offline / Edge Model (Gemma) configuration
 LOCAL_MODEL_PROVIDER = os.getenv("LOCAL_MODEL_PROVIDER", "gemma")
 LOCAL_GEMMA_URL = os.getenv("LOCAL_GEMMA_URL", "http://localhost:11434/api/generate")
-LOCAL_GEMMA_MODEL = os.getenv("LOCAL_GEMMA_MODEL", "gemma2:2b")
+LOCAL_GEMMA_MODEL = os.getenv("LOCAL_GEMMA_MODEL", "gemma2:9b")
 PREFER_LOCAL_MODEL = os.getenv("PREFER_LOCAL_MODEL", "false").lower() == "true"
 
 # Token & Cache Settings

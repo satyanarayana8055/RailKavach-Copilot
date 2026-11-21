@@ -277,9 +277,9 @@ export function ChatPanel(p: Props) {
               type="button"
               onClick={() => p.setModelEngine?.("gemma")}
               className={`rounded-full px-2 py-0.5 transition ${p.modelEngine === "gemma" ? "bg-amber font-semibold text-ink-950 shadow-xs" : "text-ink-600 hover:text-ink-950"}`}
-              title="Gemma Local Edge (Zero cloud dependency)"
+              title="Gemma 2 9B Local Edge (High-Accuracy On-Premise)"
             >
-              Gemma
+              Gemma 2
             </button>
           </div>
         )}
