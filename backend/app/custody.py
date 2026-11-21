@@ -117,20 +117,39 @@ class EvidenceRegistry:
         out = {k: item[k] for k in ("evidence_id", "kind", "timestamp", "media_url")}
         out.update(file=Path(item["file"]).name, recorded_sha256=item["sha256"],
                    checked_at=datetime.now(timezone.utc).isoformat(timespec="seconds"), algorithm="SHA-256")
-        if not p.is_file():
-            out.update(status="FILE_UNAVAILABLE", computed_sha256=None, size_bytes=None,
-                       detail="The original file is not on this server; the digest recorded at ingest is shown.")
-            return out
-        h = hashlib.sha256()
-        with p.open("rb") as f:
-            for chunk in iter(lambda: f.read(1 << 20), b""):
-                h.update(chunk)
-        computed = h.hexdigest()
+        if p.is_file():
+            h = hashlib.sha256()
+            with p.open("rb") as f:
+                for chunk in iter(lambda: f.read(1 << 20), b""):
+                    h.update(chunk)
+            computed, size, where = h.hexdigest(), p.stat().st_size, "server disk"
+        else:
+            # Media lives in Cloud Storage: re-hash the bytes actually stored there (never trust a cached digest).
+            data = _fetch_from_storage(item)
+            if data is None:
+                out.update(status="FILE_UNAVAILABLE", computed_sha256=None, size_bytes=None,
+                           detail="The original file is not on this server; the digest recorded at ingest is shown.")
+                return out
+            computed, size, where = hashlib.sha256(data).hexdigest(), len(data), "Cloud Storage"
         ok = computed == item["sha256"]
-        out.update(status="VERIFIED" if ok else "MISMATCH", computed_sha256=computed, size_bytes=p.stat().st_size,
+        out["source"] = where
+        out.update(status="VERIFIED" if ok else "MISMATCH", computed_sha256=computed, size_bytes=size,
                    detail="File is bit-for-bit identical to the one registered at ingest." if ok
                    else "File differs from the one registered at ingest. Do not rely on it.")
         return out
+
+
+_STORAGE_PREFIX = {RAILCOMM: "audio", LOCATE: "locate", WDD: "wdd"}
+
+
+def _fetch_from_storage(item: dict) -> Optional[bytes]:
+    """Bytes of the evidence file from the GCS pipeline (RAM/SSD cache, then bucket), or None if unreachable."""
+    try:
+        from .services.gcs_pipeline import gcs_pipeline
+        data, *_ = gcs_pipeline.fetch_bytes(f"{_STORAGE_PREFIX[item['kind']]}/{item['file']}")
+        return data
+    except Exception:
+        return None
 
 
 @lru_cache(maxsize=1)

@@ -19,7 +19,7 @@ from .config import (
 from .observability import observe, get_client, ENABLED as LANGFUSE_ENABLED
 from .schemas.chat import ChatQueryRequest, ChatQueryResponse
 from .schemas.evidence import Citation
-from .skills.timeline_sync import build_incident_timeline
+from .skills.timeline_sync import build_incident_timeline, cab_phone_summary, focus_incident
 from .skills.report_gen import generate_safety_artifacts
 from .skills.pattern_anomaly import analyze_safety_patterns
 from .skills.wdd_damage import get_wdd_wagon_damages
@@ -52,7 +52,8 @@ def reply_language_rule(language: str | None) -> str:
     if lang == "mixed":
         return ("LANGUAGE: The officer spoke Hinglish. Reply in natural Hinglish, Roman script: Hindi sentence structure with railway "
                 "terms in English (Loco Pilot, Home Signal, caution order, wagon), as a colleague in the control office would speak.")
-    return ("LANGUAGE: Reply in the language of the officer's question. English question: English. Devanagari Hindi: Devanagari Hindi. "
+    return ("TIMESTAMPS: use only times that appear in the context, exactly as written (HH:MM:SS); never invent or compute one. "
+            "LANGUAGE: Reply in the language of the officer's question. English question: English. Devanagari Hindi: Devanagari Hindi. "
             "Hinglish (Hindi words in Roman script mixed with English): reply in Hinglish, Roman script.")
 
 
@@ -109,6 +110,117 @@ class CopilotEngine:
             except Exception:
                 self.client = None
 
+    def _cached_answer(self, req: ChatQueryRequest, q_lower: str, start_t: float) -> Optional[ChatQueryResponse]:
+        """Verified demo answer for a core scenario (built from the datasets by scripts/build_demo_cache.py), else None."""
+        # Scenario 1: SPAD / Train 12414 near Suratgarh
+        if "12414" in q_lower or "suratgarh" in q_lower or "spad" in q_lower:
+            data = self.cache.get("scenario_1_spad_investigation", {})
+            _tag_route("cache", scenario="scenario_1_spad_investigation")
+            citations = [
+                Citation(
+                    timestamp=c.get("time"),
+                    source=c.get("source"),
+                    event_description=c.get("event"),
+                    reviewer_status=c.get("status") or ("CONFIRMED" if "CONFIRMED" in c.get("event", "") else None),
+                    evidence_id=c.get("evidence_id"),
+                )
+                for c in data.get("timestamp_citations", [])
+            ]
+            latency = int((time.time() - start_t) * 1000)
+            return ChatQueryResponse(
+                answer=data.get("summary", ""),
+                citations=citations,
+                suggested_actions=[
+                    "Generate statutory preliminary inquiry report (Rule 113 G&SR)",
+                    "Issue Devanagari Hindi crew lobby sign-on briefing notice",
+                    "Review ALP Amit Singh commendation for vigilance"
+                ],
+                latency_ms=latency,
+                token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
+                cached=True,
+                bilingual_payload=data.get("bilingual_report")
+            )
+
+        # Scenario 2: Fatigue / Alertness / Night shift (02:00 - 05:00)
+        if "fatigue" in q_lower or "sleep" in q_lower or "night" in q_lower or "02:00" in q_lower:
+            data = self.cache.get("scenario_2_fatigue_pattern", {})
+            _tag_route("cache", scenario="scenario_2_fatigue_pattern")
+            citations = [
+                Citation(
+                    timestamp=c.get("time"),
+                    source="Locate Cabin CVVRS",
+                    event_description=f"Loco {c.get('loco')} ({c.get('train')}): {c.get('duration')} by {c.get('crew')}",
+                    reviewer_status=c.get("status"),
+                    evidence_id=c.get("evidence_id"),
+                )
+                for c in data.get("cluster_data", [])
+            ]
+            latency = int((time.time() - start_t) * 1000)
+            return ChatQueryResponse(
+                answer=data.get("summary", ""),
+                citations=citations,
+                suggested_actions=data.get("corrective_actions", []),
+                latency_ms=latency,
+                token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
+                cached=True
+            )
+
+        # Scenario 4: Signal Miscommunications & Caution Orders on Bikaner Division
+        if "miscommunication" in q_lower or "caution order" in q_lower or "exchange" in q_lower:
+            data = self.cache.get("scenario_signal_miscommunications", {})
+            _tag_route("cache", scenario="scenario_signal_miscommunications")
+            citations = [
+                Citation(
+                    timestamp=c.get("time"),
+                    source=c.get("source"),
+                    event_description=c.get("event"),
+                    reviewer_status=c.get("status", "CONFIRMED"),
+                    evidence_id=c.get("evidence_id"),
+                )
+                for c in data.get("citations", [])
+            ]
+            latency = int((time.time() - start_t) * 1000)
+            return ChatQueryResponse(
+                answer=data.get("summary", ""),
+                citations=citations,
+                suggested_actions=[
+                    "Review VHF radio log for Suratgarh Junction (03:10–03:15)",
+                    "Export G&SR 4.40 Signal Callout Verification Report",
+                    "Audit fail-open segments passed through raw"
+                ],
+                latency_ms=latency,
+                token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
+                cached=True
+            )
+
+        # Scenario 3: Freight Rake / Wagon Damage / BOXN-542
+        if "wagon" in q_lower or "damage" in q_lower or "boxn" in q_lower or "gantry" in q_lower:
+            data = self.cache.get("scenario_3_wagon_damage_audit", {})
+            _tag_route("cache", scenario="scenario_3_wagon_damage_audit")
+            citations = [
+                Citation(
+                    timestamp=f.get("time", "16:45:14"),
+                    source="WDD 6-Gantry Exit Scan",
+                    event_description=f"Wagon {f.get('wagon_no')} - {f.get('status')}: {', '.join(f.get('defects', []))}",
+                    reviewer_status="CONFIRMED",
+                    evidence_id=f.get("evidence_id"),
+                )
+                for f in data.get("findings", [])
+            ]
+            latency = int((time.time() - start_t) * 1000)
+            return ChatQueryResponse(
+                answer=f"{data.get('summary', '')}\n\n" + "\n".join([f"• **{f['wagon_no']}**: {f['status']} ({', '.join(f['defects'])}) — Liability: {f['liability']}" for f in data.get('findings', [])]),
+                citations=citations,
+                suggested_actions=[
+                    "Mark critical wagons for Sick Line mechanical shunting at Lalgarh Yard",
+                    "Issue digital transit damage debit note to siding operator"
+                ],
+                latency_ms=latency,
+                token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
+                cached=True
+            )
+        return None
+
     @observe(name="copilot.chat", as_type="agent")
     def process_query(self, req: ChatQueryRequest, scope: Optional[set] = None) -> ChatQueryResponse:
         """`scope` = data sources the caller may see (RBAC). Live/local context is limited to it;
@@ -124,113 +236,9 @@ class CopilotEngine:
         # 1. Zero-Token Deterministic Fallback Cache Check (Jury Fast Demos)
         # ---------------------------------------------------------
         if not is_gemma_requested and ENABLE_CACHE_FALLBACK:
-            # Scenario 1: SPAD / Train 12414 near Suratgarh
-            if "12414" in q_lower or "suratgarh" in q_lower or "spad" in q_lower:
-                data = self.cache.get("scenario_1_spad_investigation", {})
-                _tag_route("cache", scenario="scenario_1_spad_investigation")
-                citations = [
-                    Citation(
-                        timestamp=c.get("time"),
-                        source=c.get("source"),
-                        event_description=c.get("event"),
-                        reviewer_status=c.get("status") or ("CONFIRMED" if "CONFIRMED" in c.get("event", "") else None),
-                        evidence_id=c.get("evidence_id"),
-                    )
-                    for c in data.get("timestamp_citations", [])
-                ]
-                latency = int((time.time() - start_t) * 1000)
-                return ChatQueryResponse(
-                    answer=data.get("summary", ""),
-                    citations=citations,
-                    suggested_actions=[
-                        "Generate statutory preliminary inquiry report (Rule 113 G&SR)",
-                        "Issue Devanagari Hindi crew lobby sign-on briefing notice",
-                        "Review ALP Amit Singh commendation for vigilance"
-                    ],
-                    latency_ms=latency,
-                    token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
-                    cached=True,
-                    bilingual_payload=data.get("bilingual_report")
-                )
-
-            # Scenario 2: Fatigue / Alertness / Night shift (02:00 - 05:00)
-            if "fatigue" in q_lower or "sleep" in q_lower or "night" in q_lower or "02:00" in q_lower:
-                data = self.cache.get("scenario_2_fatigue_pattern", {})
-                _tag_route("cache", scenario="scenario_2_fatigue_pattern")
-                citations = [
-                    Citation(
-                        timestamp=c.get("time"),
-                        source="Locate Cabin CVVRS",
-                        event_description=f"Loco {c.get('loco')} ({c.get('train')}): {c.get('duration')} by {c.get('crew')}",
-                        reviewer_status=c.get("status"),
-                        evidence_id=c.get("evidence_id"),
-                    )
-                    for c in data.get("cluster_data", [])
-                ]
-                latency = int((time.time() - start_t) * 1000)
-                return ChatQueryResponse(
-                    answer=data.get("summary", ""),
-                    citations=citations,
-                    suggested_actions=data.get("corrective_actions", []),
-                    latency_ms=latency,
-                    token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
-                    cached=True
-                )
-
-            # Scenario 4: Signal Miscommunications & Caution Orders on Bikaner Division
-            if "miscommunication" in q_lower or "caution order" in q_lower or "exchange" in q_lower:
-                data = self.cache.get("scenario_signal_miscommunications", {})
-                _tag_route("cache", scenario="scenario_signal_miscommunications")
-                citations = [
-                    Citation(
-                        timestamp=c.get("time"),
-                        source=c.get("source"),
-                        event_description=c.get("event"),
-                        reviewer_status=c.get("status", "CONFIRMED"),
-                        evidence_id=c.get("evidence_id"),
-                    )
-                    for c in data.get("citations", [])
-                ]
-                latency = int((time.time() - start_t) * 1000)
-                return ChatQueryResponse(
-                    answer=data.get("summary", ""),
-                    citations=citations,
-                    suggested_actions=[
-                        "Review VHF radio log for Suratgarh Junction (03:10–03:15)",
-                        "Export G&SR 4.40 Signal Callout Verification Report",
-                        "Audit fail-open segments passed through raw"
-                    ],
-                    latency_ms=latency,
-                    token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
-                    cached=True
-                )
-
-            # Scenario 3: Freight Rake / Wagon Damage / BOXN-542
-            if "wagon" in q_lower or "damage" in q_lower or "boxn" in q_lower or "gantry" in q_lower:
-                data = self.cache.get("scenario_3_wagon_damage_audit", {})
-                _tag_route("cache", scenario="scenario_3_wagon_damage_audit")
-                citations = [
-                    Citation(
-                        timestamp=f.get("time", "16:45:14"),
-                        source="WDD 6-Gantry Exit Scan",
-                        event_description=f"Wagon {f.get('wagon_no')} - {f.get('status')}: {', '.join(f.get('defects', []))}",
-                        reviewer_status="CONFIRMED",
-                        evidence_id=f.get("evidence_id"),
-                    )
-                    for f in data.get("findings", [])
-                ]
-                latency = int((time.time() - start_t) * 1000)
-                return ChatQueryResponse(
-                    answer=f"{data.get('summary', '')}\n\n" + "\n".join([f"• **{f['wagon_no']}**: {f['status']} ({', '.join(f['defects'])}) — Liability: {f['liability']}" for f in data.get('findings', [])]),
-                    citations=citations,
-                    suggested_actions=[
-                        "Mark critical wagons for Sick Line mechanical shunting at Lalgarh Yard",
-                        "Issue digital transit damage debit note to siding operator"
-                    ],
-                    latency_ms=latency,
-                    token_usage={"prompt_tokens": 0, "candidates_tokens": 0, "total_tokens": 0},
-                    cached=True
-                )
+            hit = self._cached_answer(req, q_lower, start_t)
+            if hit:
+                return hit
 
         # ---------------------------------------------------------
         # 2. Local Gemma Edge Engine (If Requested or Forced)
@@ -247,7 +255,7 @@ class CopilotEngine:
                 wdd_records = get_wdd_wagon_damages(WddDamagesInput())
                 damaged_wagons = [w for w in wdd_records if w.get("exit_damage_status") == "DAMAGED"]
                 wdd_summary = "\nWayside Wagon Damage Detection (WDD 6-Gantry Differential Context):\n" + wdd_totals(wdd_records) + "\n" + "\n".join([
-                    f"- Wagon #{w.get('position_in_rake')} ({w.get('wagon_no')}): Entry={w.get('entry_damage_status')}, Exit={w.get('exit_damage_status')}, Transit Delta={w.get('delta_transit_damage')}, Defects={', '.join([d.get('class', '') + ' (' + d.get('severity', '') + ')' for d in w.get('exit_defects', [])])}. Liability: {w.get('liability_attribution')}"
+                    f"- [{(w.get('exit_timestamp') or '')[-8:]}] Wagon #{w.get('position_in_rake')} ({w.get('wagon_no')}): Entry={w.get('entry_damage_status')}, Exit={w.get('exit_damage_status')}, Transit Delta={w.get('delta_transit_damage')}, Defects={', '.join([d.get('class', '') + ' (' + d.get('severity', '') + ')' for d in w.get('exit_defects', [])])}. Liability: {w.get('liability_attribution')}"
                     for w in damaged_wagons
                 ])
 
@@ -310,25 +318,32 @@ class CopilotEngine:
                     "FORMAT RULES:\n"
                     "1. Begin immediately with a crisp, direct one-sentence Executive Verdict answering the officer's exact question.\n"
                     "2. Ground every event with an exact timestamp badge format: [HH:MM:SS].\n"
-                    "3. Clearly separate confirmed violations (CONFIRMED) from raw unverified AI alerts (PENDING_VERIFICATION).\n"
-                    "4. Protect routine duties (walkie-talkie, reading caution orders T/409, brake valve adjustments) as SYSTEM_SUPPRESSED under G&SR Rule 113.\n"
+                    "3. Radio transcripts are facts in time order: present them as a 'Timeline' with no review label. Review labels belong only to camera/scan alerts and must be copied from the context: CONFIRMED (human-confirmed), PENDING_VERIFICATION (raw AI alert), SYSTEM_SUPPRESSED (routine duty under G&SR Rule 113). Never relabel an alert.\n"
+                    "4. Use the computed CAB CAMERA FACTS and TOTALS lines verbatim for counts; never count yourself.\n"
                     "5. Conclude with the governing statutory rules under Indian Railways G&SR and The Railways Act 1989.\n"
                     "6. Maintain authentic Indian Railways terminology (LP, ALP, Guard, Station Master, Caution Order T/409, BP pressure, SPAD). If replying in Hindi, use formal Devanagari rail safety phrasing.\n"
                     + reply_language_rule(req.language)
                 )
 
-                # Fetch timeline context within bounded window
-                timeline = build_incident_timeline(TimelineSyncInput(train_no="12414")) if sees_timeline else []
-                timeline_summary = "\n".join([f"[{t.get('time_str')}] {t.get('source')}: {t.get('event')} (Status: {t.get('reviewer_status', 'N/A')})" for t in timeline[:12]]) or "(no crew/cabin/radio data in this officer's scope)"
-
                 # Check if query pertains to Wayside Wagon Damage Detection (WDD)
                 is_wdd_query = any(k in q_lower for k in ["wagon", "wdd", "damage", "boxn", "door", "dent", "rake", "gantry", "sick", "shunting", "डिब्बा", "वैगन"])
+                is_incident_query = any(k in q_lower for k in ["12414", "suratgarh", "spad", "signal", "brake", "incident", "सिग्नल", "सूरतगढ़"])
+
+                # Timeline context: the incident window for incident questions; none for wagon-only questions.
+                wants_timeline = sees_timeline and not (is_wdd_query and not is_incident_query)
+                timeline = build_incident_timeline(TimelineSyncInput(train_no="12414")) if wants_timeline else []
+                picked = focus_incident(timeline) if is_incident_query else timeline[:12]
+                timeline_summary = "\n".join([f"[{t.get('time_str')}] {t.get('source')}: {t.get('event')}" + (f" (Reviewer status: {t['reviewer_status']})" if t.get("reviewer_status") else " (radio transcript, not a reviewed alert)") for t in picked])
+                if is_incident_query and timeline:
+                    timeline_summary += "\n" + cab_phone_summary(timeline)
+                if not timeline_summary.strip():
+                    timeline_summary = "(no crew/cabin/radio data in this officer's scope)" if not sees_timeline else "(not needed for this question)"
                 wdd_summary = ""
                 if (is_wdd_query or not sees_timeline) and "WDD" in scope:
                     wdd_records = get_wdd_wagon_damages(WddDamagesInput())
                     damaged_wagons = [w for w in wdd_records if w.get("exit_damage_status") == "DAMAGED"]
                     wdd_summary = "\nWayside Wagon Damage Detection (WDD 6-Gantry Differential Context):\n" + wdd_totals(wdd_records) + "\n" + "\n".join([
-                        f"- Wagon #{w.get('position_in_rake')} ({w.get('wagon_no')}): Entry={w.get('entry_damage_status')}, Exit={w.get('exit_damage_status')}, Transit Delta={w.get('delta_transit_damage')}, Defects={', '.join([d.get('class', '') + ' (' + d.get('severity', '') + ')' for d in w.get('exit_defects', [])])}. Liability: {w.get('liability_attribution')}"
+                        f"- [{(w.get('exit_timestamp') or '')[-8:]}] Wagon #{w.get('position_in_rake')} ({w.get('wagon_no')}): Entry={w.get('entry_damage_status')}, Exit={w.get('exit_damage_status')}, Transit Delta={w.get('delta_transit_damage')}, Defects={', '.join([d.get('class', '') + ' (' + d.get('severity', '') + ')' for d in w.get('exit_defects', [])])}. Liability: {w.get('liability_attribution')}"
                         for w in damaged_wagons
                     ])
 
@@ -371,7 +386,7 @@ class CopilotEngine:
                         event_description=t.get("event", ""),
                         reviewer_status=t.get("reviewer_status")
                     )
-                    for t in timeline[:5]
+                    for t in (picked or timeline)[:8]
                 ]
 
                 latency = int((time.time() - start_t) * 1000)
@@ -398,6 +413,11 @@ class CopilotEngine:
         # ---------------------------------------------------------
         # 4. Deterministic Local Skill Execution (Fallback)
         # ---------------------------------------------------------
+        # A core scenario still gets its verified answer when the live model is unreachable.
+        if not is_gemma_requested:
+            hit = self._cached_answer(req, q_lower, start_t)
+            if hit:
+                return hit
         _tag_route("local_skills")
         timeline = build_incident_timeline(TimelineSyncInput(train_no="12414")) if sees_timeline else []
         citations = [

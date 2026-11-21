@@ -76,7 +76,8 @@ export function CustodyRow({ c, session, canCertify }: { c: Citation; session: S
           <span>
             {s.text}
             <span className="block font-mono text-[10px] font-normal text-ink-500">
-              {check.file} · {check.computed_sha256 ? `recomputed ${short(check.computed_sha256)}` : `recorded ${short(check.recorded_sha256)}`} ·{" "}
+              {check.file} · {check.computed_sha256 ? `recomputed ${short(check.computed_sha256)}` : `recorded ${short(check.recorded_sha256)}`}
+              {check.source ? ` from ${check.source}` : ""} ·{" "}
               {new Date(check.checked_at).toLocaleTimeString("en-IN")}
             </span>
           </span>

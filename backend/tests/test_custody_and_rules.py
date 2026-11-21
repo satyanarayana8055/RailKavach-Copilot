@@ -31,10 +31,11 @@ def test_verify_recomputes_the_digest():
     assert r.status_code == 200
     v = r.json()
     assert v["recorded_sha256"] == item["sha256"]
-    if registry().path_of(item).is_file():
+    if v["computed_sha256"] is not None:  # re-hashed from server disk or Cloud Storage
         assert v["status"] == "VERIFIED" and v["computed_sha256"] == item["sha256"]
-    else:
-        assert v["status"] == "FILE_UNAVAILABLE" and v["computed_sha256"] is None
+        assert v["source"] in ("server disk", "Cloud Storage")
+    else:  # neither reachable: never invent a digest
+        assert v["status"] == "FILE_UNAVAILABLE"
 
 
 def test_tampered_file_is_reported(tmp_path, monkeypatch):

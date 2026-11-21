@@ -33,6 +33,7 @@ export interface CustodyCheck {
   size_bytes: number | null;
   checked_at: string;
   detail: string;
+  source?: "server disk" | "Cloud Storage";
 }
 
 export interface AuditEntry {
